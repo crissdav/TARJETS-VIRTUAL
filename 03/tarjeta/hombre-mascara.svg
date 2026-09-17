@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" fill="none">
+  <defs>
+    <linearGradient id="skinM" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#E8C8A8"/>
+      <stop offset="60%" stop-color="#D4B08C"/>
+      <stop offset="100%" stop-color="#C4A07A"/>
+    </linearGradient>
+    <linearGradient id="skinShM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4A07A"/>
+      <stop offset="100%" stop-color="#B4906A"/>
+    </linearGradient>
+    <linearGradient id="hairM" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#0D0D0D"/>
+    </linearGradient>
+    <linearGradient id="hairHM" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#2A2A2A"/>
+      <stop offset="100%" stop-color="#1A1A1A"/>
+    </linearGradient>
+    <linearGradient id="mSilver" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0C0C0"/>
+      <stop offset="35%" stop-color="#A9A9A9"/>
+      <stop offset="70%" stop-color="#808080"/>
+      <stop offset="100%" stop-color="#696969"/>
+    </linearGradient>
+    <linearGradient id="mGoldM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="suit" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </linearGradient>
+    <filter id="shadowM"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/></filter>
+    <filter id="glowM"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+
+  <!-- Hair -->
+  <path d="M90 170 Q75 120 90 75 Q110 30 160 18 Q200 10 240 18 Q290 30 310 75 Q325 120 310 170 L315 240 Q310 260 300 270 L290 280 Q275 295 200 305 Q125 295 110 280 L100 270 Q90 260 85 240Z" fill="url(#hairM)" filter="url(#shadowM)"/>
+  <!-- Hair style - short, neat -->
+  <path d="M100 130 Q110 90 140 60" fill="none" stroke="url(#hairHM)" stroke-width="5" opacity="0.4"/>
+  <path d="M300 130 Q290 90 260 60" fill="none" stroke="url(#hairHM)" stroke-width="5" opacity="0.4"/>
+  <path d="M120 100 Q150 55 200 45 Q250 55 280 100" fill="none" stroke="url(#hairHM)" stroke-width="3" opacity="0.3"/>
+
+  <!-- Ears -->
+  <ellipse cx="92" cy="225" rx="12" ry="18" fill="url(#skinM)"/>
+  <ellipse cx="92" cy="225" rx="8" ry="12" fill="url(#skinShM)" opacity="0.3"/>
+  <ellipse cx="308" cy="225" rx="12" ry="18" fill="url(#skinM)"/>
+  <ellipse cx="308" cy="225" rx="8" ry="12" fill="url(#skinShM)" opacity="0.3"/>
+
+  <!-- Neck (thicker, masculine) -->
+  <path d="M170 300 L165 365 Q165 395 155 425 L155 500 L245 500 L245 425 Q235 395 235 365 L230 300" fill="url(#skinM)"/>
+  <path d="M170 300 L165 365" fill="none" stroke="url(#skinShM)" stroke-width="1.5" opacity="0.3"/>
+  <!-- Adam's apple -->
+  <path d="M196 340 L200 350 L204 340" fill="none" stroke="#C4A07A" stroke-width="1" opacity="0.3"/>
+
+  <!-- Face (more angular, masculine jaw) -->
+  <path d="M100 200 Q100 165 135 150 Q170 140 200 145 Q230 140 265 150 Q300 165 300 200 L305 260 Q305 290 285 310 Q265 335 200 345 Q135 335 115 310 Q95 290 95 260Z" fill="url(#skinM)" filter="url(#shadowM)"/>
+  <!-- Jawline emphasis -->
+  <path d="M115 290 Q130 320 200 340 Q270 320 285 290" fill="none" stroke="#B4906A" stroke-width="2" opacity="0.2"/>
+  <!-- Cheekbone shading -->
+  <ellipse cx="130" cy="250" rx="25" ry="15" fill="#C4A07A" opacity="0.25"/>
+  <ellipse cx="270" cy="250" rx="25" ry="15" fill="#C4A07A" opacity="0.25"/>
+
+  <!-- MASQUERADE MASK (angular, silver) -->
+  <g filter="url(#shadowM)">
+    <!-- Mask base - more angular -->
+    <path d="M88 218 Q88 190 118 180 Q148 170 200 185 Q252 170 282 180 Q312 190 312 218 Q312 242 292 252 Q272 262 250 255 Q230 268 200 272 Q170 268 150 255 Q128 262 108 252 Q88 242 88 218Z" fill="url(#mSilver)" stroke="#696969" stroke-width="2"/>
+    <!-- Mask angular ridges -->
+    <path d="M120 200 L148 188 L200 185 L252 188 L280 200" fill="none" stroke="#FFF" stroke-width="1" opacity="0.15"/>
+    <path d="M100 218 Q120 210 140 215" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.15"/>
+    <path d="M300 218 Q280 210 260 215" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.15"/>
+    <!-- Center gold diamond -->
+    <path d="M195 190 L200 178 L205 190 L200 196Z" fill="url(#mGoldM)" stroke="#FFD700" stroke-width="1.5"/>
+    <circle cx="200" cy="187" r="2.5" fill="#C41E3A" filter="url(#glowM)"/>
+    <!-- Eye holes - more angular -->
+    <path d="M128 210 L155 198 L185 210 L155 222Z" fill="#0d0000"/>
+    <path d="M128 210 L155 198 L185 210 L155 222Z" fill="none" stroke="#D4AF37" stroke-width="2"/>
+    <path d="M215 210 L245 198 L272 210 L245 222Z" fill="#0d0000"/>
+    <path d="M215 210 L245 198 L272 210 L245 222Z" fill="none" stroke="#D4AF37" stroke-width="2"/>
+    <!-- Eyes visible -->
+    <ellipse cx="155" cy="212" rx="14" ry="9" fill="#3D2517"/>
+    <ellipse cx="245" cy="212" rx="14" ry="9" fill="#3D2517"/>
+    <circle cx="155" cy="212" r="6" fill="#1A0E08"/>
+    <circle cx="245" cy="212" r="6" fill="#1A0E08"/>
+    <circle cx="152" cy="210" r="2.5" fill="#FFF" opacity="0.7"/>
+    <circle cx="242" cy="210" r="2.5" fill="#FFF" opacity="0.7"/>
+    <circle cx="158" cy="214" r="1.2" fill="#FFF" opacity="0.4"/>
+    <circle cx="248" cy="214" r="1.2" fill="#FFF" opacity="0.4"/>
+    <!-- Gold trim lines -->
+    <path d="M95 218 L108 210" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M305 218 L292 210" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M108 252 L118 245" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+    <path d="M292 252 L282 245" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+    <!-- Side accent lines -->
+    <path d="M98 228 L108 222" stroke="#D4AF37" stroke-width="0.8" opacity="0.4"/>
+    <path d="M302 228 L292 222" stroke="#D4AF37" stroke-width="0.8" opacity="0.4"/>
+  </g>
+
+  <!-- Nose (masculine, stronger) -->
+  <path d="M195 260 Q200 278 205 260" fill="none" stroke="#B4906A" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="193" cy="270" r="2.5" fill="#C4A07A" opacity="0.3"/>
+  <circle cx="207" cy="270" r="2.5" fill="#C4A07A" opacity="0.3"/>
+
+  <!-- Lips (thinner, masculine) -->
+  <path d="M182 295 Q191 289 200 291 Q209 289 218 295" fill="#C4956A" opacity="0.7"/>
+  <path d="M182 295 Q200 303 218 295" fill="#C4956A" opacity="0.6"/>
+
+  <!-- Slight stubble shadow -->
+  <path d="M150 310 Q170 330 200 335 Q230 330 250 310" fill="none" stroke="#8B7355" stroke-width="0.5" opacity="0.15"/>
+
+  <!-- Suit / formal attire -->
+  <path d="M55 430 Q95 395 155 382 Q175 377 200 375 Q225 377 245 382 Q305 395 345 430 L370 500 L30 500Z" fill="url(#suit)"/>
+  <!-- Suit lapels -->
+  <path d="M145 405 L175 385 L200 378" fill="none" stroke="#2a2a2a" stroke-width="2"/>
+  <path d="M255 405 L225 385 L200 378" fill="none" stroke="#2a2a2a" stroke-width="2"/>
+  <!-- Lapel edges -->
+  <path d="M145 405 L175 385" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+  <path d="M255 405 L225 385" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+  <!-- Shirt collar -->
+  <path d="M170 385 L180 375 L200 370 L220 375 L230 385" fill="none" stroke="#FFF" stroke-width="1.5" opacity="0.6"/>
+  <!-- Bow tie -->
+  <path d="M188 372 L200 368 L212 372 L200 376Z" fill="#8B0000"/>
+  <circle cx="200" cy="372" r="2" fill="#FFD700"/>
+  <!-- Pocket square hint -->
+  <path d="M260 410 L268 400 L275 410" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+</svg>

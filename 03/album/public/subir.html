@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sube tus fotos — XV de Grecia Peña</title>
+<meta name="theme-color" content="#8B0000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .upload-card {
+    max-width: 520px;
+    margin: 1rem auto 2rem;
+    padding: 2rem 1.75rem;
+    text-align: center;
+  }
+
+  .upload-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    color: var(--dorado-light);
+    margin-bottom: 0.4rem;
+  }
+
+  .upload-intro {
+    color: var(--gris-light);
+    font-style: italic;
+    font-size: 1.02rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .field {
+    display: block;
+    text-align: left;
+    margin-bottom: 1.25rem;
+  }
+
+  .field span {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    margin-bottom: 0.4rem;
+  }
+
+  .field input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--blanco);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .field input[type="text"]:focus {
+    border-color: var(--dorado);
+  }
+
+  .dropzone {
+    border: 2px dashed var(--glass-border);
+    border-radius: 10px;
+    padding: 2rem 1rem;
+    margin: 1.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: rgba(212, 175, 55, 0.03);
+  }
+
+  .dropzone.hover,
+  .dropzone:hover {
+    border-color: var(--dorado);
+    background: rgba(212, 175, 55, 0.08);
+  }
+
+  .dropzone strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-light);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3rem;
+  }
+
+  .dropzone p {
+    color: var(--gris-light);
+    font-size: 0.95rem;
+  }
+
+  .dropzone input[type="file"] { display: none; }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  .chip {
+    font-size: 0.75rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 0.25rem 0.8rem;
+  }
+
+  .progress-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    margin-top: 0.4rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--dorado-dark), var(--dorado-light));
+    transition: width 0.25s;
+  }
+
+  .status-note {
+    min-height: 1.6rem;
+    margin-top: 1rem;
+    color: var(--dorado-light);
+    font-size: 0.95rem;
+  }
+
+  .recent {
+    margin: 2rem auto;
+    max-width: 620px;
+  }
+
+  .recent h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .recent-grid img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+  }
+
+  .unlimited {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-style: italic;
+    color: var(--gris-light);
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" style="max-width:620px;">
+  <a href="/" class="btn-logout" style="text-decoration:none; display:inline-block;">← Inicio</a>
+  <span class="logo" style="color:var(--dorado);">XV · Grecia Peña</span>
+</div>
+
+<div class="page-head">
+  <span class="eyebrow">Con tu foto en la noche</span>
+  <h1>Sube tus fotos</h1>
+  <p class="sub">XV de Grecia Peña · Noche de Máscaras</p>
+  <div class="head-divider"></div>
+</div>
+
+<section class="container">
+  <div class="upload-card glass-card">
+    <h2 class="upload-title">🎭 Comparte el momento</h2>
+    <p class="upload-intro">Suma tu foto al álbum en tiempo real. Sin límites, todas valen.</p>
+
+    <label class="field" for="autor">
+      <span>Tu nombre</span>
+      <input type="text" id="autor" maxlength="60" placeholder="Escribe tu nombre">
+    </label>
+
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="archivos" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+      <strong>📷 Toca o arrastra fotos aquí</strong>
+      <p>Puedes elegir varias al mismo tiempo</p>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <button class="btn" id="btnSubir" type="button" style="width:100%;">Subir fotos</button>
+    <div class="progress-bar" id="bar"><div class="progress-fill" id="fill"></div></div>
+    <div class="status-note" id="status"></div>
+    <p class="unlimited">✨ Sin límite de fotos · Álbum en tiempo real ✨</p>
+  </div>
+
+  <div class="recent glass-card">
+    <h2>Fotos más recientes</h2>
+    <div class="recent-grid" id="recentGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <p class="gold">Noche de Máscaras · 27 de Noviembre, 2026</p>
+  <p>Álbum XV de Grecia Peña</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="subir.js"></script>
+</body>
+</html>

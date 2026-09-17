@@ -1,0 +1,13 @@
+{
+  "name": "album-xv-grecia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Album de fotos XV en tiempo real — Grecia Peña (Noche de Máscaras). Los invitados escanean un QR y suben fotos sin límite.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

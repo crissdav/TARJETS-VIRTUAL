@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sube tus fotos — XV de Grecia Peña</title>
+<meta name="description" content="Escanea el código QR y comparte tus fotos en el álbum en tiempo real de los XV de Grecia Peña.">
+<meta name="theme-color" content="#8B0000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .qr-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0 2.5rem;
+  }
+
+  .qr-big {
+    width: 260px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .qr-big img {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
+  }
+
+  .qr-big h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 0.8rem;
+  }
+
+  .steps {
+    max-width: 420px;
+  }
+
+  .steps h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.06em;
+    color: var(--dorado-light);
+    margin-bottom: 1rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: var(--rojo-bright);
+    background: rgba(196, 30, 58, 0.12);
+    border: 1px solid rgba(196, 30, 58, 0.4);
+    border-radius: 50%;
+  }
+
+  .step p { color: var(--gris-light); font-size: 1.05rem; }
+  .step b { color: var(--blanco); }
+
+  .alt-link {
+    text-align: center;
+    margin: 0 auto 2rem;
+  }
+
+  .alt-link .btn {
+    margin-top: 1rem;
+  }
+
+  .live-note {
+    text-align: center;
+    color: var(--gris-light);
+    font-style: italic;
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <span class="eyebrow">Noche de Máscaras</span>
+  <h1>Comparte tu foto</h1>
+  <p class="sub">XV de Grecia Peña · Álbum en tiempo real</p>
+  <div class="head-divider"></div>
+</div>
+
+<section class="qr-section container">
+  <div class="qr-big glass-card">
+    <h3>Escanea el código QR</h3>
+    <img id="qrImg" alt="Código QR para subir fotos">
+  </div>
+
+  <div class="steps glass-card" style="padding:1.75rem 2rem;">
+    <h2>✨ Es muy fácil</h2>
+    <div class="step">
+      <span class="step-num">1</span>
+      <p><b>Escanea</b> el código QR con la cámara de tu teléfono.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <p>Abre el enlace y <b>escribe tu nombre</b>.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <p><b>Sube tus fotos</b> — puedes elegir varias, sin límite.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">4</span>
+      <p>Aparecen <b>al instante</b> en el álbum de Grecia. 🎭</p>
+    </div>
+  </div>
+</section>
+
+<div class="alt-link">
+  <p class="live-note">¿No puedes escanear?</p>
+  <a class="btn" href="/subir" style="text-decoration:none;">Ir a subir fotos</a>
+</div>
+
+<footer>
+  <p class="gold">Noche de Máscaras · 27 de Noviembre, 2026</p>
+  <p>Álbum XV de Grecia Peña</p>
+</footer>
+
+<script>
+  document.getElementById('qrImg').src = '/api/qr';
+</script>
+</body>
+</html>

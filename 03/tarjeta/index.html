@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XV Años — Grecia Peña | Noche de Máscaras</title>
+<meta name="description" content="Invitación digital de XV años, tema Fiesta de Máscaras — Grecia Peña">
+<meta property="og:title" content="XV Años — Grecia Peña | Noche de Máscaras">
+<meta property="og:description" content="Invitación digital interactiva para los XV años de Grecia Peña — Viernes 27 de Noviembre, 2026">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#8B0000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- GLOBAL PARTICLES -->
+<div class="gold-dust" id="goldDust" aria-hidden="true"></div>
+<div class="mask-confetti" id="maskConfetti" aria-hidden="true"></div>
+<div class="twinkle-layer" id="twinkleLayer" aria-hidden="true"></div>
+
+<!-- ==========================================
+     SPLASH SCREEN
+     ========================================== -->
+<div class="splash" id="splash">
+  <div class="splash-stars" id="splashStars" aria-hidden="true"></div>
+
+  <!-- Detailed masquerade mask SVG -->
+  <div class="splash-mask-wrap">
+    <svg class="splash-mask" viewBox="0 0 500 320" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="spGold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="40%" stop-color="#D4AF37"/>
+          <stop offset="100%" stop-color="#B8860B"/>
+        </linearGradient>
+        <linearGradient id="spRed" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#C41E3A"/>
+          <stop offset="100%" stop-color="#8B0000"/>
+        </linearGradient>
+        <radialGradient id="spJewel" cx="50%" cy="40%">
+          <stop offset="0%" stop-color="#FF6B6B"/>
+          <stop offset="100%" stop-color="#8B0000"/>
+        </radialGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="softGlow"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <!-- Mask body -->
+      <path d="M50 160 Q50 80 120 65 Q170 50 250 75 Q330 50 380 65 Q450 80 450 160 Q450 210 400 235 Q360 255 310 245 Q280 270 250 280 Q220 270 190 245 Q140 255 100 235 Q50 210 50 160Z" fill="url(#spGold)" stroke="#8B6914" stroke-width="3"/>
+      <!-- Filigree pattern on mask -->
+      <path d="M90 140 Q120 120 160 130 Q200 140 200 120" fill="none" stroke="#FFF" stroke-width="1" opacity="0.15"/>
+      <path d="M410 140 Q380 120 340 130 Q300 140 300 120" fill="none" stroke="#FFF" stroke-width="1" opacity="0.15"/>
+      <path d="M120 180 Q160 170 200 180 Q220 185 240 180" fill="none" stroke="#B8860B" stroke-width="0.8" opacity="0.3"/>
+      <path d="M380 180 Q340 170 300 180 Q280 185 260 180" fill="none" stroke="#B8860B" stroke-width="0.8" opacity="0.3"/>
+      <!-- Eye holes with depth -->
+      <ellipse cx="170" cy="145" rx="48" ry="32" fill="#0d0000"/>
+      <ellipse cx="170" cy="145" rx="48" ry="32" fill="none" stroke="#FFD700" stroke-width="2.5"/>
+      <ellipse cx="170" cy="145" rx="44" ry="28" fill="none" stroke="#FFF" stroke-width="0.5" opacity="0.15"/>
+      <ellipse cx="330" cy="145" rx="48" ry="32" fill="#0d0000"/>
+      <ellipse cx="330" cy="145" rx="48" ry="32" fill="none" stroke="#FFD700" stroke-width="2.5"/>
+      <ellipse cx="330" cy="145" rx="44" ry="28" fill="none" stroke="#FFF" stroke-width="0.5" opacity="0.15"/>
+      <!-- Eye sparkle left -->
+      <ellipse cx="155" cy="135" rx="6" ry="4" fill="#FFF" opacity="0.08"/>
+      <ellipse cx="315" cy="135" rx="6" ry="4" fill="#FFF" opacity="0.08"/>
+      <!-- Center jewel diamond -->
+      <path d="M242 100 L250 82 L258 100 L250 108Z" fill="url(#spJewel)" stroke="#FFD700" stroke-width="2"/>
+      <circle cx="250" cy="95" r="4" fill="#FFD700" filter="url(#softGlow)"/>
+      <!-- Nose bridge -->
+      <path d="M244 145 Q250 175 256 145" fill="none" stroke="#8B6914" stroke-width="2"/>
+      <!-- Decorative swirls left -->
+      <path d="M80 130 Q65 110 78 98 Q90 86 102 100" fill="none" stroke="#C41E3A" stroke-width="3" stroke-linecap="round"/>
+      <path d="M68 150 Q52 135 60 120" fill="none" stroke="#C41E3A" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M75 168 Q62 158 65 145" fill="none" stroke="#C41E3A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <!-- Decorative swirls right -->
+      <path d="M420 130 Q435 110 422 98 Q410 86 398 100" fill="none" stroke="#C41E3A" stroke-width="3" stroke-linecap="round"/>
+      <path d="M432 150 Q448 135 440 120" fill="none" stroke="#C41E3A" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M425 168 Q438 158 435 145" fill="none" stroke="#C41E3A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <!-- Large feather left cluster -->
+      <path d="M95 65 Q60 15 72 -10 Q90 8 105 50" fill="url(#spRed)" opacity="0.95"/>
+      <path d="M85 58 Q45 10 58 -20 Q78 5 95 45" fill="#C41E3A" opacity="0.7"/>
+      <path d="M110 52 Q80 5 92 -18 Q108 5 118 42" fill="#8B0000" opacity="0.6"/>
+      <path d="M70 55 Q38 12 50 -15 Q68 8 80 48" fill="#C41E3A" opacity="0.5"/>
+      <!-- Feather quills -->
+      <line x1="95" y1="65" x2="78" y2="-5" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+      <line x1="85" y1="58" x2="62" y2="-15" stroke="#FFD700" stroke-width="0.6" opacity="0.3"/>
+      <!-- Large feather right cluster -->
+      <path d="M405 65 Q440 15 428 -10 Q410 8 395 50" fill="url(#spRed)" opacity="0.95"/>
+      <path d="M415 58 Q455 10 442 -20 Q422 5 405 45" fill="#C41E3A" opacity="0.7"/>
+      <path d="M390 52 Q420 5 408 -18 Q392 5 382 42" fill="#8B0000" opacity="0.6"/>
+      <path d="M430 55 Q462 12 450 -15 Q432 8 420 48" fill="#C41E3A" opacity="0.5"/>
+      <line x1="405" y1="65" x2="422" y2="-5" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+      <!-- Pearl decorations -->
+      <circle cx="135" cy="105" r="3.5" fill="#FFF" opacity="0.85"/>
+      <circle cx="365" cy="105" r="3.5" fill="#FFF" opacity="0.85"/>
+      <circle cx="200" cy="95" r="2.5" fill="#FFF" opacity="0.7"/>
+      <circle cx="300" cy="95" r="2.5" fill="#FFF" opacity="0.7"/>
+      <circle cx="220" cy="88" r="2" fill="#FFF" opacity="0.6"/>
+      <circle cx="280" cy="88" r="2" fill="#FFF" opacity="0.6"/>
+      <!-- Glow behind mask -->
+      <ellipse cx="250" cy="160" rx="200" ry="100" fill="url(#spGold)" opacity="0.06" filter="url(#softGlow)"/>
+    </svg>
+    <!-- Animated glow ring behind mask -->
+    <div class="splash-glow-ring" aria-hidden="true"></div>
+  </div>
+
+  <div class="splash-content">
+    <span class="splash-eyebrow">Una noche de</span>
+    <h1 class="splash-title" data-letters>MÁSCARAS</h1>
+    <p class="splash-name name-stack"><span data-letters>Grecia Peña</span></p>
+    <p class="splash-tagline">"Detrás de cada máscara, un corazón que sueña con bailar bajo la luna."</p>
+    <button class="btn-open" id="btnOpenSplash" type="button">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      Abrir invitación
+    </button>
+    <p class="splash-clock-hint">Toca para desenmascarar la magia</p>
+  </div>
+</div>
+
+<!-- ==========================================
+     DOUBLE DOOR ENVELOPE
+     ========================================== -->
+<div class="envelope-wrapper" id="envelopeWrapper">
+  <div>
+    <div class="envelope" id="envelope">
+      <div class="envelope-letter">
+        <div class="letter-content">
+          <!-- Chandelier SVG -->
+          <svg class="letter-chandelier" viewBox="0 0 120 100" aria-hidden="true">
+            <line x1="60" y1="0" x2="60" y2="20" stroke="#D4AF37" stroke-width="1.5"/>
+            <circle cx="60" cy="22" r="4" fill="#FFD700"/>
+            <path d="M30 40 Q60 30 90 40" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <path d="M35 42 L30 65 M45 38 L42 60 M55 36 L54 58 M65 36 L66 58 M75 38 L78 60 M85 42 L90 65" stroke="#D4AF37" stroke-width="1" opacity="0.6"/>
+            <circle cx="30" cy="68" r="3" fill="#FFD700" opacity="0.8"/>
+            <circle cx="42" cy="63" r="2.5" fill="#FFD700" opacity="0.7"/>
+            <circle cx="54" cy="61" r="2.5" fill="#FFD700" opacity="0.7"/>
+            <circle cx="66" cy="61" r="2.5" fill="#FFD700" opacity="0.7"/>
+            <circle cx="78" cy="63" r="2.5" fill="#FFD700" opacity="0.7"/>
+            <circle cx="90" cy="68" r="3" fill="#FFD700" opacity="0.8"/>
+            <!-- Candle flames -->
+            <ellipse cx="30" cy="66" rx="2" ry="3" fill="#FF6B35" opacity="0.6"/>
+            <ellipse cx="42" cy="61" rx="1.5" ry="2.5" fill="#FF6B35" opacity="0.5"/>
+            <ellipse cx="54" cy="59" rx="1.5" ry="2.5" fill="#FF6B35" opacity="0.5"/>
+            <ellipse cx="66" cy="59" rx="1.5" ry="2.5" fill="#FF6B35" opacity="0.5"/>
+            <ellipse cx="78" cy="61" rx="1.5" ry="2.5" fill="#FF6B35" opacity="0.5"/>
+            <ellipse cx="90" cy="66" rx="2" ry="3" fill="#FF6B35" opacity="0.6"/>
+          </svg>
+          <div class="letter-xv" data-letters>XV AÑOS</div>
+          <div class="letter-line"></div>
+          <div class="letter-name name-stack"><span data-letters>Grecia Peña</span></div>
+          <div class="letter-theme">Noche de Máscaras</div>
+        </div>
+      </div>
+      <div class="door door-left">
+        <div class="door-orn">
+          <svg viewBox="0 0 100 120" class="door-ornament-svg" aria-hidden="true">
+            <path d="M30 60 Q30 35 50 30 Q70 35 70 60 Q70 80 50 85 Q30 80 30 60Z" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.4"/>
+            <path d="M40 55 Q40 42 50 40 Q60 42 60 55 Q60 65 50 68 Q40 65 40 55Z" fill="#D4AF37" opacity="0.15"/>
+            <circle cx="50" cy="52" r="3" fill="#D4AF37" opacity="0.3"/>
+            <path d="M25 30 Q35 20 50 18 Q65 20 75 30" fill="none" stroke="#D4AF37" stroke-width="0.8" opacity="0.3"/>
+            <path d="M25 90 Q35 100 50 102 Q65 100 75 90" fill="none" stroke="#D4AF37" stroke-width="0.8" opacity="0.3"/>
+            <path d="M50 30 L50 18" fill="none" stroke="#D4AF37" stroke-width="0.6" opacity="0.2"/>
+            <path d="M50 85 L50 102" fill="none" stroke="#D4AF37" stroke-width="0.6" opacity="0.2"/>
+            <circle cx="50" cy="18" r="2" fill="#D4AF37" opacity="0.2"/>
+            <circle cx="50" cy="102" r="2" fill="#D4AF37" opacity="0.2"/>
+          </svg>
+        </div>
+        <span class="door-handle" aria-hidden="true"></span>
+      </div>
+      <div class="door door-right">
+        <div class="door-orn">
+          <svg viewBox="0 0 100 120" class="door-ornament-svg" aria-hidden="true">
+            <path d="M30 60 Q30 35 50 30 Q70 35 70 60 Q70 80 50 85 Q30 80 30 60Z" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.4"/>
+            <path d="M40 55 Q40 42 50 40 Q60 42 60 55 Q60 65 50 68 Q40 65 40 55Z" fill="#D4AF37" opacity="0.15"/>
+            <circle cx="50" cy="52" r="3" fill="#D4AF37" opacity="0.3"/>
+            <path d="M25 30 Q35 20 50 18 Q65 20 75 30" fill="none" stroke="#D4AF37" stroke-width="0.8" opacity="0.3"/>
+            <path d="M25 90 Q35 100 50 102 Q65 100 75 90" fill="none" stroke="#D4AF37" stroke-width="0.8" opacity="0.3"/>
+            <path d="M50 30 L50 18" fill="none" stroke="#D4AF37" stroke-width="0.6" opacity="0.2"/>
+            <path d="M50 85 L50 102" fill="none" stroke="#D4AF37" stroke-width="0.6" opacity="0.2"/>
+            <circle cx="50" cy="18" r="2" fill="#D4AF37" opacity="0.2"/>
+            <circle cx="50" cy="102" r="2" fill="#D4AF37" opacity="0.2"/>
+          </svg>
+        </div>
+        <span class="door-handle" aria-hidden="true"></span>
+      </div>
+      <div class="envelope-seal">
+        <svg viewBox="0 0 140 140" aria-hidden="true">
+          <defs>
+            <linearGradient id="sealG" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#B8860B"/>
+            </linearGradient>
+          </defs>
+          <circle cx="70" cy="70" r="58" fill="url(#sealG)" stroke="#8B6914" stroke-width="2.5"/>
+          <circle cx="70" cy="70" r="48" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.25"/>
+          <circle cx="70" cy="70" r="42" fill="none" stroke="#8B6914" stroke-width="0.5" opacity="0.4"/>
+          <path d="M40 65 Q40 52 55 50 Q60 49 65 53 Q70 49 75 50 Q90 52 90 65 Q90 78 78 82 Q72 85 65 82 Q58 85 52 82 Q40 78 40 65Z" fill="#8B0000" stroke="#FFD700" stroke-width="1.5"/>
+          <ellipse cx="53" cy="63" rx="7" ry="5" fill="#0d0000"/>
+          <ellipse cx="77" cy="63" rx="7" ry="5" fill="#0d0000"/>
+          <path d="M63 55 L65 49 L67 55 L65 58Z" fill="#FFD700"/>
+          <path d="M45 50 Q38 35 42 28 Q48 35 50 46" fill="#C41E3A" opacity="0.8"/>
+          <path d="M85 50 Q92 35 88 28 Q82 35 80 46" fill="#C41E3A" opacity="0.8"/>
+        </svg>
+      </div>
+    </div>
+    <p class="envelope-hint">Toca el sello dorado para abrir</p>
+  </div>
+</div>
+
+
+
+<!-- ==========================================
+     HERO SECTION
+     ========================================== -->
+<section class="hero" id="hero">
+  <div class="hero-layout">
+    <!-- LEFT / TOP: Text content -->
+    <div class="hero-content">
+      <span class="hero-eyebrow">Mis quince años</span>
+      <h2 class="hero-name name-stack"><span data-letters>Grecia Peña</span></h2>
+      <p class="hero-xv"><span class="xv-star">✦</span> NOCHE DE MÁSCARAS <span class="xv-star">✦</span></p>
+      <p class="hero-quote">"Detrás de cada máscara, un corazón que sueña con bailar bajo la luna. Esta noche, Grecia descubre su verdad."</p>
+
+      <div class="hero-date-card" data-tilt>
+        <svg class="date-corner dc-tl" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 30 L0 8 Q0 0 8 0 L30 0" fill="none" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        <svg class="date-corner dc-tr" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 0 L22 0 Q30 0 30 8 L30 30" fill="none" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        <svg class="date-corner dc-bl" viewBox="0 0 30 30" aria-hidden="true"><path d="M30 30 L8 30 Q0 30 0 22 L0 0" fill="none" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        <svg class="date-corner dc-br" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 30 L30 30 L30 22 Q30 30 22 30" fill="none" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        <div class="hd-day">Viernes 27 de Noviembre, 2026</div>
+        <div class="hd-sub">7:00 p.m. · Por confirmar</div>
+      </div>
+    </div>
+
+    <!-- RIGHT / BOTTOM: People with masks -->
+    <div class="hero-visual" data-tilt>
+      <div class="hero-people">
+        <div class="hero-person hero-person-f">
+          <img src="mujer-mascara.svg" alt="Mujer con máscara de carnaval" class="hero-img-person">
+        </div>
+        <div class="hero-person hero-person-m">
+          <img src="hombre-mascara.svg" alt="Hombre con máscara de carnaval" class="hero-img-person">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true"><span></span>Desliza</div>
+</section>
+
+<!-- ==========================================
+     FAMILY (PAPÁS Y PADRINOS)
+     ========================================== -->
+<section class="family-section" id="familia">
+  <div class="container">
+    <span class="eyebrow reveal">Con el amor de mi familia</span>
+    <h2 class="section-title reveal">Mis papás y mis padrinos</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="family-grid">
+      <div class="family-card reveal" data-delay="0" data-tilt>
+        <span class="family-ring" aria-hidden="true"></span>
+        <h3 class="family-block-title">Con la bendición de mis papás</h3>
+        <div class="family-person">
+          <span class="family-role">Papá</span>
+          <span class="family-name">Miguel Peña Martines</span>
+        </div>
+        <div class="family-person">
+          <span class="family-role">Mamá</span>
+          <span class="family-name">Loyola Judith Arteaga Gloria</span>
+        </div>
+      </div>
+
+      <div class="family-card reveal" data-delay="150" data-tilt>
+        <span class="family-ring" aria-hidden="true"></span>
+        <h3 class="family-block-title">Con el apoyo de mis padrinos</h3>
+        <div class="family-person">
+          <span class="family-role">Padrino</span>
+          <span class="family-name">Juan Carlos Mosaiguate Clemente</span>
+        </div>
+        <div class="family-person">
+          <span class="family-role">Madrina</span>
+          <span class="family-name">Lesly Grace Vargas Gloria</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     COUNTDOWN
+     ========================================== -->
+<section class="countdown-section" id="countdown">
+  <div class="container">
+    <span class="eyebrow reveal">El reloj de la masquerade</span>
+    <h2 class="section-title reveal">Cuenta regresiva</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="countdown-grid reveal">
+      <div class="cd-item" data-tilt><div class="cd-number" id="cdDays">00</div><span class="cd-label">Días</span></div>
+      <div class="cd-item" data-tilt><div class="cd-number" id="cdHours">00</div><span class="cd-label">Horas</span></div>
+      <div class="cd-item" data-tilt><div class="cd-number" id="cdMins">00</div><span class="cd-label">Min</span></div>
+      <div class="cd-item" data-tilt><div class="cd-number" id="cdSecs">00</div><span class="cd-label">Seg</span></div>
+    </div>
+    <p class="countdown-note reveal">🎭 La noche más enigmática está por comenzar… ✨</p>
+  </div>
+</section>
+
+<!-- ==========================================
+     CALENDAR
+     ========================================== -->
+<section class="cal-section" id="calendario">
+  <div class="container">
+    <span class="eyebrow reveal">La fecha enmascarada</span>
+    <h2 class="section-title reveal">Noviembre 2026</h2>
+    <div class="section-divider reveal"></div>
+    <div class="cal-card reveal-scale" data-tilt>
+      <div class="cal-header">
+        <span class="cal-month">Noviembre</span>
+        <span class="cal-year">2026</span>
+      </div>
+      <div class="cal-weekdays">
+        <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+      </div>
+      <div class="cal-days">
+        <span>1</span><span>2</span><span>3</span>
+        <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+        <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+        <span>25</span><span>26</span><span class="cal-highlight">27</span><span>28</span>
+        <span>29</span><span>30</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     ITINERARY
+     ========================================== -->
+<section class="itinerary-section" id="itinerario">
+  <div class="container">
+    <span class="eyebrow reveal">El programa de la noche</span>
+    <h2 class="section-title reveal">Itinerario</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="timeline">
+      <div class="timeline-item reveal" data-delay="0">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">7:00 PM</div>
+          <h3 class="timeline-title">Llegada de Invitados</h3>
+          <p class="timeline-desc">Recepción con bebidas y aperitivos. Cada invitado recibirá su máscara al entrar.</p>
+          <div class="timeline-icon-wrap">
+            <!-- Door/gate icon -->
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#D4AF37" stroke-width="1.5"/><rect x="22" y="18" width="16" height="28" rx="2" fill="none" stroke="#D4AF37" stroke-width="1.5"/><path d="M30 18 Q30 14 34 12 L34 18" fill="none" stroke="#D4AF37" stroke-width="1"/><circle cx="34" cy="32" r="1.5" fill="#D4AF37"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" data-delay="100">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">7:30 PM</div>
+          <h3 class="timeline-title">Presentación de la Quinceañera</h3>
+          <p class="timeline-desc">Grecia hará su entrada enmascarada, revelando su identidad bajo la luz de los focos.</p>
+          <div class="timeline-icon-wrap">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#C41E3A" stroke-width="1.5"/><path d="M30 12 L33 22 L44 22 L35 28 L38 38 L30 32 L22 38 L25 28 L16 22 L27 22Z" fill="#C41E3A" opacity="0.35"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" data-delay="200">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">8:00 PM</div>
+          <h3 class="timeline-title">Primer Baile — Vals</h3>
+          <p class="timeline-desc">Vals de apertura con la quinceañera y su corte de honor bajo la luna.</p>
+          <div class="timeline-icon-wrap">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#D4AF37" stroke-width="1.5"/><path d="M25 42 Q25 30 28 24 Q30 22 32 24 Q35 22 37 24 Q40 30 40 42" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="18" r="3.5" fill="none" stroke="#D4AF37" stroke-width="1.5"/><circle cx="30" cy="18" r="1.5" fill="#D4AF37"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" data-delay="300">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">9:00 PM</div>
+          <h3 class="timeline-title">Cena de Gala</h3>
+          <p class="timeline-desc">Exquisito banquete con los mejores platillos de la noche en ambiance de masquerade.</p>
+          <div class="timeline-icon-wrap">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#D4AF37" stroke-width="1.5"/><ellipse cx="30" cy="34" rx="14" ry="7" fill="none" stroke="#D4AF37" stroke-width="1.5"/><path d="M30 16 L30 27" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/><path d="M24 27 Q30 22 36 27" fill="none" stroke="#D4AF37" stroke-width="1"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" data-delay="400">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">10:00 PM</div>
+          <h3 class="timeline-title">Baile y Celebración</h3>
+          <p class="timeline-desc">Pista de baile abierta, música en vivo y sorpresas durante toda la noche.</p>
+          <div class="timeline-icon-wrap">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#C41E3A" stroke-width="1.5"/><path d="M18 40 L24 28 L28 34 L34 22 L38 28 L42 40" fill="none" stroke="#C41E3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="18" r="2" fill="#C41E3A" opacity="0.3"/><circle cx="38" cy="16" r="1.5" fill="#C41E3A" opacity="0.25"/><circle cx="30" cy="13" r="2.5" fill="#C41E3A" opacity="0.3"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" data-delay="500">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">11:30 PM</div>
+          <h3 class="timeline-title">Corte de Pastel y Brindis</h3>
+          <p class="timeline-desc">Momento especial con brindis de honor y corte del pastel temático de máscaras.</p>
+          <div class="timeline-icon-wrap">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#D4AF37" stroke-width="1.5"/><rect x="22" y="30" width="16" height="10" rx="2" fill="none" stroke="#D4AF37" stroke-width="1.5"/><path d="M22 34 Q30 28 38 34" fill="none" stroke="#D4AF37" stroke-width="1"/><path d="M30 18 L30 30" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="30" cy="16" rx="2.5" ry="3" fill="#C41E3A" opacity="0.5"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" data-delay="600">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" data-tilt>
+          <div class="timeline-time">12:00 AM</div>
+          <h3 class="timeline-title">La Medianoche</h3>
+          <p class="timeline-desc">Grecia se desenmascara. La fiesta continúa hasta el amanecer.</p>
+          <div class="timeline-icon-wrap">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#C41E3A" stroke-width="1.5"/><circle cx="28" cy="28" r="10" fill="none" stroke="#D4AF37" stroke-width="1.5"/><path d="M36 22 Q40 18 36 14" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="20" r="1" fill="#FFD700" opacity="0.5"/><circle cx="38" cy="16" r="0.8" fill="#FFD700" opacity="0.4"/><circle cx="18" cy="26" r="0.6" fill="#FFD700" opacity="0.3"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     DRESSCODE
+     ========================================== -->
+<section class="dresscode" id="dresscode">
+  <div class="container">
+    <span class="eyebrow reveal">Código de vestimenta</span>
+    <h2 class="section-title reveal">Dresscode</h2>
+    <div class="section-divider reveal"></div>
+    <p class="section-sub reveal">Elegante con toque enigmático. Los colores de la paleta NO se deben usar en tu atuendo.</p>
+
+    <div class="dc-palette-block reveal">
+      <h3 class="dc-palette-title">Colores que NO debes usar</h3>
+      <div class="dc-palette">
+        <div class="dc-swatch-item"><span class="dc-swatch" style="background:#8B0000"></span><span class="dc-swatch-name">Rojo Carmesí</span></div>
+        <div class="dc-swatch-item"><span class="dc-swatch" style="background:#D4AF37"></span><span class="dc-swatch-name">Dorado</span></div>
+        <div class="dc-swatch-item"><span class="dc-swatch" style="background:#FFFFFF"></span><span class="dc-swatch-name">Blanco</span></div>
+        <div class="dc-swatch-item"><span class="dc-swatch" style="background:#A9A9A9"></span><span class="dc-swatch-name">Gris Plata</span></div>
+      </div>
+      <p class="dc-palette-label">Estos tonos pertenecen a la quinceañera</p>
+    </div>
+
+    <h3 class="dc-guide-title reveal">¿Cómo ir vestido?</h3>
+    <div class="dresscode-grid">
+      <div class="dc-card reveal" data-tilt>
+        <div class="dc-img-wrap">
+          <img src="vestido.svg" alt="Vestido elegante" class="dc-img">
+        </div>
+        <h3>Damas</h3>
+        <p>Vestido largo elegante en negro, azul marino o tonos oscuros. ¡Añade una máscara!</p>
+      </div>
+      <div class="dc-card reveal" data-tilt>
+        <div class="dc-img-wrap">
+          <img src="esmoquin.svg" alt="Esmoquin formal" class="dc-img">
+        </div>
+        <h3>Caballeros</h3>
+        <p>Terno formal en negro o gris oscuro. Corbata elegante y ¡no olvides tu máscara!</p>
+      </div>
+    </div>
+
+    <p class="dc-quote reveal">«Nadie puede ser engañado por siempre con una máscara, pues debajo late un corazón verdadero.»<span>— La Masquerade</span></p>
+  </div>
+</section>
+
+<!-- ==========================================
+     RSVP
+     ========================================== -->
+<section class="rsvp" id="rsvp">
+  <div class="container">
+    <span class="eyebrow reveal">Confirma tu asistencia</span>
+    <h2 class="section-title reveal">Confirmar Asistencia</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="rsvp-card reveal-scale" data-tilt>
+      <div class="rsvp-mask-wrap">
+        <svg class="rsvp-mask-icon" viewBox="0 0 120 80" aria-hidden="true">
+          <defs><linearGradient id="rG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs>
+          <path d="M15 40 Q15 22 35 18 Q50 15 60 22 Q70 15 85 18 Q105 22 105 40 Q105 55 90 60 Q80 65 60 60 Q40 65 30 60 Q15 55 15 40Z" fill="url(#rG)" stroke="#8B6914" stroke-width="1.5"/>
+          <ellipse cx="42" cy="37" rx="10" ry="7" fill="#0d0000"/><ellipse cx="78" cy="37" rx="10" ry="7" fill="#0d0000"/>
+          <path d="M57 30 L60 22 L63 30 L60 33Z" fill="#C41E3A"/>
+          <path d="M25 25 Q15 10 20 2 Q28 8 30 20" fill="#C41E3A" opacity="0.8"/>
+          <path d="M95 25 Q105 10 100 2 Q92 8 90 20" fill="#C41E3A" opacity="0.8"/>
+        </svg>
+      </div>
+      <p class="rsvp-intro">Será un honor contar contigo en la noche más enigmática del año.</p>
+      <span class="pass-badge">🎭 Pase válido para 2 personas</span>
+
+      <form class="rsvp-form" id="rsvpForm" onsubmit="return false;">
+        <label class="rsvp-field" for="guestName">
+          <span class="rsvp-field-label">Tu nombre completo <b class="req">*</b></span>
+          <input type="text" id="guestName" placeholder="Escribe aquí tu nombre" required>
+        </label>
+        <label class="rsvp-field" for="guestCompanion">
+          <span class="rsvp-field-label">Nombre de tu acompañante <span class="opt">(opcional)</span></span>
+          <input type="text" id="guestCompanion" placeholder="Escribe aquí el nombre">
+        </label>
+        <div class="rsvp-qr" id="rsvpQr" hidden>
+          <p class="rsvp-qr-hint">Tu código se genera en vivo. Descarga el QR y después confirma por WhatsApp</p>
+          <canvas id="rsvpQrCanvas" aria-hidden="true"></canvas>
+          <a class="rsvp-qr-dl" id="rsvpQrDownload" download="qr-grecia.png">Descargar QR</a>
+          <button type="button" class="btn-whatsapp" id="btnWhatsapp" disabled>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Confirmar por WhatsApp
+          </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FOOTER
+     ========================================== -->
+<footer class="footer">
+  <!-- Decorative chandelier -->
+  <svg class="footer-chandelier" viewBox="0 0 160 80" aria-hidden="true">
+    <line x1="80" y1="0" x2="80" y2="15" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+    <circle cx="80" cy="17" r="3" fill="#FFD700" opacity="0.4"/>
+    <path d="M40 30 Q80 22 120 30" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+    <path d="M50 32 L46 52 M65 28 L62 48 M80 26 L80 46 M95 28 L98 48 M110 32 L114 52" stroke="#D4AF37" stroke-width="0.8" opacity="0.25"/>
+    <circle cx="46" cy="54" r="2" fill="#FFD700" opacity="0.3"/><circle cx="62" cy="50" r="1.8" fill="#FFD700" opacity="0.25"/>
+    <circle cx="80" cy="48" r="1.8" fill="#FFD700" opacity="0.25"/><circle cx="98" cy="50" r="1.8" fill="#FFD700" opacity="0.25"/>
+    <circle cx="114" cy="54" r="2" fill="#FFD700" opacity="0.3"/>
+    <ellipse cx="46" cy="52" rx="1.2" ry="2" fill="#FF6B35" opacity="0.25"/>
+    <ellipse cx="80" cy="46" rx="1.2" ry="2" fill="#FF6B35" opacity="0.2"/>
+    <ellipse cx="114" cy="52" rx="1.2" ry="2" fill="#FF6B35" opacity="0.25"/>
+  </svg>
+  <p class="footer-name">Grecia Peña</p>
+  <p class="footer-sub">XV AÑOS · 27 de Noviembre, 2026</p>
+  <p class="footer-credit">Noche de Máscaras — Una noche para recordar</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- Música de fondo (YouTube) -->
+<button class="music-btn" id="musicBtn" type="button" title="Reproducir / pausar música" aria-label="Reproducir o pausar la música">♪</button>
+<audio id="bgMusic" loop preload="auto" aria-hidden="true">
+  <source src="Britney Spears - Baby One More Time (Lyrics).mp3" type="audio/mpeg">
+</audio>
+
+<script src="qrcode-generator.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

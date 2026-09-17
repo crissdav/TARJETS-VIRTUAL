@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álbum XV — Grecia Peña | Noche de Máscaras</title>
+<meta name="description" content="Álbum de fotos en tiempo real de los XV años de Grecia Peña — Noche de Máscaras, 27 de Noviembre, 2026">
+<meta name="theme-color" content="#8B0000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+  }
+
+  .topbar .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .btn-logout {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 0.45rem 1rem;
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .btn-logout:hover {
+    color: var(--rojo-bright);
+    border-color: var(--rojo-bright);
+  }
+
+  .stats-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--dorado-light);
+    line-height: 1;
+  }
+
+  .stats-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    margin-top: 0.3rem;
+  }
+
+  .live-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: var(--gris-light);
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  .live-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #3ddc84;
+    box-shadow: 0 0 10px #3ddc84;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+  }
+
+  .gallery .ph-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+  }
+
+  .gallery .ph-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+  }
+
+  .ph-meta {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    color: var(--blanco);
+    background: linear-gradient(transparent, rgba(13, 13, 13, 0.85));
+  }
+
+  .ph-meta b { font-family: 'Cinzel', serif; letter-spacing: 0.04em; }
+
+  .gallery-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    text-align: center;
+    margin: 1.5rem 0 1rem;
+  }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 1.5rem;
+    color: var(--gris-light);
+    font-style: italic;
+  }
+
+  .empty-state h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    font-style: normal;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.92);
+    padding: 1.5rem;
+  }
+
+  .lightbox.show { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.2);
+  }
+
+  .lightbox .lb-meta {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: var(--gris-light);
+    text-align: center;
+  }
+
+  .lightbox .lb-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    font-size: 2rem;
+    color: var(--dorado);
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  @media (max-width: 480px) {
+    .gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .gallery img { height: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="logo">XV · Grecia Peña</span>
+  <button class="btn-logout" id="btnLogout" type="button">Cerrar sesión</button>
+</div>
+
+<div class="page-head">
+  <span class="eyebrow">Noche de Máscaras</span>
+  <h1>Álbum en tiempo real</h1>
+  <p class="sub">Viernes 27 de Noviembre, 2026 · 7:00 p.m.</p>
+  <div class="live-bar">
+    <span class="live-dot"></span>
+    <span id="countFotos" style="font-style: normal; font-weight: 700; color: var(--dorado-light); font-family:'Cinzel',serif;">0</span>
+    <span>fotos en el álbum</span>
+  </div>
+  <div class="head-divider"></div>
+</div>
+
+<h2 class="gallery-title">✦ Todas las fotos ✦</h2>
+
+<section class="container">
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<footer>
+  <p class="gold">Noche de Máscaras · 27 de Noviembre, 2026</p>
+  <p>Álbum XV de Grecia Peña</p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-close" id="lbClose">✕</div>
+  <img id="lbImg" alt="Foto ampliada">
+  <div class="lb-meta" id="lbMeta"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="landing.js"></script>
+</body>
+</html>
