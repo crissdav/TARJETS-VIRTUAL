@@ -27,6 +27,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 | `qrcode-generator.js` | Libreria QR (Kazuhiko Arase, MIT) |
 | `mujer-mascara.svg` | Ilustracion de mujer con mascara de carnaval |
 | `hombre-mascara.svg` | Ilustracion de hombre con mascara de carnaval |
+| `mascara-icono.svg` | Icono SVG de mascara (usado en badge y notas) |
 | `vestido.svg` | Ilustracion SVG de vestido elegante (damas) |
 | `esmoquin.svg` | Ilustracion SVG de esmoquin formal (caballeros) |
 | `Britney Spears - Baby One More Time (Lyrics).mp3` | Musica de fondo (local, en bucle) |
@@ -49,6 +50,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 - Dos puertas oscuras con ornamentos SVG dorados filigrana y asas doradas con glow
 - Sello dorado con mascara SVG que se rompe al hacer clic
 - Las puertas se abren en 3D (rotateY ±110°) con perspective
+- **Humo animado** de 3 colores (rojo, dorado y blanco) que **brota del sello al romperse** (clic): puffs que salen del centro y se expanden hacia arriba, generados por `releaseSealSmoke()` y solo en ese momento
 
 ### 3. Hero (Principal)
 - Nombre "Grecia Peña" en Cinzel con shimmer dorado animado
@@ -59,7 +61,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 
 ### 4. Musica de Fondo
 - Audio local MP3 (Britney Spears - Baby One More Time) en bucle, **sin depender de internet**
-- Arranca al tocar "Abrir invitacion" (gesto del usuario requerido por el navegador)
+- Arranca cuando la seccion Hero entra en pantalla al hacer scroll (despues de abrir la invitacion)
 - Boton flotante inferior derecho `♪` / `⏸`
 - Al pausar y reanudar **continua desde donde quedo** (no se reinicia)
 - Oculto en impresion
@@ -96,6 +98,8 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 - El QR contiene el enlace `wa.me/917845115` con mensaje compacto de confirmacion (nombre + acompanante)
 - PNG 240px con margen blanco de seguridad (facil de escanear)
 - Boton **"Descargar QR"** (aparece antes que el de WhatsApp)
+- **iOS/iPhone**: el atributo `download` se ignora. El boton pasa a llamarse **"Guardar QR"** y usa la Web Share API (menu Compartir → "Guardar imagen"); si no esta disponible, se muestra la imagen del QR con la indicacion **"Manten presionada la imagen y elige Guardar en Fotos"** (la imagen es long-pressable)
+- Descarga via `canvas.toBlob` + ancla insertada en el DOM (compatible Firefox/Safari/movil); nombre de archivo saneado `qr-grecia-<nombre>.png`
 - Boton **"Confirmar por WhatsApp" bloqueado** hasta descargar el QR; al descargarlo se desbloquea y envia el mensaje completo con todos los datos
 - Notificacion toast
 - Meta Open Graph para compartir en redes
@@ -132,7 +136,8 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 | Gold dust | 35 particulas doradas flotantes |
 | Mask confetti | 20 emojis de mascara cayendo |
 | Twinkle stars | 50 estrellas titilantes |
-| Music button | Boton flotante `♪`/`⏸` con pulso dorado |
+| **BG decor (Hero en adelante)** | Brillo flotante (blobs dorados/rojos difuminados), mascaras flotando (15) y particulas doradas ascendentes (28) que acompanan el scroll |
+| Music button | Boton flotante 60px con iconos SVG de nota/pausa y pulso dorado |
 | 3D tilt | Efecto inclinacion en tarjetas (solo desktop) |
 | Scroll reveal | IntersectionObserver con 25+ elementos animados |
 | Countdown flip | Animacion flip en numeros cambiantes |
@@ -141,7 +146,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 ## Efectos CSS
 
 - **Glassmorphism** en 7 componentes (blur 18px, fondo semi-transparente, borde dorado)
-- **15+ keyframe animations** (dustFloat, confettiFall, twinkle, maskFloat, maskReveal, charReveal, fadeUp, pulse, splashHide, sealBreak, bounceDown, calPulse, glowRing, cdFlip)
+- **15+ keyframe animations** (dustFloat, confettiFall, twinkle, maskFloat, maskReveal, charReveal, fadeUp, pulse, splashHide, sealBreak, bounceDown, calPulse, glowRing, cdFlip, **glowDrift, maskDrift, riseUp, smokeBurst**)
 - **Scrollbar personalizado** (6px, thumb dorado)
 - **Seleccion de texto** (fondo rojo, texto dorado)
 - **Sombras glow** (doradas y rojas)
@@ -155,7 +160,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 | `769px+` | Desktop: hero horizontal, texto alineado izquierda |
 | `1200px+` | Desktop grande: fuentes maximas |
 | `320-360px` | Defensas para moviles pequenos: tamaños fijos en SVGs (el headless no emula menos de ~496px) |
-| `print` | Oculta overlays/particulas/musica, negro sobre blanco |
+| `print` | Oculta overlays/particulas/musica/bg-decor, negro sobre blanco |
 | `prefers-reduced-motion` | Desactiva todas las animaciones |
 
 ## Dependencias Externas
@@ -168,7 +173,8 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 ## Flujo de Interaccion
 
 ```
-Splash (click "Abrir invitacion", arranca la musica) → Sobre → Click sello / swipe up
+Splash (click "Abrir invitacion") → Sobre → Click sello / swipe up
 → Puertas se abren 3D → Contenido principal se revela
+→ Al llegar al Hero arranca la musica
 → Scroll por secciones → RSVP: escribir datos → QR en vivo → Descargar QR → Confirmar por WhatsApp
 ```

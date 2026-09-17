@@ -212,6 +212,96 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
+   BACKGROUND DECOR — HERO ONWARD
+   (brillos flotantes, máscaras flotando, partículas ascendentes)
+   ============================================================ */
+.bg-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-decor .glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(36px);
+  will-change: transform;
+  animation: glowDrift 18s ease-in-out infinite alternate;
+}
+
+.bg-decor .bg-mask {
+  position: absolute;
+  line-height: 1;
+  user-select: none;
+  opacity: 0.08;
+  will-change: transform;
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.35));
+  animation: maskDrift 16s ease-in-out infinite alternate;
+}
+
+.bg-decor .rise-particle {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: var(--dorado-light);
+  box-shadow: 0 0 6px var(--dorado);
+  animation: riseUp linear infinite;
+}
+
+@keyframes glowDrift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(6vmin, -4vmin, 0) scale(1.15); }
+  100% { transform: translate3d(-5vmin, 5vmin, 0) scale(0.95); }
+}
+
+@keyframes maskDrift {
+  0%   { transform: translateY(0) rotate(-8deg); }
+  50%  { transform: translateY(-4vmin) rotate(6deg); }
+  100% { transform: translateY(3vmin) rotate(-3deg); }
+}
+
+@keyframes riseUp {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* ============================================================
+   ENVELOPE SMOKE — humo rojo / dorado / blanco al romper el sello
+   ============================================================ */
+.envelope-smoke {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+
+.envelope-stage {
+  position: relative;
+  z-index: 1;
+}
+
+.envelope-smoke .smoke-puff {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(9px);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: smokeBurst ease-out both;
+}
+
+@keyframes smokeBurst {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) scale(0.3); opacity: 0; }
+  12%  { opacity: var(--smoke-opacity, 0.7); }
+  65%  { opacity: var(--smoke-opacity, 0.7); }
+  100% { transform: translate(-50%, -50%) translate(var(--smoke-x, 0px), var(--smoke-y, -30vh)) scale(2.2); opacity: 0; }
+}
+
+/* ============================================================
    SPLASH STARS & CHARS
    ============================================================ */
 .splash-star {
@@ -243,7 +333,7 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(90deg,
     var(--dorado) 0%,
     var(--dorado-light) 25%,
-    var(--blanco) 50%,
+    #F3E3B0 50%,
     var(--dorado-light) 75%,
     var(--dorado) 100%);
   background-size: 220% auto;
@@ -453,6 +543,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   transition: transform 0.6s var(--ease-smooth);
 }
 
@@ -464,28 +555,28 @@ h1, h2, h3, h4, h5, h6 {
 
 .letter-chandelier {
   font-size: 2rem;
-  width: 80px;
+  width: 64px;
   height: auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .letter-xv {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: var(--rojo);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .letter-line {
   width: 60px;
   height: 1px;
   background: var(--dorado-dark);
-  margin: 0.5rem auto;
+  margin: 0.4rem auto;
 }
 
 .letter-name {
   font-family: var(--font-script);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--rojo-bright);
 }
@@ -495,7 +586,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.85rem;
   color: var(--gris-dark);
   font-style: italic;
-  margin-top: 0.3rem;
+  margin-top: 0.25rem;
 }
 
 .door {
@@ -658,7 +749,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--dorado-light);
   line-height: 1.15;
   margin-bottom: 0.3rem;
-  text-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
 }
 
 .hero-xv {
@@ -1292,6 +1383,16 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1.5rem;
 }
 
+.note-emoji,
+.badge-emoji {
+  width: 1.1em;
+  height: 0.72em;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.45));
+}
+
+.note-emoji { margin: 0 0.4em; }
+
 .rsvp-form {
   text-align: left;
 }
@@ -1362,12 +1463,21 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0.5rem;
 }
 
-#rsvpQrCanvas {
+.rsvp-qr-img {
   display: block;
   margin: 0 auto;
   border-radius: 8px;
   border: 1px solid var(--glass-border);
   max-width: 160px;
+  width: 100%;
+  height: auto;
+}
+
+.rsvp-qr-ios-hint {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--gris);
+  margin-top: 0.4rem;
 }
 
 .rsvp-qr-dl {
@@ -1891,7 +2001,12 @@ h1, h2, h3, h4, h5, h6 {
 
   .envelope {
     width: 300px;
-    height: 220px;
+    height: 228px;
+  }
+
+  .letter-chandelier {
+    width: 56px;
+    margin-bottom: 0.3rem;
   }
 
   .toast {
@@ -2014,7 +2129,7 @@ h1, h2, h3, h4, h5, h6 {
 .splash-clock-hint { font-size: 0.86rem; }
 .btn-open { font-size: 0.96rem; }
 .envelope-hint { font-size: 0.86rem; }
-.letter-theme { font-size: 0.96rem; }
+.letter-theme { font-size: 0.9rem; }
 .hero-scroll { font-size: 0.81rem; }
 .cd-label { font-size: 0.76rem; }
 .countdown-note { font-size: 1.01rem; }
@@ -2051,14 +2166,13 @@ h1, h2, h3, h4, h5, h6 {
   right: 1.4rem;
   bottom: 1.4rem;
   z-index: 10002;
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 0;
   color: var(--dorado-light);
   background: var(--glass-bg);
   -webkit-backdrop-filter: blur(12px);
@@ -2068,6 +2182,18 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth), color 0.3s;
 }
+
+.music-btn svg {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+
+.music-btn .icon-play { display: block; }
+.music-btn .icon-pause { display: none; }
+
+.music-btn.playing .icon-play { display: none; }
+.music-btn.playing .icon-pause { display: block; }
 
 .music-btn:hover {
   transform: scale(1.08);
@@ -2112,6 +2238,7 @@ h1, h2, h3, h4, h5, h6 {
   .mask-confetti,
   .confetti-mask,
   .twinkle-layer,
+  .bg-decor,
   .hero-scroll,
   .toast,
   .music-btn {
@@ -2194,5 +2321,13 @@ h1, h2, h3, h4, h5, h6 {
 
   .door-right.open-right {
     transform: none;
+  }
+
+  .bg-decor {
+    display: none !important;
+  }
+
+  .envelope-smoke {
+    display: none !important;
   }
 }

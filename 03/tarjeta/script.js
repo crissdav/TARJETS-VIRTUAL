@@ -63,6 +63,103 @@
     }
   }
 
+  /* ───────── D.2) BG DECOR — HERO ONWARD ───────── */
+  function createBgDecor() {
+    const container = $('#bgDecor');
+    if (!container) return;
+
+    const glowColors = [
+      'rgba(212, 175, 55,',
+      'rgba(196, 30, 58,',
+      'rgba(255, 215, 0,'
+    ];
+    const blobCount = isMobile ? 5 : 7;
+    for (let i = 0; i < blobCount; i++) {
+      const blob = document.createElement('div');
+      blob.className = 'glow-blob';
+      const size = (isMobile ? 22 : 26) + Math.random() * (isMobile ? 14 : 20);
+      blob.style.width = size + 'vmin';
+      blob.style.height = size + 'vmin';
+      blob.style.left = Math.random() * 100 + '%';
+      blob.style.top = Math.random() * 100 + '%';
+      const color = glowColors[Math.floor(Math.random() * glowColors.length)];
+      const alpha = (0.10 + Math.random() * 0.10).toFixed(2);
+      blob.style.background = 'radial-gradient(circle, ' + color + ' ' + alpha + ') 0%, transparent 70%)';
+      blob.style.animationDuration = 14 + Math.random() * 10 + 's';
+      blob.style.animationDelay = (-Math.random() * 12) + 's';
+      container.appendChild(blob);
+    }
+
+    const maskCount = isMobile ? 10 : 15;
+    for (let i = 0; i < maskCount; i++) {
+      const m = document.createElement('div');
+      m.className = 'bg-mask';
+      m.textContent = '🎭';
+      m.style.fontSize = (34 + Math.random() * 50) + 'px';
+      m.style.left = Math.random() * 100 + '%';
+      m.style.top = Math.random() * 100 + '%';
+      m.style.opacity = (0.05 + Math.random() * 0.08).toFixed(2);
+      m.style.animationDuration = 12 + Math.random() * 10 + 's';
+      m.style.animationDelay = (-Math.random() * 12) + 's';
+      container.appendChild(m);
+    }
+
+    const partCount = isMobile ? 18 : 28;
+    for (let i = 0; i < partCount; i++) {
+      const p = document.createElement('div');
+      p.className = 'rise-particle';
+      const size = 2 + Math.random() * 3;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = 8 + Math.random() * 9 + 's';
+      p.style.animationDelay = (-Math.random() * 16) + 's';
+      container.appendChild(p);
+    }
+  }
+
+  /* ───────── D.3) ENVELOPE SMOKE — humo al romper el sello ───────── */
+  function releaseSealSmoke() {
+    const container = $('#envelopeSmoke');
+    if (!container) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    container.innerHTML = '';
+    const colors = [
+      'rgba(196, 30, 58,',    // rojo
+      'rgba(212, 175, 55,',   // dorado
+      'rgba(255, 255, 255,'   // blanco
+    ];
+    const count = isMobile ? 36 : 58;
+    let maxDuration = 0;
+    for (let i = 0; i < count; i++) {
+      const puff = document.createElement('div');
+      puff.className = 'smoke-puff';
+      const size = (isMobile ? 48 : 58) + Math.random() * (isMobile ? 48 : 78);
+      puff.style.width = size + 'vmin';
+      puff.style.height = size + 'vmin';
+      puff.style.left = '50%';
+      puff.style.top = '50%';
+      const color = colors[i % colors.length];
+      const alpha = (isMobile ? 0.62 : 0.55) + Math.random() * 0.35;
+      puff.style.background = 'radial-gradient(circle, ' + color + ' ' + alpha.toFixed(2) + ') 0%, ' + color + ' ' + (alpha * 0.85).toFixed(2) + ') 28%, ' + color + ' ' + (alpha * 0.45).toFixed(2) + ') 50%, transparent 68%)';
+      puff.style.setProperty('--smoke-opacity', (0.75 + Math.random() * 0.25).toFixed(2));
+      const dirX = Math.random() < 0.5 ? -1 : 1;
+      const dirY = Math.random() < 0.5 ? -1 : 1;
+      const distX = 70 + Math.random() * 70;   // 70-140 vmin (todo el ancho)
+      const distY = 45 + Math.random() * 55;   // 45-100 vh (todo el alto)
+      puff.style.setProperty('--smoke-x', (dirX * distX).toFixed(1) + 'vmin');
+      puff.style.setProperty('--smoke-y', (dirY * distY).toFixed(1) + 'vh');
+      const dur = 1.1 + Math.random() * 0.8;
+      maxDuration = Math.max(maxDuration, dur);
+      puff.style.animationDuration = dur.toFixed(2) + 's';
+      puff.style.animationDelay = (Math.random() * 0.15).toFixed(2) + 's';
+      container.appendChild(puff);
+    }
+
+    setTimeout(() => { container.innerHTML = ''; }, (maxDuration + 0.5) * 1000);
+  }
+
   /* ───────── E) SPLASH STARS ───────── */
   function createSplashStars() {
     const container = $('#splashStars');
@@ -113,6 +210,7 @@
     if (!seal) return;
 
     seal.classList.add('breaking');
+    releaseSealSmoke();
     setTimeout(() => {
       seal.style.display = 'none';
       const doorL = $('.door-left', envelope);
@@ -210,7 +308,6 @@
     const btn = document.getElementById('musicBtn');
     if (!btn) return;
     btn.classList.toggle('playing', musicOn);
-    btn.textContent = musicOn ? '⏸' : '♪';
   }
 
   function startMusic() {
@@ -237,6 +334,24 @@
   function playPauseMusic() {
     if (musicOn) stopMusic();
     else startMusic();
+  }
+
+  /* ───────── M.3) MÚSICA AL LLEGAR AL HERO ───────── */
+  let heroMusicStarted = false;
+
+  function initHeroMusic() {
+    const hero = $('#hero');
+    if (!hero) return;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !heroMusicStarted) {
+          heroMusicStarted = true;
+          startMusic();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    observer.observe(hero);
   }
 
   /* ───────── N) RSVP FORM ───────── */
@@ -293,6 +408,39 @@
   }
 
   /* ───────── O) QR CODE ───────── */
+  function safeFileName(text) {
+    return (text || 'invitado')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9._-]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 40)
+      .toLowerCase() || 'invitado';
+  }
+
+  function triggerDownload(url, filename) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { if (a.parentNode) a.parentNode.removeChild(a); }, 1500);
+  }
+
+  function isIOSDevice() {
+    return /iP(hone|ad|od)/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
+  function canShareFiles(file) {
+    try {
+      return !!(navigator.canShare && navigator.canShare({ files: [file] }));
+    } catch (_) {
+      return false;
+    }
+  }
+
   function generateQR(name, qrData) {
     if (typeof qrcode === 'undefined') return;
 
@@ -323,19 +471,73 @@
       }
     }
 
+    const dataUrl = canvas.toDataURL('image/png');
+    const fileName = `qr-grecia-${safeFileName(name)}.png`;
+    const ios = isIOSDevice();
+    const img = $('#rsvpQrImg');
+    const iosHint = $('#rsvpQrIosHint');
+    if (img) img.src = dataUrl;
+
     const link = $('#rsvpQrDownload');
-    if (link) {
-      link.onclick = (e) => {
-        e.preventDefault();
-        const a = document.createElement('a');
-        a.download = `qr-grecia-${name}.png`;
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-        const wbtn = document.getElementById('btnWhatsapp');
-        if (wbtn) wbtn.disabled = false;
-        showToast('¡QR descargado! Ahora puedes confirmar por WhatsApp 🎭');
-      };
+    if (!link) return;
+
+    if (ios) {
+      link.textContent = 'Guardar QR';
+      if (iosHint) iosHint.hidden = false;
     }
+
+    const enableWhatsapp = () => {
+      const wbtn = document.getElementById('btnWhatsapp');
+      if (wbtn) wbtn.disabled = false;
+    };
+
+    let cachedFile = null;
+    const makeFile = (blob) => {
+      if (!blob) return null;
+      try { return new File([blob], fileName, { type: 'image/png' }); }
+      catch (_) { return null; }
+    };
+    if (typeof canvas.toBlob === 'function') {
+      canvas.toBlob(blob => { cachedFile = makeFile(blob); }, 'image/png');
+    }
+
+    const useFile = (file) => {
+      if (file && ios && canShareFiles(file)) {
+        try {
+          navigator.share({ files: [file], title: 'Código QR', text: 'Muestra este código en la entrada' })
+            .then(() => { enableWhatsapp(); showToast('¡QR guardado! Ahora puedes confirmar por WhatsApp 🎭'); })
+            .catch(() => { enableWhatsapp(); showToast('Mantén presionada la imagen y elige «Guardar en Fotos» 🎭'); });
+        } catch (_) {
+          enableWhatsapp();
+          showToast('Mantén presionada la imagen y elige «Guardar en Fotos» 🎭');
+        }
+        return;
+      }
+      if (ios) {
+        enableWhatsapp();
+        showToast('Mantén presionada la imagen y elige «Guardar en Fotos» 🎭');
+        return;
+      }
+      if (file) {
+        const url = URL.createObjectURL(file);
+        triggerDownload(url, fileName);
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+      } else {
+        triggerDownload(dataUrl, fileName);
+      }
+      enableWhatsapp();
+      showToast('¡QR descargado! Ahora puedes confirmar por WhatsApp 🎭');
+    };
+
+    link.onclick = (e) => {
+      e.preventDefault();
+      if (cachedFile) { useFile(cachedFile); return; }
+      if (typeof canvas.toBlob === 'function') {
+        canvas.toBlob(blob => useFile(makeFile(blob)), 'image/png');
+      } else {
+        useFile(null);
+      }
+    };
   }
 
   /* ───────── P) TOAST ───────── */
@@ -370,6 +572,7 @@
     createGoldDust();
     createMaskConfetti();
     createTwinkleStars();
+    createBgDecor();
     createSplashStars();
     splitLetters();
     initRSVP();
@@ -378,11 +581,12 @@
     const btnOpen = $('#btnOpenSplash');
     if (btnOpen) btnOpen.addEventListener('click', () => {
       openSplash();
-      startMusic();
     });
 
     const musicBtn = $('#musicBtn');
     if (musicBtn) musicBtn.addEventListener('click', playPauseMusic);
+
+    initHeroMusic();
 
     const seal = $('.envelope-seal');
     if (seal) seal.addEventListener('click', openSeal);
