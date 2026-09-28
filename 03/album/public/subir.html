@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Sube tus fotos — XV de Grecia Peña</title>
 <meta name="theme-color" content="#8B0000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,54 +65,15 @@
     border-color: var(--dorado);
   }
 
-  .dropzone {
-    border: 2px dashed var(--glass-border);
-    border-radius: 10px;
-    padding: 2rem 1rem;
-    margin: 1.5rem 0;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: rgba(212, 175, 55, 0.03);
-  }
-
-  .dropzone.hover,
-  .dropzone:hover {
-    border-color: var(--dorado);
-    background: rgba(212, 175, 55, 0.08);
-  }
-
-  .dropzone strong {
-    display: block;
-    font-family: 'Cinzel', serif;
-    color: var(--dorado-light);
-    letter-spacing: 0.06em;
-    margin-bottom: 0.3rem;
-  }
-
-  .dropzone p {
-    color: var(--gris-light);
-    font-size: 0.95rem;
-  }
-
-  .dropzone input[type="file"] { display: none; }
-
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.75rem;
-  }
-
-  .chip {
-    font-size: 0.75rem;
-    font-family: 'Cinzel', serif;
-    letter-spacing: 0.08em;
-    color: var(--dorado);
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid var(--glass-border);
-    border-radius: 999px;
-    padding: 0.25rem 0.8rem;
+  .upload-card input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    pointer-events: none;
   }
 
   .progress-bar {
@@ -136,6 +97,43 @@
     margin-top: 1rem;
     color: var(--dorado-light);
     font-size: 0.95rem;
+  }
+
+  .cam-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .cam-modal[hidden] { display: none; }
+
+  .cam-box {
+    width: min(520px, 100%);
+    padding: 1rem;
+  }
+
+  .cam-box video {
+    width: 100%;
+    border-radius: 10px;
+    background: #000;
+    display: block;
+  }
+
+  .cam-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .cam-actions .btn { flex: 1; padding: 0.9rem 0.75rem; font-size: 0.78rem; }
+
+  @media (max-width: 420px) {
+    .cam-actions { flex-direction: column; }
   }
 
   .recent {
@@ -177,12 +175,31 @@
     margin-top: 1.25rem;
     font-size: 0.95rem;
   }
+
+  .upload-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .upload-actions .btn {
+    flex: 1;
+    padding: 0.9rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  .upload-actions .btn.ghost {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  @media (max-width: 420px) {
+    .upload-actions { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 
-<div class="topbar" style="max-width:620px;">
-  <a href="/" class="btn-logout" style="text-decoration:none; display:inline-block;">← Inicio</a>
+<div class="topbar" style="max-width:620px; justify-content:center;">
   <span class="logo" style="color:var(--dorado);">XV · Grecia Peña</span>
 </div>
 
@@ -196,24 +213,25 @@
 <section class="container">
   <div class="upload-card glass-card">
     <h2 class="upload-title">🎭 Comparte el momento</h2>
-    <p class="upload-intro">Suma tu foto al álbum en tiempo real. Sin límites, todas valen.</p>
+    <p class="upload-intro">Escribe tu nombre, elige o toma tus fotos y se suman al álbum al instante.</p>
 
     <label class="field" for="autor">
       <span>Tu nombre</span>
-      <input type="text" id="autor" maxlength="60" placeholder="Escribe tu nombre">
+      <input type="text" id="autor" name="nombre" maxlength="60" placeholder="Escribe tu nombre"
+             autocomplete="name" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="done">
     </label>
 
-    <div class="dropzone" id="dropzone">
-      <input type="file" id="archivos" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
-      <strong>📷 Toca o arrastra fotos aquí</strong>
-      <p>Puedes elegir varias al mismo tiempo</p>
-      <div class="chips" id="chips"></div>
+    <input type="file" id="archivos" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+    <input type="file" id="camara" accept="image/*" capture="user">
+
+    <div class="upload-actions">
+      <button class="btn" id="btnElegir" type="button">🖼️ Elegir fotos</button>
+      <button class="btn ghost" id="btnTomar" type="button">📸 Tomar foto</button>
     </div>
 
-    <button class="btn" id="btnSubir" type="button" style="width:100%;">Subir fotos</button>
     <div class="progress-bar" id="bar"><div class="progress-fill" id="fill"></div></div>
     <div class="status-note" id="status"></div>
-    <p class="unlimited">✨ Sin límite de fotos · Álbum en tiempo real ✨</p>
+    <p class="unlimited">✨ Se suben solas al álbum · Sin límite de fotos ✨</p>
   </div>
 
   <div class="recent glass-card">
@@ -226,6 +244,17 @@
   <p class="gold">Noche de Máscaras · 27 de Noviembre, 2026</p>
   <p>Álbum XV de Grecia Peña</p>
 </footer>
+
+<div class="cam-modal" id="camModal" hidden>
+  <div class="cam-box glass-card">
+    <video id="camVideo" playsinline autoplay muted></video>
+    <canvas id="camCanvas" hidden></canvas>
+    <div class="cam-actions">
+      <button class="btn" id="btnCapturar" type="button">📸 Capturar</button>
+      <button class="btn ghost" id="btnCerrarCam" type="button">Cancelar</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 

@@ -3,15 +3,23 @@
 
   const autor = document.getElementById('autor');
   const input = document.getElementById('archivos');
-  const dropzone = document.getElementById('dropzone');
-  const chips = document.getElementById('chips');
-  const btn = document.getElementById('btnSubir');
+  const camara = document.getElementById('camara');
+  const btnElegir = document.getElementById('btnElegir');
+  const btnTomar = document.getElementById('btnTomar');
   const fill = document.getElementById('fill');
   const status = document.getElementById('status');
   const recentGrid = document.getElementById('recentGrid');
   const toast = document.getElementById('toast');
+  const camModal = document.getElementById('camModal');
+  const camVideo = document.getElementById('camVideo');
+  const camCanvas = document.getElementById('camCanvas');
+  const btnCapturar = document.getElementById('btnCapturar');
+  const btnCerrarCam = document.getElementById('btnCerrarCam');
 
-  let seleccionados = [];
+  const esMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  let stream = null;
+
+  let subiendo = false;
 
   function showToast(msg) {
     toast.textContent = msg;
@@ -19,55 +27,94 @@
     setTimeout(() => toast.classList.remove('show'), 3500);
   }
 
-  function chipHTML(name) {
-    const el = document.createElement('span');
-    el.className = 'chip';
-    el.textContent = name;
-    return el;
+  function nombreValido() {
+    if (autor.value.trim()) return true;
+    showToast('Escribe tu nombre primero 🙏');
+    autor.focus();
+    return false;
   }
 
-  dropzone.addEventListener('click', () => input.click());
+  function bloquear(v) {
+    subiendo = v;
+    btnElegir.disabled = v;
+    btnTomar.disabled = v;
+  }
 
-  ['dragover', 'drop'].forEach(ev => {
-    dropzone.addEventListener(ev, e => {
-      e.preventDefault();
-      dropzone.classList.toggle('hover', ev === 'dragover');
-    });
+  btnElegir.addEventListener('click', () => {
+    if (subiendo || !nombreValido()) return;
+    input.click();
   });
 
-  dropzone.addEventListener('drop', e => {
-    if (e.dataTransfer && e.dataTransfer.files.length) {
-      input.files = e.dataTransfer.files;
-      seleccionados = [...input.files];
-      pintarChips();
+  btnTomar.addEventListener('click', () => {
+    if (subiendo || !nombreValido()) return;
+    if (esMovil || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      camara.click();
+      return;
     }
+    abrirCamara();
   });
 
   input.addEventListener('change', () => {
-    seleccionados = [...input.files];
-    pintarChips();
+    const files = [...input.files];
+    input.value = '';
+    if (files.length) subir(files);
   });
 
-  function pintarChips() {
-    chips.innerHTML = '';
-    seleccionados.forEach(f => chips.appendChild(chipHTML(f.name)));
+  camara.addEventListener('change', () => {
+    const files = [...camara.files];
+    camara.value = '';
+    if (files.length) subir(files);
+  });
+
+  async function abrirCamara() {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+      camVideo.srcObject = stream;
+      camModal.hidden = false;
+      camVideo.play().catch(() => {});
+    } catch (e) {
+      cerrarCamara();
+      showToast(window.isSecureContext
+        ? 'No se pudo abrir la cámara. Revisa los permisos.'
+        : 'La cámara del navegador necesita HTTPS. En el celular usa "📸 Tomar foto".');
+    }
   }
 
-  btn.addEventListener('click', async () => {
-    const nombre = autor.value.trim() || 'Invitado';
-    if (!seleccionados.length) {
-      showToast('Elige al menos una foto 📷');
-      return;
-    }
+  function cerrarCamara() {
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    stream = null;
+    camVideo.srcObject = null;
+    camModal.hidden = true;
+  }
 
-    btn.disabled = true;
+  btnCapturar.addEventListener('click', () => {
+    if (!stream || !camVideo.videoWidth) return;
+    camCanvas.width = camVideo.videoWidth;
+    camCanvas.height = camVideo.videoHeight;
+    camCanvas.getContext('2d').drawImage(camVideo, 0, 0, camCanvas.width, camCanvas.height);
+    camCanvas.toBlob(blob => {
+      if (!blob) return;
+      const file = new File([blob], 'foto-' + Date.now() + '.jpg', { type: 'image/jpeg' });
+      cerrarCamara();
+      subir([file]);
+    }, 'image/jpeg', 0.9);
+  });
+
+  btnCerrarCam.addEventListener('click', cerrarCamara);
+  camModal.addEventListener('click', e => { if (e.target === camModal) cerrarCamara(); });
+
+  async function subir(files) {
+    const nombre = autor.value.trim() || 'Invitado';
+    bloquear(true);
     status.textContent = '';
     fill.style.width = '0%';
 
-    const ok = [];
-    for (let i = 0; i < seleccionados.length; i++) {
-      const file = seleccionados[i];
-      status.textContent = `Subiendo ${i + 1} de ${seleccionados.length}…`;
+    let ok = 0;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      status.textContent = files.length > 1
+        ? `Subiendo ${i + 1} de ${files.length}…`
+        : 'Subiendo tu foto…';
       try {
         const res = await fetch('/api/subir', {
           method: 'POST',
@@ -79,27 +126,24 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error');
-        ok.push(data);
+        ok++;
       } catch (err) {
-        showToast('No se pudo subir ' + file.name + ': ' + err.message);
+        showToast('No se pudo subir: ' + err.message);
       }
-      fill.style.width = Math.round(((i + 1) / seleccionados.length) * 100) + '%';
+      fill.style.width = Math.round(((i + 1) / files.length) * 100) + '%';
     }
 
-    status.textContent = ok.length
-      ? `¡${ok.length} foto${ok.length > 1 ? 's' : ''} sumada${ok.length > 1 ? 's' : ''} al álbum! 🎭`
+    status.textContent = ok
+      ? `¡${ok} foto${ok > 1 ? 's' : ''} en el álbum! 🎭`
       : 'No se subió ninguna foto.';
-
-    btn.disabled = false;
-    input.value = '';
-    seleccionados = [];
-    pintarChips();
+    bloquear(false);
     cargarRecientes();
-  });
+    setTimeout(() => { fill.style.width = '0%'; }, 1200);
+  }
 
   async function cargarRecientes() {
     try {
-      const res = await fetch('/api/fotos');
+      const res = await fetch('/api/recientes');
       const fotos = await res.json();
       recentGrid.innerHTML = '';
       fotos.slice(0, 30).forEach(f => {
