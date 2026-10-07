@@ -510,9 +510,9 @@
           <input type="text" id="guestCompanion" placeholder="Escribe aquí el nombre">
         </label>
         <div class="rsvp-qr" id="rsvpQr" hidden>
-          <p class="rsvp-qr-hint">Tu código se genera en vivo. Descarga el QR y después confirma por WhatsApp</p>
+          <p class="rsvp-qr-hint" id="rsvpQrHint">Tu pase se genera en vivo con tu nombre. Descárgalo y escanéalo para confirmar por WhatsApp</p>
           <canvas id="rsvpQrCanvas" hidden aria-hidden="true"></canvas>
-          <img class="rsvp-qr-img" id="rsvpQrImg" alt="Código QR para confirmar asistencia">
+          <img class="rsvp-qr-img" id="rsvpQrImg" alt="Código QR para confirmar asistencia por WhatsApp">
           <p class="rsvp-qr-ios-hint" id="rsvpQrIosHint" hidden>Mantén presionada la imagen y elige «Guardar en Fotos»</p>
           <a class="rsvp-qr-dl" id="rsvpQrDownload" download="qr-grecia.png">Descargar QR</a>
           <button type="button" class="btn-whatsapp" id="btnWhatsapp" disabled>

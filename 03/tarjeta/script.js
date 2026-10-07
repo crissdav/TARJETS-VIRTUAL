@@ -4,6 +4,12 @@
   const CONFIG = {
     EVENT_DATE: new Date('2026-11-27T19:00:00'),
     PHONE: '917845115',
+    /* Supabase: donde queda anotado el invitado al confirmar por WhatsApp.
+       Copia estos dos valores de tu proyecto Supabase (Settings → API).
+       La lista es privada: la clave anónima solo puede insertar por la
+       función `anotar`, gracias a las reglas RLS. */
+    SUPABASE_URL: 'https://dgogtngftdqibxrwmgzs.supabase.co',
+    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnb2d0bmdmdGRxaWJ4cndtZ3pzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2Njg0NDEsImV4cCI6MjEwMTI0NDQ0MX0.uPAoAVgW13JwzaGoKX3k8CNYGZSvjroB29PGaP6frhA',
     MASK_EMOJIS: ['🎭', '🎪', '🎨', '🎀', '✨', '👑', '💀', '🦋', '🌸', '🪩']
   };
 
@@ -362,6 +368,8 @@
     const qrSection = $('#rsvpQr');
     if (!nameInput || !qrSection) return;
 
+    const waBase = `https://wa.me/${CONFIG.PHONE}`;
+
     function buildMessage() {
       const name = nameInput.value.trim();
       const companion = (companionInput || {}).value || '';
@@ -374,15 +382,38 @@
       return msg;
     }
 
-    function compactMessage() {
-      const name = nameInput.value.trim();
-      const companion = (companionInput || {}).value || '';
-      let msg = `Confirmo asistencia - Nombre: ${name}`;
-      if (companion.trim()) msg += ` - Acompanante: ${companion.trim()}`;
-      return msg;
+    /* El QR lleva la confirmación ya escrita en WhatsApp: el invitado
+       solo escanea y le da enviar. */
+    function whatsappUrl() {
+      const n = nameInput.value.trim();
+      const a = companionInput ? companionInput.value.trim() : '';
+      let msg = 'Confirmo asistencia - Nombre: ' + n;
+      if (a) msg += ' - Acompanante: ' + a;
+      return `${waBase}?text=${encodeURIComponent(msg)}`;
     }
 
-    const waBase = `https://wa.me/${CONFIG.PHONE}`;
+    /* Al confirmar por WhatsApp el invitado queda anotado en la lista.
+       Va en segundo plano: el enlace de WhatsApp no debe esperar. */
+    function anotar() {
+      const nombre = nameInput.value.trim();
+      if (!nombre) return;
+      if (!/^https?:\/\/.+\.supabase\.co$/i.test(CONFIG.SUPABASE_URL)) return;
+      if (/^TU-ANON-KEY/.test(CONFIG.SUPABASE_ANON_KEY)) return;
+      try {
+        fetch(CONFIG.SUPABASE_URL + '/rest/v1/rpc/anotar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': CONFIG.SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({
+            p_nombre: nombre,
+            p_acompanante: companionInput ? companionInput.value.trim() : ''
+          })
+        }).catch(() => { /* sin internet: la lista se completa a mano */ });
+      } catch (e) { /* ignorar */ }
+    }
 
     function updateLive() {
       const name = nameInput.value.trim();
@@ -391,8 +422,7 @@
         waBtn.disabled = true;
         return;
       }
-      const urlQr = `${waBase}?text=${encodeURIComponent(compactMessage())}`;
-      generateQR(name, urlQr);
+      generateQR(name, whatsappUrl(), waBase);
       qrSection.hidden = false;
       waBtn.disabled = true;
     }
@@ -404,6 +434,7 @@
       const name = nameInput.value.trim();
       if (!name || waBtn.disabled) return;
       window.open(`${waBase}?text=${encodeURIComponent(buildMessage())}`, '_blank');
+      anotar();
     });
   }
 
@@ -441,20 +472,44 @@
     }
   }
 
-  function generateQR(name, qrData) {
-    if (typeof qrcode === 'undefined') return;
-
+  /* Construye el QR. Si el contenido no cabe (nombres muy largos), se
+     degrada al enlace de WhatsApp sin mensaje, que siempre cabe. No se
+     recortan los parámetros porque eso rompería el mensaje ya escrito. */
+  function generarQR(qrData, reserva) {
+    if (typeof qrcode === 'undefined') return null;
     qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
-    const qr = qrcode(0, 'M');
-    qr.addData(qrData);
-    qr.make();
+    for (const datos of [qrData, reserva]) {
+      try {
+        const qr = qrcode(0, 'M');
+        qr.addData(datos);
+        qr.make();
+        return qr;
+      } catch (e) { /* no cabe: prueba el respaldo */ }
+    }
+    return null;
+  }
+
+  function generateQR(name, qrData, reserva) {
+    const descarga = $('#rsvpQrDownload');
+    const pista = $('#rsvpQrHint');
+    const qr = generarQR(qrData, reserva);
+
+    if (!qr) {
+      if (descarga) descarga.style.display = 'none';
+      if (pista) pista.textContent = 'Tu nombre es muy largo para el código. Confirma por WhatsApp y te anotamos a mano.';
+      return;
+    }
+
+    /* Vuelve a su estado normal si el nombre ya cabe. */
+    if (descarga) descarga.style.display = '';
+    if (pista) pista.textContent = 'Tu pase se genera en vivo con tu nombre. Descárgalo y escanéalo para confirmar por WhatsApp';
 
     const canvas = $('#rsvpQrCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const modules = qr.getModuleCount();
-    const pad = 20;
-    const size = 240;
+    const pad = 24;
+    const size = 300;
     canvas.width = size;
     canvas.height = size;
     const cell = (size - pad * 2) / modules;

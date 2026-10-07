@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Lista de Invitados · XV Años de Grecia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="mascara-icono.svg">
+</head>
+<body>
+
+<div class="bg-decor" id="bgDecor" aria-hidden="true"></div>
+
+<div class="page">
+  <div class="container">
+
+    <header class="head">
+      <svg class="head-mask" viewBox="0 0 120 80" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs>
+        <path d="M15 40 Q15 22 35 18 Q50 15 60 22 Q70 15 85 18 Q105 22 105 40 Q105 55 90 60 Q80 65 60 60 Q40 65 30 60 Q15 55 15 40Z" fill="url(#g)" stroke="#8B6914" stroke-width="1.5"/>
+        <ellipse cx="42" cy="37" rx="10" ry="7" fill="#0d0000"/><ellipse cx="78" cy="37" rx="10" ry="7" fill="#0d0000"/>
+        <path d="M57 30 L60 22 L63 30 L60 33Z" fill="#C41E3A"/>
+        <path d="M25 25 Q15 10 20 2 Q28 8 30 20" fill="#C41E3A" opacity="0.8"/>
+        <path d="M95 25 Q105 10 100 2 Q92 8 90 20" fill="#C41E3A" opacity="0.8"/>
+      </svg>
+      <span class="eyebrow">XV Años · Noche de Máscaras</span>
+      <h1 class="head-title">Lista de Invitados</h1>
+      <div class="section-divider"></div>
+      <p class="head-sub">Grecia Peña · 27 de Noviembre, 2026</p>
+      <span class="pass-badge"><img class="badge-emoji" src="mascara-icono.svg" alt=""> Solo la quinceañera</span>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-value" id="statRegistros">0</div>
+        <div class="stat-label">Anotados</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="statPersonas">0</div>
+        <div class="stat-label">Personas</div>
+      </div>
+      <div class="stat stat-ok">
+        <div class="stat-value" id="statConfirmados">0</div>
+        <div class="stat-label">Ya confirmaron</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="statPares">0</div>
+        <div class="stat-label">Con acompañante</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value is-text" id="statUltima">—</div>
+        <div class="stat-label">Última anotación</div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="search-wrap">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
+        </svg>
+        <input class="input" type="search" id="buscar" placeholder="Buscar por nombre o acompañante…" autocomplete="off">
+      </div>
+      <select class="select" id="orden" aria-label="Ordenar lista">
+        <option value="fecha-desc">Más recientes</option>
+        <option value="fecha-asc">Más antiguos</option>
+        <option value="nombre-asc">Nombre (A–Z)</option>
+        <option value="nombre-desc">Nombre (Z–A)</option>
+        <option value="personas-desc">Más personas</option>
+        <option value="pendientes">Solo pendientes</option>
+        <option value="confirmados">Solo confirmados</option>
+      </select>
+      <span class="live" id="liveStatus" role="status" aria-live="polite">En vivo</span>
+      <button class="btn" type="button" id="btnCsv">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 21h16"/>
+        </svg>
+        Descargar CSV
+      </button>
+      <button class="btn btn-red" type="button" id="btnSalir">Salir</button>
+    </section>
+
+    <p class="hint">Los invitados se anotan solos desde la tarjeta al confirmar por WhatsApp.
+      Esta lista se actualiza en vivo, sin recargar.</p>
+
+    <section class="panel">
+      <div class="table-wrap" id="tablaWrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-num">#</th>
+              <th>Invitado</th>
+              <th>Acompañante</th>
+              <th class="col-estado">Confirmado</th>
+              <th class="col-acciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>
+            <div class="empty-mask">🎭</div>
+          <h2 id="emptyTitle">Aún no hay invitados anotados</h2>
+          <p id="emptyText">Cuando los invitados confirmen desde la tarjeta, aparecerán aquí.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ── Modal: editar ─────────────────────────────────────── -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 class="modal-title" id="modalTitle">Editar Confirmación</h2>
+    <form id="formEditar" autocomplete="off">
+      <div class="field">
+        <label class="field-label" for="editNombre">Invitado <b class="req">*</b></label>
+        <input class="input" type="text" id="editNombre" maxlength="80" required>
+      </div>
+      <div class="field">
+        <label class="field-label" for="editAcompanante">Acompañante <span class="opt">(opcional)</span></label>
+        <input class="input" type="text" id="editAcompanante" maxlength="80">
+      </div>
+      <div class="modal-actions">
+        <button class="btn" type="button" id="btnCancelar">Cancelar</button>
+        <button class="btn" type="submit" id="btnGuardar">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="lista.js"></script>
+</body>
+</html>

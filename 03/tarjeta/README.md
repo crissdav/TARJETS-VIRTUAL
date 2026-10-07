@@ -94,13 +94,33 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 
 ### 9. RSVP (Confirmar Asistencia)
 - Formulario: nombre (obligatorio), acompanante (opcional)
+- **El invitado NO ve ningun boton de guardar.** La confirmacion ocurre al
+  confirmar por WhatsApp y el pase queda anotado en la lista de la quinceanera
+  sin que la tarjeta lo anuncie
+- Al pulsar **"Confirmar por WhatsApp"** la tarjeta hace un `POST` silencioso a
+  Supabase (en segundo plano, no espera respuesta ni muestra estado) y luego abre
+  el chat con el mensaje completo. Si falla la red, el invitado igual recibe el
+  mensaje y la lista se completa a mano
+- Ese `POST` llama a la funcion RPC `anotar(p_nombre, p_acompanante)`. La tabla
+  tiene RLS sin policy de INSERT: solo esa funcion (security definer) puede
+  escribir; la clave anon publica no sirve para insertar por su cuenta
+- Si el invitado ya estaba anotado, la funcion **actualiza** el registro en vez
+  de duplicarlo (ignora mayusculas y acentos) y **conserva** las marcas de
+  "ya confirmó" que puso la quinceañera
+- Los datos de conexion viven en `script.js`, constantes `CONFIG.SUPABASE_URL` y
+  `CONFIG.SUPABASE_ANON_KEY`: copiar **Project URL** y **anon public key** desde
+  Settings → API del proyecto Supabase antes de publicar
 - **Codigo QR en vivo**: se genera al instante mientras escribes, actualizandose con cada tecla (igual que la tarjeta del directorio 02)
-- El QR contiene el enlace `wa.me/917845115` con mensaje compacto de confirmacion (nombre + acompanante)
-- PNG 240px con margen blanco de seguridad (facil de escanear)
+- El QR abre **WhatsApp con el mensaje de confirmacion ya escrito** (nombre +
+  acompanante), para que el invitado solo escanee y le de enviar. No lleva a
+  ninguna pagina: la lista de invitados del proyecto `../confirmacion` es privada
+- Si el contenido no llegara a caber en el QR, cae al enlace `wa.me/917845115` sin
+  mensaje en vez de romperse
+- PNG 300px con margen blanco de seguridad (facil de escanear)
 - Boton **"Descargar QR"** (aparece antes que el de WhatsApp)
 - **iOS/iPhone**: el atributo `download` se ignora. El boton pasa a llamarse **"Guardar QR"** y usa la Web Share API (menu Compartir → "Guardar imagen"); si no esta disponible, se muestra la imagen del QR con la indicacion **"Manten presionada la imagen y elige Guardar en Fotos"** (la imagen es long-pressable)
 - Descarga via `canvas.toBlob` + ancla insertada en el DOM (compatible Firefox/Safari/movil); nombre de archivo saneado `qr-grecia-<nombre>.png`
-- Boton **"Confirmar por WhatsApp" bloqueado** hasta descargar el QR; al descargarlo se desbloquea y envia el mensaje completo con todos los datos
+- Boton **"Confirmar por WhatsApp"** bloqueado hasta descargar el QR
 - Notificacion toast
 - Meta Open Graph para compartir en redes
 
@@ -176,5 +196,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 Splash (click "Abrir invitacion") → Sobre → Click sello / swipe up
 → Puertas se abren 3D → Contenido principal se revela
 → Al llegar al Hero arranca la musica
-→ Scroll por secciones → RSVP: escribir datos → QR en vivo → Descargar QR → Confirmar por WhatsApp
+→ Scroll por secciones → RSVP: escribir datos → QR en vivo (abre WhatsApp con el
+  mensaje escrito) → Descargar QR → "Confirmar por WhatsApp" (anota el pase en la
+  lista de `../confirmacion` en segundo plano)
 ```
