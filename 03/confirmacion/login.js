@@ -86,7 +86,7 @@
       error('No se pudo cargar Supabase. Revisa la conexión a internet.');
       return;
     }
-    if (!configurar()) {
+    if (!configurado()) {
       error('Falta configurar config.js con los datos de tu proyecto Supabase.');
       return;
     }
