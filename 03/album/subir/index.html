@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sube tus fotos — XV de Grecia Peña</title>
+<meta name="description" content="Sube tus fotos a la Noche de Máscaras — XV años de Grecia Peña">
+<meta name="theme-color" content="#8B0000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="mascara-icono.svg">
+</head>
+<body>
+
+<div class="bg-decor" id="bgDecor" aria-hidden="true"></div>
+
+<div class="topbar" style="justify-content:center;">
+  <span class="logo">XV · Grecia Peña</span>
+</div>
+
+<div class="page-head">
+  <span class="eyebrow">Con tu foto en la noche</span>
+  <h1>Sube tus fotos</h1>
+  <p class="sub">XV de Grecia Peña · Noche de Máscaras</p>
+  <div class="head-divider"></div>
+</div>
+
+<section class="container">
+  <div class="upload-card glass-card">
+    <h2 class="upload-title">🎭 Comparte el momento</h2>
+    <p class="upload-intro">Escribe tu nombre, elige o toma tus fotos y se suman al álbum al instante.</p>
+
+    <label class="field" for="autor">
+      <span>Tu nombre</span>
+      <input type="text" id="autor" maxlength="60" placeholder="Escribe tu nombre"
+             autocomplete="name" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="done">
+    </label>
+
+    <input type="file" id="archivos" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+    <input type="file" id="camara" accept="image/*" capture="user">
+
+    <div class="upload-actions">
+      <button class="btn" id="btnElegir" type="button">🖼️ Elegir fotos</button>
+      <button class="btn ghost" id="btnTomar" type="button">📸 Tomar foto</button>
+    </div>
+
+    <div class="progress-bar" id="bar"><div class="progress-fill" id="fill"></div></div>
+    <div class="status-note" id="status"></div>
+    <p class="unlimited">✨ Se suben solas al álbum · Sin límite de fotos ✨</p>
+  </div>
+</section>
+
+<footer>
+  <p class="gold">Noche de Máscaras · 27 de Noviembre, 2026</p>
+  <p>Álbum XV de Grecia Peña</p>
+</footer>
+
+<div class="cam-modal" id="camModal" hidden>
+  <div class="cam-box glass-card">
+    <video id="camVideo" playsinline autoplay muted></video>
+    <canvas id="camCanvas" hidden></canvas>
+    <div class="cam-actions">
+      <button class="btn" id="btnCapturar" type="button">📸 Capturar</button>
+      <button class="btn ghost" id="btnCerrarCam" type="button">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="subir.js"></script>
+</body>
+</html>
