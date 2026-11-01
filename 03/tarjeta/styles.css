@@ -3143,6 +3143,39 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Tarjetas de vestimenta: marco con los tonos del vestido */
+.dc-card {
+  padding: 0.7rem 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 2px solid #EAB8C4;
+  border-radius: 18px;
+  box-shadow: 0 0 0 4px rgba(242, 196, 206, 0.55), 0 12px 26px rgba(122, 18, 72, 0.16);
+}
+
+.dc-img-wrap {
+  width: 100%;
+  max-width: none;
+  height: 200px;
+  padding: 0.6rem;
+  margin-bottom: 0.8rem;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.75) 0%, transparent 60%),
+    linear-gradient(160deg, #F2C4CE 0%, #EAB8C4 100%);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 0 1.5px #EAB8C4, inset 0 2px 10px rgba(122, 18, 72, 0.12);
+}
+
+.dc-img {
+  filter: drop-shadow(0 6px 10px rgba(90, 16, 48, 0.25));
+}
+
+@media (max-width: 480px) {
+  .dc-img-wrap {
+    height: 170px;
+  }
+}
+
 @media print {
   .falling-words { display: none !important; }
 

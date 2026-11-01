@@ -1,52 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 8 180 236" fill="none">
   <defs>
     <linearGradient id="bSilk" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3FA37A"/>
-      <stop offset="0.5" stop-color="#21704F"/>
-      <stop offset="1" stop-color="#134A34"/>
+      <stop offset="0" stop-color="#4DB88A"/>
+      <stop offset="0.5" stop-color="#237854"/>
+      <stop offset="1" stop-color="#14503A"/>
     </linearGradient>
     <linearGradient id="bSkirt" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#141B36"/>
-      <stop offset="0.5" stop-color="#2B3866"/>
-      <stop offset="1" stop-color="#111730"/>
+      <stop offset="0" stop-color="#121A38"/>
+      <stop offset="0.5" stop-color="#2E3D72"/>
+      <stop offset="1" stop-color="#0F1530"/>
     </linearGradient>
     <linearGradient id="bShoe" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3A3A44"/>
+      <stop offset="0" stop-color="#4A4A56"/>
       <stop offset="1" stop-color="#0D0D12"/>
     </linearGradient>
+    <linearGradient id="bBag" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A3A48"/>
+      <stop offset="1" stop-color="#121218"/>
+    </linearGradient>
     <filter id="bShadow" x="-20%" y="-10%" width="140%" height="130%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3A0A24" flood-opacity="0.28"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#5A1030" flood-opacity="0.3"/>
     </filter>
   </defs>
 
-  <g filter="url(#bShadow)">
-    <!-- blusa de seda cruzada -->
-    <path d="M72 22 L100 46 L128 22 L150 32 L164 64 L148 72 L140 58 L138 100 L62 100 L60 58 L52 72 L36 64 L50 32 Z" fill="url(#bSilk)"/>
-    <path d="M72 22 L100 46 L118 80" stroke="#0E3B29" stroke-width="1.4" opacity="0.7"/>
-    <path d="M128 22 L100 46" stroke="#0E3B29" stroke-width="1.4" opacity="0.7"/>
-    <path d="M78 30 C86 40 94 46 100 50" stroke="#7DD3AE" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
-    <path d="M62 92 C80 96 120 96 138 92" stroke="#0E3B29" stroke-width="1.2" opacity="0.6"/>
-    <path d="M44 62 L54 58 M156 62 L146 58" stroke="#7DD3AE" stroke-width="1.4" opacity="0.6"/>
+  <g filter="url(#bShadow)" stroke-linejoin="round" stroke-linecap="round">
+    <!-- blusa de seda cruzada con mangas abullonadas -->
+    <path d="M72 20 L100 46 L128 20 L150 30 L166 62 L148 72 L140 58 L138 100 L62 100 L60 58 L52 72 L34 62 L50 30 Z"
+          fill="url(#bSilk)" stroke="#0B3424" stroke-width="1.6"/>
+    <!-- cruce y brillo de la seda -->
+    <path d="M72 20 L100 46 L120 84" stroke="#0B3424" stroke-width="1.3"/>
+    <path d="M128 20 L100 46" stroke="#0B3424" stroke-width="1.3"/>
+    <path d="M80 28 C88 38 95 44 100 50" stroke="#A8EBCB" stroke-width="2.2" opacity="0.55"/>
+    <path d="M68 62 C70 76 70 88 68 96" stroke="#A8EBCB" stroke-width="1.6" opacity="0.35"/>
+    <!-- puños de las mangas -->
+    <path d="M34 62 L48 70 M166 62 L152 70" stroke="#0B3424" stroke-width="2.4"/>
+    <!-- lazo en la cintura -->
+    <path d="M118 84 C126 82 132 88 128 94 C124 98 118 92 118 84 Z" fill="#2E8F65" stroke="#0B3424" stroke-width="1.2"/>
+    <path d="M120 90 L114 108 M124 92 L128 110" stroke="#2E8F65" stroke-width="3"/>
 
     <!-- falda midi plisada -->
-    <rect x="66" y="104" width="68" height="9" rx="2" fill="#0F1530"/>
-    <path d="M66 113 L134 113 L160 200 L40 200 Z" fill="url(#bSkirt)"/>
-    <g stroke="#0B1026" stroke-width="1.2" opacity="0.75">
-      <path d="M78 113 L64 200 M90 113 L84 200 M100 113 L100 200 M110 113 L116 200 M122 113 L136 200"/>
+    <rect x="64" y="100" width="72" height="10" rx="2.5" fill="#0F1530" stroke="#070A18" stroke-width="1.4"/>
+    <path d="M64 110 L136 110 L162 200 C130 206 70 206 38 200 Z" fill="url(#bSkirt)" stroke="#070A18" stroke-width="1.6"/>
+    <g stroke="#070A18" stroke-width="1.3" opacity="0.8">
+      <path d="M76 110 L60 202 M88 110 L80 204 M100 110 L100 205 M112 110 L120 204 M124 110 L140 202"/>
     </g>
-    <g stroke="#5A6AA6" stroke-width="1" opacity="0.45">
-      <path d="M84 113 L74 200 M105 113 L108 200 M116 113 L126 200"/>
+    <g stroke="#6F82C8" stroke-width="1.1" opacity="0.45">
+      <path d="M82 110 L70 203 M106 110 L110 205 M118 110 L130 203"/>
     </g>
-
-    <!-- tacones -->
-    <path d="M104 236 C112 226 124 222 136 226 L150 232 C153 234 152 238 148 238 L114 238 Z" fill="url(#bShoe)"/>
-    <path d="M104 236 L104 248 L108 248 L110 238" fill="#0D0D12"/>
-    <path d="M140 236 C148 226 160 222 172 226 L186 232 C189 234 188 238 184 238 L150 238 Z" fill="url(#bShoe)" opacity="0.92"/>
-    <path d="M140 236 L140 248 L144 248 L146 238" fill="#0D0D12"/>
 
     <!-- cartera de mano -->
-    <rect x="18" y="214" width="62" height="32" rx="6" fill="#1B1B24"/>
-    <path d="M18 224 C36 236 62 236 80 224" fill="#2A2A36"/>
-    <circle cx="49" cy="231" r="3" fill="#7DD3AE"/>
+    <rect x="20" y="214" width="62" height="28" rx="6" fill="url(#bBag)" stroke="#07070B" stroke-width="1.4"/>
+    <path d="M20 223 C38 234 64 234 82 223" fill="#2C2C38" stroke="#07070B" stroke-width="1.2"/>
+    <circle cx="51" cy="229" r="3.2" fill="#4DB88A" stroke="#0B3424" stroke-width="0.8"/>
+
+    <!-- tacones -->
+    <path d="M100 232 C108 222 120 218 132 222 L148 229 C151 231 150 236 146 236 L110 236 Z" fill="url(#bShoe)" stroke="#07070B" stroke-width="1.3"/>
+    <path d="M100 232 L100 244 L105 244 L108 236" fill="#0D0D12" stroke="#07070B" stroke-width="1.2"/>
+    <path d="M116 226 C122 223 128 223 134 225" stroke="#8A8A98" stroke-width="1.1" opacity="0.7"/>
+    <path d="M138 232 C146 222 158 218 170 222 L186 229 C189 231 188 236 184 236 L148 236 Z" fill="url(#bShoe)" stroke="#07070B" stroke-width="1.3"/>
+    <path d="M138 232 L138 244 L143 244 L146 236" fill="#0D0D12" stroke="#07070B" stroke-width="1.2"/>
+    <path d="M154 226 C160 223 166 223 172 225" stroke="#8A8A98" stroke-width="1.1" opacity="0.7"/>
   </g>
 </svg>
