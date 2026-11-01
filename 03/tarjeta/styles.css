@@ -272,7 +272,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
-   ENVELOPE SMOKE — humo rojo / dorado / blanco al romper el sello
+   ENVELOPE SMOKE — humo lavanda / champán / celeste / rosa al romper el sello
    ============================================================ */
 .envelope-smoke {
   position: absolute;
@@ -280,7 +280,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 5;
   pointer-events: none;
   overflow: hidden;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
 }
 
 .envelope-stage {
@@ -1418,9 +1418,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .rsvp-mask-icon {
-  width: 60px;
-  height: 60px;
-  opacity: 0.6;
+  display: block;
+  width: 120px;
+  height: 76px;
+  margin: 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(122, 18, 72, 0.25));
 }
 
 .rsvp-intro {
@@ -2484,6 +2487,323 @@ h1, h2, h3, h4, h5, h6 {
   .cd-item:last-child .cd-number {
     animation: none !important;
   }
+}
+
+/* ============================================================
+   SECCIONES COMPACTAS — menos espacio y tarjetas más ligeras
+   ============================================================ */
+.countdown-section,
+.cal-section,
+.itinerary-section,
+.family-section {
+  padding: 3rem 1.25rem;
+}
+
+.countdown-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  max-width: 24rem;
+  margin: 0 auto;
+}
+
+.note-emoji {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.pass-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  max-width: 100%;
+  padding: 0.5rem 1.2rem;
+  line-height: 1.35;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.badge-emoji {
+  flex-shrink: 0;
+}
+
+/* Familia */
+.family-grid {
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.family-card {
+  padding: 1.1rem 1rem 0.6rem;
+}
+
+.family-ring {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 0.6rem;
+}
+
+.family-ring::before {
+  inset: 5px;
+}
+
+.family-block-title {
+  margin-bottom: 0.3rem;
+}
+
+.family-person {
+  padding: 0.5rem 0;
+}
+
+.family-name {
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  line-height: 1.25;
+}
+
+/* Itinerario: icono a la derecha, tarjeta compacta */
+.timeline {
+  margin-top: 1.25rem;
+}
+
+.timeline-item {
+  margin-bottom: 0.8rem;
+}
+
+.timeline-card {
+  position: relative;
+  padding: 0.7rem 3.6rem 0.7rem 1rem;
+}
+
+.timeline-title {
+  margin-bottom: 0.1rem;
+  line-height: 1.25;
+}
+
+.timeline-desc {
+  line-height: 1.4;
+}
+
+.timeline-icon-wrap {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  transform: translateY(-50%);
+}
+
+.timeline-icon-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 480px) {
+  .countdown-section,
+  .cal-section,
+  .itinerary-section,
+  .family-section {
+    padding: 2.25rem 1rem;
+  }
+
+  .timeline {
+    padding-left: 28px;
+  }
+
+  .timeline-item {
+    padding-left: 1rem;
+  }
+
+  .timeline-dot {
+    left: -18px;
+  }
+}
+
+/* ============================================================
+   SOBRE — puertas con marco, sello de lacre y palabras que vuelan
+   ============================================================ */
+.envelope {
+  filter: drop-shadow(0 18px 30px rgba(122, 18, 72, 0.28));
+}
+
+.door {
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.16) 0 1.5px, transparent 1.5px 16px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 1.5px, transparent 1.5px 16px),
+    linear-gradient(160deg, #FFCFE3 0%, #F59AC4 60%, #E8679F 100%);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.door::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.12), inset 0 0 0 6px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+
+/* brillo que recorre las puertas */
+.door::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: translateX(-200%) skewX(-18deg);
+  animation: doorShine 4s 1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.door-right::after {
+  animation-delay: 1.4s;
+}
+
+@keyframes doorShine {
+  0%, 55% { transform: translateX(-200%) skewX(-18deg); }
+  100%    { transform: translateX(450%) skewX(-18deg); }
+}
+
+.door-orn {
+  width: 96px;
+  height: 64px;
+}
+
+.door-handle {
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 35% 30%, #FFFFFF, #F7C6D9 60%, #E0287F);
+  box-shadow: 0 2px 6px rgba(122, 18, 72, 0.35);
+}
+
+.envelope-seal {
+  width: 92px;
+  height: 92px;
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 6px 10px rgba(122, 18, 72, 0.45));
+  animation: sealPulse 2.4s ease-in-out infinite;
+}
+
+.envelope-seal svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes sealPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-50%, -50%) scale(1.06); }
+}
+
+.envelope-seal.breaking {
+  animation: sealBreak 0.5s var(--ease-smooth) forwards;
+}
+
+.envelope-hint {
+  bottom: -38px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dorado);
+}
+
+/* Palabras que vuelan al abrir el sobre (las crea script.js) */
+.flying-words {
+  position: fixed;
+  inset: 0;
+  z-index: 10003;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fw {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--dorado-light);
+  text-shadow: 0 2px 0 #FFFFFF, 0 6px 16px rgba(216, 27, 114, 0.35);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.fw-script {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--blanco);
+}
+
+.fw-light {
+  color: #FFFFFF;
+  text-shadow: 0 2px 10px rgba(216, 27, 114, 0.7);
+}
+
+.fw img {
+  display: block;
+  width: 2.6em;
+  height: auto;
+}
+
+/* 1. estallido: sale del sello hacia afuera */
+.fw-burst  { animation-name: fwBurst; }
+@keyframes fwBurst {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(0deg); }
+  20%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.1) rotate(var(--r)); }
+}
+
+/* 2. espiral: gira mientras se aleja */
+.fw-spiral { animation-name: fwSpiral; }
+@keyframes fwSpiral {
+  0%   { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) translateX(0) rotate(0deg) scale(0.3); }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--r)) translateX(var(--d)) rotate(calc(var(--r) * -1)) scale(1); }
+}
+
+/* 3. zoom: aparece gigante y se desvanece */
+.fw-zoom   { animation-name: fwZoom; }
+@keyframes fwZoom {
+  0%   { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.2); }
+  30%  { opacity: 1; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1); }
+  70%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(2.2); }
+}
+
+/* 4. giro 3D: voltea como una carta y sube */
+.fw-flip   { animation-name: fwFlip; }
+@keyframes fwFlip {
+  0%   { opacity: 0; transform: translate(calc(-50% + var(--x)), -50%) perspective(400px) rotateX(90deg); }
+  25%  { opacity: 1; transform: translate(calc(-50% + var(--x)), calc(-50% - 20px)) perspective(400px) rotateX(0deg); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) perspective(400px) rotateX(-80deg); }
+}
+
+/* 5. pluma: flota hacia arriba meciéndose */
+.fw-float  { animation-name: fwFloat; }
+@keyframes fwFloat {
+  0%   { opacity: 0; transform: translate(calc(-50% + var(--x)), 40vh) rotate(0deg); }
+  20%  { opacity: 1; }
+  40%  { transform: translate(calc(-50% + var(--x) + 30px), 10vh) rotate(8deg); }
+  70%  { opacity: 1; transform: translate(calc(-50% + var(--x) - 30px), -20vh) rotate(-8deg); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--x)), -55vh) rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flying-words { display: none; }
+  .door::after,
+  .envelope-seal { animation: none; }
 }
 
 @media print {

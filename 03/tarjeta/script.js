@@ -145,8 +145,10 @@
 
     container.innerHTML = '';
     const colors = [
-      'rgba(255, 95, 168,',    // rojo
-      'rgba(224, 40, 127,',   // dorado
+      'rgba(165, 115, 235,',  // lavanda
+      'rgba(245, 185, 80,',   // champán
+      'rgba(110, 190, 240,',  // celeste perla
+      'rgba(255, 95, 168,',   // rosa intenso
       'rgba(255, 255, 255,'   // blanco
     ];
     const count = isMobile ? 36 : 58;
@@ -162,7 +164,7 @@
       const color = colors[i % colors.length];
       const alpha = (isMobile ? 0.62 : 0.55) + Math.random() * 0.35;
       puff.style.background = 'radial-gradient(circle, ' + color + ' ' + alpha.toFixed(2) + ') 0%, ' + color + ' ' + (alpha * 0.85).toFixed(2) + ') 28%, ' + color + ' ' + (alpha * 0.45).toFixed(2) + ') 50%, transparent 68%)';
-      puff.style.setProperty('--smoke-opacity', (0.75 + Math.random() * 0.25).toFixed(2));
+      puff.style.setProperty('--smoke-opacity', (0.5 + Math.random() * 0.25).toFixed(2));
       const dirX = Math.random() < 0.5 ? -1 : 1;
       const dirY = Math.random() < 0.5 ? -1 : 1;
       const distX = 70 + Math.random() * 70;   // 70-140 vmin (todo el ancho)
@@ -177,6 +179,60 @@
     }
 
     setTimeout(() => { container.innerHTML = ''; }, (maxDuration + 0.5) * 1000);
+  }
+
+  /* ───────── D.4) PALABRAS QUE VUELAN AL ABRIR ───────── */
+  const FLY_WORDS = ['Máscaras', 'Misterio', 'Antifaz', 'Secreto', 'Enigma', 'Baile', 'Vals',
+    'Magia', 'XV', 'Noche', 'Sueños', 'Grecia', 'Elegancia', 'Masquerade'];
+  const FLY_TYPES = ['fw-burst', 'fw-spiral', 'fw-zoom', 'fw-flip', 'fw-float'];
+
+  function launchFlyingWords() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const layer = document.createElement('div');
+    layer.className = 'flying-words';
+    layer.setAttribute('aria-hidden', 'true');
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const count = isMobile ? 14 : 20;
+    let longest = 0;
+
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      const type = FLY_TYPES[i % FLY_TYPES.length];
+      el.className = 'fw ' + type;
+
+      // algunas son antifaces en vez de palabras
+      if (i % 6 === 5) {
+        const img = document.createElement('img');
+        img.src = 'mascara-icono.svg';
+        img.alt = '';
+        el.appendChild(img);
+      } else {
+        el.textContent = FLY_WORDS[Math.floor(Math.random() * FLY_WORDS.length)];
+        if (Math.random() < 0.4) el.classList.add('fw-script');
+        else if (Math.random() < 0.3) el.classList.add('fw-light');
+      }
+
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 0.3 + Math.random() * 0.25;
+      el.style.setProperty('--x', (Math.cos(angle) * vw * dist).toFixed(0) + 'px');
+      el.style.setProperty('--y', (Math.sin(angle) * vh * dist).toFixed(0) + 'px');
+      el.style.setProperty('--r', (Math.random() < 0.5 ? -1 : 1) * (120 + Math.random() * 240) + 'deg');
+      el.style.setProperty('--d', (vw * (0.25 + Math.random() * 0.2)).toFixed(0) + 'px');
+      el.style.fontSize = (1 + Math.random() * 1.1).toFixed(2) + 'rem';
+
+      const dur = 1.8 + Math.random() * 1.2;
+      const delay = Math.random() * 0.9;
+      longest = Math.max(longest, dur + delay);
+      el.style.animationDuration = dur.toFixed(2) + 's';
+      el.style.animationDelay = delay.toFixed(2) + 's';
+      layer.appendChild(el);
+    }
+
+    document.body.appendChild(layer);
+    setTimeout(() => layer.remove(), (longest + 0.3) * 1000);
   }
 
   /* ───────── E) SPLASH STARS ───────── */
@@ -230,6 +286,7 @@
 
     seal.classList.add('breaking');
     releaseSealSmoke();
+    launchFlyingWords();
     setTimeout(() => {
       seal.style.display = 'none';
       const doorL = $('.door-left', envelope);
