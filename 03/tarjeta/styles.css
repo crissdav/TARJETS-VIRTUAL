@@ -3155,7 +3155,7 @@ h1, h2, h3, h4, h5, h6 {
 .dc-img-wrap {
   width: 100%;
   max-width: none;
-  height: 270px;
+  height: 250px;
   padding: 0.5rem 0.4rem;
   margin-bottom: 0.8rem;
   border-radius: 12px;
@@ -3172,7 +3172,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 480px) {
   .dc-img-wrap {
-    height: 230px;
+    height: 205px;
   }
 }
 
