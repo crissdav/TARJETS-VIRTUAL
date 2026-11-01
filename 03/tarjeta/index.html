@@ -151,11 +151,11 @@
     <!-- LEFT / TOP: Text content -->
     <div class="hero-content">
       <span class="hero-eyebrow">Mis quince años</span>
-      <h2 class="hero-name name-stack"><span data-letters>Grecia Peña</span></h2>
+      <h2 class="hero-name name-stack" data-sparkle="12"><span data-letters>Grecia Peña</span></h2>
       <p class="hero-xv"><span class="xv-star">✦</span> NOCHE DE MÁSCARAS <span class="xv-star">✦</span></p>
       <p class="hero-quote">"Detrás de cada máscara, un corazón que sueña con bailar bajo la luna. Esta noche, Grecia descubre su verdad."</p>
 
-      <div class="hero-date-card" data-tilt>
+      <div data-sparkle="12" class="hero-date-card" data-tilt>
         <svg class="date-corner dc-tl" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 30 L0 8 Q0 0 8 0 L30 0" fill="none" stroke="#E0287F" stroke-width="1.5"/></svg>
         <svg class="date-corner dc-tr" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 0 L22 0 Q30 0 30 8 L30 30" fill="none" stroke="#E0287F" stroke-width="1.5"/></svg>
         <svg class="date-corner dc-bl" viewBox="0 0 30 30" aria-hidden="true"><path d="M30 30 L8 30 Q0 30 0 22 L0 0" fill="none" stroke="#E0287F" stroke-width="1.5"/></svg>
@@ -240,7 +240,7 @@
     <span class="eyebrow reveal">La fecha enmascarada</span>
     <h2 class="section-title reveal">Noviembre 2026</h2>
     <div class="section-divider reveal"></div>
-    <div class="cal-card reveal-scale" data-tilt>
+    <div class="cal-card reveal-scale" data-tilt data-sparkle="12">
       <div class="cal-header">
         <span class="cal-month">Noviembre</span>
         <span class="cal-year">2026</span>
@@ -253,7 +253,7 @@
         <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
         <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
         <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
-        <span>25</span><span>26</span><span class="cal-highlight">27</span><span>28</span>
+        <span>25</span><span>26</span><span class="cal-highlight" data-sparkle="4">27</span><span>28</span>
         <span>29</span><span>30</span>
       </div>
     </div>
@@ -368,7 +368,7 @@
     <div class="section-divider reveal"></div>
     <p class="section-sub reveal">Formal, elegante y con antifaz.</p>
 
-    <div class="dc-palette-block reveal">
+    <div class="dc-palette-block reveal" data-sparkle="14">
       <h3 class="dc-palette-title">Colores que NO debes usar</h3>
       <p class="dc-palette-hint">Toca cada color para tacharlo</p>
       <div class="dc-palette">
@@ -446,19 +446,11 @@
      FOOTER
      ========================================== -->
 <footer class="footer">
-  <!-- Decorative chandelier -->
-  <svg class="footer-chandelier" viewBox="0 0 160 80" aria-hidden="true">
-    <line x1="80" y1="0" x2="80" y2="15" stroke="#E0287F" stroke-width="1" opacity="0.4"/>
-    <circle cx="80" cy="17" r="3" fill="#FF5FA8" opacity="0.4"/>
-    <path d="M40 30 Q80 22 120 30" fill="none" stroke="#E0287F" stroke-width="1" opacity="0.3"/>
-    <path d="M50 32 L46 52 M65 28 L62 48 M80 26 L80 46 M95 28 L98 48 M110 32 L114 52" stroke="#E0287F" stroke-width="0.8" opacity="0.25"/>
-    <circle cx="46" cy="54" r="2" fill="#FF5FA8" opacity="0.3"/><circle cx="62" cy="50" r="1.8" fill="#FF5FA8" opacity="0.25"/>
-    <circle cx="80" cy="48" r="1.8" fill="#FF5FA8" opacity="0.25"/><circle cx="98" cy="50" r="1.8" fill="#FF5FA8" opacity="0.25"/>
-    <circle cx="114" cy="54" r="2" fill="#FF5FA8" opacity="0.3"/>
-    <ellipse cx="46" cy="52" rx="1.2" ry="2" fill="#FF6B35" opacity="0.25"/>
-    <ellipse cx="80" cy="46" rx="1.2" ry="2" fill="#FF6B35" opacity="0.2"/>
-    <ellipse cx="114" cy="52" rx="1.2" ry="2" fill="#FF6B35" opacity="0.25"/>
-  </svg>
+  <div class="footer-art" data-sparkle="14">
+    <img class="footer-tiara" src="tiara.svg" alt="Tiara de quinceañera">
+    <img class="footer-mask" src="mascara-icono.svg" alt="" aria-hidden="true">
+  </div>
+  <p class="footer-invite">¡Te esperamos!</p>
   <p class="footer-name">Grecia Peña</p>
   <p class="footer-sub">XV AÑOS · 27 de Noviembre, 2026</p>
   <p class="footer-credit">Noche de Máscaras — Una noche para recordar</p>

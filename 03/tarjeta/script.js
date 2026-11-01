@@ -280,6 +280,32 @@
     requestAnimationFrame(() => layer.classList.add('on'));
   }
 
+  /* ───────── D.6) CHISPAS alrededor de lo importante ───────── */
+  function initSparkles() {
+    const tones = ['', 'spk-gold', 'spk-white'];
+    $$('[data-sparkle]').forEach(host => {
+      if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+      const n = parseInt(host.getAttribute('data-sparkle'), 10) || 6;
+      const small = host.offsetWidth < 60;
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('i');
+        s.className = 'spk ' + tones[i % tones.length];
+        s.setAttribute('aria-hidden', 'true');
+        // sobre el borde del elemento, con algo de variación
+        const t = Math.random();
+        const side = i % 4;
+        const along = (6 + t * 88).toFixed(1) + '%';
+        const edge = (side < 2 ? -2 + Math.random() * 8 : 94 + Math.random() * 8).toFixed(1) + '%';
+        if (side % 2 === 0) { s.style.left = along; s.style.top = edge; }
+        else { s.style.top = along; s.style.left = edge; }
+        s.style.setProperty('--s', (small ? 9 + Math.random() * 6 : 13 + Math.random() * 13).toFixed(0) + 'px');
+        s.style.setProperty('--d', (1.6 + Math.random() * 1.6).toFixed(2) + 's');
+        s.style.setProperty('--delay', (-Math.random() * 3).toFixed(2) + 's');
+        host.appendChild(s);
+      }
+    });
+  }
+
   /* ───────── E) SPLASH STARS ───────── */
   function createSplashStars() {
     const container = $('#splashStars');
@@ -778,6 +804,7 @@
 
     initTilt();
     initDressSwatches();
+    initSparkles();
   }
 
   if (document.readyState === 'loading') {

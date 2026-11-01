@@ -2956,6 +2956,146 @@ h1, h2, h3, h4, h5, h6 {
   .falling-words { display: none; }
 }
 
+/* ============================================================
+   CHISPAS — destellos que resaltan nombre, fecha, calendario y colores
+   ============================================================ */
+.spk {
+  position: absolute;
+  width: var(--s, 12px);
+  height: var(--s, 12px);
+  margin: calc(var(--s, 12px) / -2) 0 0 calc(var(--s, 12px) / -2);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  animation: spkTwinkle var(--d, 2s) ease-in-out var(--delay, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+/* halo */
+.spk::after {
+  content: '';
+  position: absolute;
+  inset: -70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow, rgba(255, 122, 184, 0.6)) 0%, transparent 65%);
+}
+
+/* estrella de 4 puntas */
+.spk::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  background: radial-gradient(circle, #FFFFFF 0 28%, var(--c, #FF7AB8) 75%);
+}
+
+.spk-gold { --c: #F5C04A; --glow: rgba(245, 192, 74, 0.55); }
+.spk-white { --c: #FFE3F0; --glow: rgba(255, 255, 255, 0.85); }
+
+@keyframes spkTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  45%      { opacity: 1; transform: scale(1) rotate(90deg); }
+  60%      { opacity: 1; transform: scale(0.85) rotate(110deg); }
+}
+
+/* bloques resaltados */
+.hero-date-card,
+.cal-card {
+  box-shadow: 0 0 0 2px rgba(216, 27, 114, 0.28), 0 12px 32px rgba(216, 27, 114, 0.22);
+}
+
+.dc-palette-block {
+  position: relative;
+  padding: 1.4rem 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(216, 27, 114, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 12px 32px rgba(216, 27, 114, 0.2);
+}
+
+.hero-name {
+  position: relative;
+}
+
+.cal-highlight {
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 18px rgba(216, 27, 114, 0.7);
+}
+
+/* Pie de página: tiara + antifaz */
+.footer {
+  padding-top: 3rem;
+}
+
+.footer-art {
+  position: relative;
+  width: min(250px, 68vw);
+  margin: 0 auto 1rem;
+}
+
+.footer-tiara {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: tiaraFloat 5s ease-in-out infinite;
+}
+
+.footer-mask {
+  display: block;
+  width: 48%;
+  height: auto;
+  margin: -4% auto 0;
+  transform: rotate(-6deg);
+  filter: drop-shadow(0 6px 12px rgba(122, 18, 72, 0.25));
+}
+
+@keyframes tiaraFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.footer-invite {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dorado-light);
+  margin-bottom: 0.6rem;
+}
+
+.footer-name {
+  font-size: 1.8rem;
+}
+
+@media (max-width: 480px) {
+  .dc-palette-block {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .dc-palette {
+    gap: 0.55rem;
+  }
+
+  .dc-swatch {
+    width: 52px;
+    height: 52px;
+  }
+
+  .dc-swatch-name {
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spk { display: none; }
+  .footer-tiara { animation: none; }
+}
+
 @media print {
   .falling-words { display: none !important; }
 
