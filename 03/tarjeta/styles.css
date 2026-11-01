@@ -3176,6 +3176,67 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ============================================================
+   SCROLL FLUIDO EN MÓVILES
+   El desenfoque de fondo (vidrio) se recalcula en cada cuadro del
+   scroll: en móvil se cambia por un fondo casi opaco. Lo que está
+   fuera de pantalla se pausa (clase .fx-pausa, puesta desde script.js).
+   ============================================================ */
+.fx-pausa,
+.fx-pausa * {
+  animation-play-state: paused !important;
+}
+
+.perf-mobile {
+  --glass-bg: rgba(255, 255, 255, 0.86);
+}
+
+.perf-mobile *,
+.perf-mobile *::before,
+.perf-mobile *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Las manchas de luz ya son degradados radiales: el blur sobra */
+.perf-mobile .bg-decor .glow-blob {
+  filter: none;
+}
+
+/* Letras del título: aparecen sin desenfoque */
+@keyframes charRevealLite {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.perf-mobile .char {
+  animation-name: charRevealLite;
+}
+
+.perf-mobile .splash-name .char,
+.perf-mobile .hero-name .char,
+.perf-mobile .footer-name .char {
+  animation-name: charRevealLite, goldFlow;
+}
+
+/* En móviles modestos el nombre queda con su degradado, sin moverse:
+   repintar cada letra en cada cuadro es lo más caro de esta página */
+.perf-lite .splash-name .char,
+.perf-lite .hero-name .char,
+.perf-lite .footer-name .char {
+  animation-name: charRevealLite;
+}
+
+/* Móviles modestos: sin sombras animadas ni brillos extra */
+.perf-lite .twinkle-star,
+.perf-lite .gold-particle {
+  box-shadow: none;
+}
+
+.perf-lite .falling-words .fall img {
+  display: none;
+}
+
 @media print {
   .falling-words { display: none !important; }
 

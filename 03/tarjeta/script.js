@@ -18,11 +18,27 @@
 
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || 'ontouchstart' in window;
 
+  /* Nivel del teléfono: los modestos (poca memoria o pocos núcleos, ahorro de
+     datos o "reducir movimiento") reciben menos efectos para que el scroll
+     vaya fluido. iOS no informa bien sus núcleos, así que no cuenta ahí. */
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isLite = !!(
+    (navigator.connection && navigator.connection.saveData) ||
+    (navigator.deviceMemory && navigator.deviceMemory <= 3) ||
+    (!isIOS && navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+    (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  );
+  document.documentElement.classList.add(isMobile ? 'perf-mobile' : 'perf-full');
+  if (isLite) document.documentElement.classList.add('perf-lite');
+
+  /* Cantidad de partículas según el equipo: escritorio, móvil, móvil modesto. */
+  const fx = (full, mobile, lite) => (isLite ? lite : isMobile ? mobile : full);
+
   /* ───────── B) GOLD DUST PARTICLES ───────── */
   function createGoldDust() {
     const container = $('#goldDust');
     if (!container) return;
-    for (let i = 0; i < (isMobile ? 22 : 35); i++) {
+    for (let i = 0; i < fx(35, 22, 8); i++) {
       const dot = document.createElement('div');
       dot.className = 'gold-particle';
       const size = 2 + Math.random() * 3;
@@ -55,7 +71,7 @@
   function createTwinkleStars() {
     const container = $('#twinkleLayer');
     if (!container) return;
-    for (let i = 0; i < (isMobile ? 30 : 50); i++) {
+    for (let i = 0; i < fx(50, 30, 12); i++) {
       const star = document.createElement('div');
       star.className = 'twinkle-star';
       const size = 1 + Math.random() * 2;
@@ -79,7 +95,7 @@
       'rgba(255, 95, 168,',
       'rgba(255, 141, 192,'
     ];
-    const blobCount = isMobile ? 5 : 7;
+    const blobCount = fx(7, 5, 0);
     for (let i = 0; i < blobCount; i++) {
       const blob = document.createElement('div');
       blob.className = 'glow-blob';
@@ -96,7 +112,7 @@
       container.appendChild(blob);
     }
 
-    const maskCount = isMobile ? 10 : 15;
+    const maskCount = fx(15, 10, 5);
     for (let i = 0; i < maskCount; i++) {
       const m = document.createElement('div');
       m.className = 'bg-mask';
@@ -110,7 +126,7 @@
       container.appendChild(m);
     }
 
-    const partCount = isMobile ? 18 : 28;
+    const partCount = fx(28, 18, 6);
     for (let i = 0; i < partCount; i++) {
       const p = document.createElement('div');
       p.className = 'rise-particle';
@@ -123,7 +139,7 @@
       container.appendChild(p);
     }
 
-    const petalCount = isMobile ? 7 : 12;
+    const petalCount = fx(12, 7, 0);
     for (let i = 0; i < petalCount; i++) {
       const petal = document.createElement('div');
       petal.className = 'petal';
@@ -151,7 +167,7 @@
       'rgba(255, 95, 168,',   // rosa intenso
       'rgba(255, 255, 255,'   // blanco
     ];
-    const count = isMobile ? 36 : 58;
+    const count = fx(58, 36, 18);
     let maxDuration = 0;
     for (let i = 0; i < count; i++) {
       const puff = document.createElement('div');
@@ -195,7 +211,7 @@
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const count = isMobile ? 14 : 20;
+    const count = fx(20, 14, 8);
     let longest = 0;
 
     for (let i = 0; i < count; i++) {
@@ -248,7 +264,7 @@
     layer.className = 'falling-words';
     layer.setAttribute('aria-hidden', 'true');
 
-    const count = isMobile ? 10 : 16;
+    const count = fx(16, 10, 5);
     for (let i = 0; i < count; i++) {
       const el = document.createElement('span');
       el.className = 'fall ' + FALL_TYPES[i % FALL_TYPES.length];
@@ -285,7 +301,7 @@
     const tones = ['', 'spk-gold', 'spk-white'];
     $$('[data-sparkle]').forEach(host => {
       if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
-      const n = parseInt(host.getAttribute('data-sparkle'), 10) || 6;
+      const n = Math.ceil((parseInt(host.getAttribute('data-sparkle'), 10) || 6) * fx(1, 0.6, 0.35));
       const small = host.offsetWidth < 60;
       for (let i = 0; i < n; i++) {
         const s = document.createElement('i');
@@ -310,7 +326,7 @@
   function createSplashStars() {
     const container = $('#splashStars');
     if (!container) return;
-    for (let i = 0; i < (isMobile ? 35 : 60); i++) {
+    for (let i = 0; i < fx(60, 35, 15); i++) {
       const star = document.createElement('div');
       star.className = 'splash-star';
       const size = 1 + Math.random() * 3;
@@ -458,6 +474,34 @@
       });
     }, { threshold: 0.15 });
     targets.forEach(t => observer.observe(t));
+  }
+
+  /* ───────── SCROLL FLUIDO ─────────
+     Las animaciones de una sección fuera de pantalla se pausan, y en móvil
+     las capas fijas del fondo se quedan quietas mientras el dedo desliza. */
+  function initScrollPerf() {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => e.target.classList.toggle('fx-pausa', !e.isIntersecting));
+      }, { rootMargin: '120px 0px' });
+      $$('section, footer').forEach(s => io.observe(s));
+    }
+
+    if (!isMobile) return;
+    let quieto = null;
+    let pausado = false;
+    const capas = () => $$('.bg-decor, .falling-words');
+    window.addEventListener('scroll', () => {
+      if (!pausado) {
+        pausado = true;
+        capas().forEach(c => c.classList.add('fx-pausa'));
+      }
+      clearTimeout(quieto);
+      quieto = setTimeout(() => {
+        pausado = false;
+        capas().forEach(c => c.classList.remove('fx-pausa'));
+      }, 180);
+    }, { passive: true });
   }
 
   /* ───────── M.2) MÚSICA DE FONDO ───────── */
@@ -805,6 +849,7 @@
     initTilt();
     initDressSwatches();
     initSparkles();
+    initScrollPerf();
   }
 
   if (document.readyState === 'loading') {

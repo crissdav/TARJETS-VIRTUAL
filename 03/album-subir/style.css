@@ -662,3 +662,19 @@ footer .gold {
   .mf-item,
   .mf-item.ok .mf-estado { animation: none; }
 }
+
+/* ── Scroll fluido en móviles ─────────────────────────────
+   El desenfoque de fondo (vidrio) se recalcula en cada cuadro del
+   scroll: en pantallas táctiles se cambia por un fondo casi opaco. */
+@media (hover: none) and (pointer: coarse) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.88);
+  }
+
+  *,
+  *::before,
+  *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
