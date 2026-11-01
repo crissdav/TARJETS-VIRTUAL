@@ -1,29 +1,30 @@
 :root {
-  --rojo: #D94A8C;
+  --rojo: #E75A9B;
   --rojo-bright: #F06BA8;
   --rojo-light: #D81B60;
   --dorado: #C2185B;
-  --dorado-light: #E91E7A;
-  --dorado-dark: #8E0E47;
-  --blanco: #4A0D2E;
-  --gris: #8A2D5C;
-  --gris-light: #9E3A6E;
+  --dorado-light: #D81B72;
+  --dorado-dark: #880E4F;
+  --blanco: #3F0A27;
+  --gris: #6E1A45;
+  --gris-light: #7E2453;
   --gris-dark: #F3BCD5;
   --verde: #3CC46A;
-  --negro: #FFF0F6;
-  --bg-dark: #FCD3E3;
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(224, 40, 127, 0.25);
+  --negro: #FFF5F9;
+  --bg-dark: #FCD9E8;
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(216, 27, 114, 0.3);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 18px; }
 
 body {
   font-family: 'Cormorant Garamond', serif;
   background: var(--bg-dark);
   color: var(--blanco);
+  font-weight: 500;
   min-height: 100vh;
   min-height: 100dvh;
   line-height: 1.6;

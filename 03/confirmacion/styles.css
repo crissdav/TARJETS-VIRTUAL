@@ -6,25 +6,25 @@
 
 /* ── Custom Properties ────────────────────────────────────── */
 :root {
-  --rojo: #D94A8C;
+  --rojo: #E75A9B;
   --rojo-bright: #F06BA8;
   --rojo-light: #D81B60;
   --dorado: #C2185B;
-  --dorado-light: #E91E7A;
-  --dorado-dark: #8E0E47;
-  --blanco: #4A0D2E;
-  --gris: #8A2D5C;
-  --gris-light: #9E3A6E;
+  --dorado-light: #D81B72;
+  --dorado-dark: #880E4F;
+  --blanco: #3F0A27;
+  --gris: #6E1A45;
+  --gris-light: #7E2453;
   --gris-dark: #F3BCD5;
   --verde: #3CC46A;
-  --negro: #FFF0F6;
-  --bg-dark: #FCD3E3;
+  --negro: #FFF5F9;
+  --bg-dark: #FCD9E8;
 
   --font-display: 'Cinzel', serif;
   --font-body: 'Cormorant Garamond', serif;
 
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(224, 40, 127, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(216, 27, 114, 0.3);
   --glass-blur: 18px;
 
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -42,13 +42,14 @@
 }
 
 html {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 body {
   font-family: var(--font-body);
   background: var(--bg-dark);
   color: var(--blanco);
+  font-weight: 500;
   overflow-x: hidden;
   min-height: 100vh;
   line-height: 1.6;
@@ -986,7 +987,7 @@ td.es-confirmado .nombre {
 /* A partir de aquí la tabla se vuelve a tarjetas: con menos de ~900px
    las cinco columnas apretaban los botones y la botonera se salía. */
 @media (max-width: 900px) {
-  html { font-size: 16px; }
+  html { font-size: 18px; }
 
   .toolbar { gap: 0.6rem; }
   .select { flex: 1 1 100%; }

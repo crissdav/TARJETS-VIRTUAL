@@ -22,7 +22,7 @@
   function createGoldDust() {
     const container = $('#goldDust');
     if (!container) return;
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < (isMobile ? 22 : 35); i++) {
       const dot = document.createElement('div');
       dot.className = 'gold-particle';
       const size = 2 + Math.random() * 3;
@@ -55,7 +55,7 @@
   function createTwinkleStars() {
     const container = $('#twinkleLayer');
     if (!container) return;
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < (isMobile ? 30 : 50); i++) {
       const star = document.createElement('div');
       star.className = 'twinkle-star';
       const size = 1 + Math.random() * 2;
@@ -122,6 +122,19 @@
       p.style.animationDelay = (-Math.random() * 16) + 's';
       container.appendChild(p);
     }
+
+    const petalCount = isMobile ? 7 : 12;
+    for (let i = 0; i < petalCount; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      const scale = 0.6 + Math.random() * 0.7;
+      petal.style.width = (14 * scale) + 'px';
+      petal.style.height = (18 * scale) + 'px';
+      petal.style.left = Math.random() * 100 + '%';
+      petal.style.animationDuration = 11 + Math.random() * 9 + 's';
+      petal.style.animationDelay = (-Math.random() * 20) + 's';
+      container.appendChild(petal);
+    }
   }
 
   /* ───────── D.3) ENVELOPE SMOKE — humo al romper el sello ───────── */
@@ -170,7 +183,7 @@
   function createSplashStars() {
     const container = $('#splashStars');
     if (!container) return;
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < (isMobile ? 35 : 60); i++) {
       const star = document.createElement('div');
       star.className = 'splash-star';
       const size = 1 + Math.random() * 3;
@@ -284,6 +297,17 @@
       });
       el.addEventListener('mouseleave', () => {
         el.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
+  /* ───────── L.2) DRESSCODE — tachar colores ───────── */
+  function initDressSwatches() {
+    $$('.dc-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.dc-swatch-item');
+        const crossed = item.classList.toggle('is-crossed');
+        btn.setAttribute('aria-pressed', String(crossed));
       });
     });
   }
@@ -650,6 +674,7 @@
     setInterval(updateCountdown, 1000);
 
     initTilt();
+    initDressSwatches();
   }
 
   if (document.readyState === 'loading') {

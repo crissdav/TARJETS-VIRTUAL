@@ -5,25 +5,25 @@
 
 /* ── Custom Properties ────────────────────────────────────── */
 :root {
-  --rojo: #D94A8C;
+  --rojo: #E75A9B;
   --rojo-bright: #F06BA8;
   --rojo-light: #D81B60;
   --dorado: #C2185B;
-  --dorado-light: #E91E7A;
-  --dorado-dark: #8E0E47;
-  --blanco: #4A0D2E;
-  --gris: #8A2D5C;
-  --gris-light: #9E3A6E;
+  --dorado-light: #D81B72;
+  --dorado-dark: #880E4F;
+  --blanco: #3F0A27;
+  --gris: #6E1A45;
+  --gris-light: #7E2453;
   --gris-dark: #F3BCD5;
-  --negro: #FFF0F6;
-  --bg-dark: #FCD3E3;
+  --negro: #FFF5F9;
+  --bg-dark: #FCD9E8;
 
   --font-display: 'Cinzel', serif;
   --font-body: 'Cormorant Garamond', serif;
   --font-script: 'Cinzel', serif;
 
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(224, 40, 127, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(216, 27, 114, 0.3);
   --glass-blur: 18px;
 
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -46,13 +46,14 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 body {
   font-family: var(--font-body);
   background: var(--bg-dark);
   color: var(--blanco);
+  font-weight: 500;
   overflow-x: hidden;
   min-height: 100vh;
   line-height: 1.6;
@@ -1193,43 +1194,84 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dc-swatch {
-  width: 60px;
-  height: 60px;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(216, 27, 114, 0.35), 0 6px 16px rgba(122, 18, 72, 0.18);
   position: relative;
-  overflow: hidden;
   transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.dc-swatch:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 20px rgba(122, 18, 72, 0.25);
+.dc-swatch:hover,
+.dc-swatch:focus-visible {
+  transform: scale(1.1);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dorado-light), 0 8px 22px rgba(122, 18, 72, 0.25);
+}
+
+/* X de "no uses este color": dos barras que aparecen al tocar */
+.dc-swatch::before,
+.dc-swatch::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 124%;
+  height: 7px;
+  margin: -3.5px 0 0 -62%;
+  border-radius: 4px;
+  background: #E0115F;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 2px 8px rgba(122, 18, 72, 0.35);
+  transform: rotate(45deg) scaleX(0);
+  transition: transform 0.35s var(--ease-bounce);
+  pointer-events: none;
 }
 
 .dc-swatch::after {
-  content: '\2716';
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(122, 18, 72, 0.35);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 1.8rem;
-  color: white;
+  transform: rotate(-45deg) scaleX(0);
+  transition-delay: 0.08s;
 }
 
-.dc-swatch:hover::after {
-  opacity: 1;
+.dc-swatch-item.is-crossed .dc-swatch::before { transform: rotate(45deg) scaleX(1); }
+.dc-swatch-item.is-crossed .dc-swatch::after { transform: rotate(-45deg) scaleX(1); }
+
+.dc-swatch-item.is-crossed .dc-swatch {
+  animation: swatchShake 0.45s ease;
+}
+
+@keyframes swatchShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-4deg); }
+  50% { transform: translateX(5px) rotate(4deg); }
+  75% { transform: translateX(-3px); }
 }
 
 .dc-swatch-name {
   font-family: var(--font-body);
   font-size: 0.75rem;
-  color: var(--gris-light);
+  font-weight: 600;
+  color: var(--gris);
+  transition: color 0.3s;
+}
+
+.dc-swatch-item.is-crossed .dc-swatch-name {
+  color: #E0115F;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.dc-palette-hint {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--dorado);
+  margin: -0.4rem 0 1rem;
 }
 
 .dc-palette-label {
@@ -2132,33 +2174,33 @@ h1, h2, h3, h4, h5, h6 {
 .btn-open { font-size: 0.96rem; }
 .envelope-hint { font-size: 0.86rem; }
 .letter-theme { font-size: 0.9rem; }
-.hero-scroll { font-size: 0.81rem; }
-.cd-label { font-size: 0.76rem; }
+.hero-scroll { font-size: 0.86rem; }
+.cd-label { font-size: 0.82rem; }
 .countdown-note { font-size: 1.01rem; }
 .cal-year { font-size: 0.96rem; }
-.cal-weekdays span { font-size: 0.71rem; }
+.cal-weekdays span { font-size: 0.8rem; }
 .cal-days span { font-size: 1.01rem; }
 .cal-month { font-size: 1.41rem; }
-.timeline-time { font-size: 0.76rem; }
+.timeline-time { font-size: 0.84rem; }
 .timeline-title { font-size: 0.96rem; }
 .timeline-desc { font-size: 0.91rem; }
 .dc-palette-title { font-size: 0.86rem; }
 .dc-guide-title { font-size: 0.86rem; }
-.dc-swatch-name { font-size: 0.86rem; }
+.dc-swatch-name { font-size: 0.92rem; }
 .dc-palette-label { font-size: 0.91rem; }
 .dc-card h3 { font-size: 0.96rem; }
 .dc-card p { font-size: 0.91rem; }
 .family-block-title { font-size: 0.91rem; }
-.family-role { font-size: 0.73rem; }
+.family-role { font-size: 0.8rem; }
 .rsvp-intro { font-size: 1.11rem; }
 .rsvp-field-label { font-size: 0.81rem; }
-.pass-badge { font-size: 0.71rem; }
+.pass-badge { font-size: 0.78rem; }
 .rsvp-qr-hint { font-size: 0.91rem; }
-.rsvp-qr-dl { font-size: 0.76rem; }
+.rsvp-qr-dl { font-size: 0.84rem; }
 .btn-whatsapp { font-size: 0.86rem; }
 .toast { font-size: 1.01rem; }
 .footer-sub { font-size: 1.01rem; }
-.footer-credit { font-size: 0.66rem; }
+.footer-credit { font-size: 0.74rem; }
 
 /* ============================================================
    MÚSICA — BOTÓN FLOTANTE
@@ -2216,6 +2258,199 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================================
    PRINT STYLES
    ============================================================ */
+/* ============================================================
+   ROSA NUBE — REALCE DE TEXTOS Y ANIMACIONES LIGERAS
+   (solo transform/opacity para que cargue fluido en móviles)
+   ============================================================ */
+
+/* Brillo que recorre los títulos de sección */
+.section-title {
+  background: linear-gradient(100deg,
+    var(--dorado-dark) 0%,
+    var(--dorado-light) 35%,
+    #FF8DC0 50%,
+    var(--dorado-light) 65%,
+    var(--dorado-dark) 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+}
+
+.section-title.visible {
+  animation: titleShine 6s linear infinite;
+}
+
+@keyframes titleShine {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 250% 50%; }
+}
+
+/* Divisor que se dibuja al aparecer */
+.section-divider {
+  height: 3px;
+  width: 80px;
+  border-radius: 2px;
+  transform-origin: center;
+}
+
+.section-divider.visible {
+  animation: dividerGrow 0.9s 0.2s var(--ease-smooth) both;
+}
+
+@keyframes dividerGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Textos más resaltantes */
+.eyebrow,
+.hero-eyebrow {
+  font-weight: 600;
+  color: var(--dorado);
+}
+
+.section-sub,
+.hero-quote,
+.dc-card p,
+.timeline-desc,
+.rsvp-intro,
+.countdown-note {
+  font-weight: 500;
+  color: var(--gris);
+}
+
+.hero-xv {
+  text-shadow: 0 3px 0 rgba(255, 255, 255, 0.7), 0 8px 24px rgba(216, 27, 114, 0.25);
+}
+
+/* Botón de abrir: relleno rosa intenso con destello */
+.btn-open {
+  color: #FFFFFF;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--dorado-light), #F06BA8);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(216, 27, 114, 0.35);
+}
+
+.btn-open::before {
+  background: var(--dorado-dark);
+}
+
+.btn-open:hover {
+  color: #FFFFFF;
+}
+
+.btn-open::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  animation: btnShine 3.2s 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes btnShine {
+  0%, 60% { transform: translateX(-150%) skewX(-20deg); }
+  100%    { transform: translateX(350%) skewX(-20deg); }
+}
+
+/* Cuenta regresiva: los segundos laten */
+.cd-item:last-child .cd-number {
+  animation: secBeat 1s ease-in-out infinite;
+}
+
+@keyframes secBeat {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.12); }
+}
+
+/* Pétalos rosa nube cayendo (los crea script.js) */
+.bg-decor .petal {
+  position: absolute;
+  top: -30px;
+  width: 14px;
+  height: 18px;
+  border-radius: 80% 0 80% 0;
+  background: linear-gradient(135deg, #FFD3E6, #F48FBF);
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.8);
+  will-change: transform;
+  animation: petalFall linear infinite;
+}
+
+@keyframes petalFall {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  50%  { transform: translate3d(40px, 50vh, 0) rotate(180deg); }
+  90%  { opacity: 0.85; }
+  100% { transform: translate3d(-20px, 105vh, 0) rotate(360deg); opacity: 0; }
+}
+
+/* Rendimiento: los brillos ya son degradados radiales, sin blur extra */
+.bg-decor .glow-blob {
+  filter: none;
+}
+
+/* Celular: que "Noche de Máscaras" nunca se corte */
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: clamp(2.1rem, 10.5vw, 2.7rem);
+  }
+
+  .hero-xv {
+    font-size: clamp(2.2rem, 12.5vw, 3.1rem);
+    letter-spacing: 0.04em;
+  }
+
+  .btn-open {
+    letter-spacing: 0.14em;
+    padding: 0.85rem 1.8rem;
+    white-space: nowrap;
+  }
+
+  .cal-card {
+    padding: 1.4rem 0.8rem;
+  }
+
+  .cal-weekdays span {
+    font-size: 0.72rem;
+    letter-spacing: 0;
+  }
+
+  .cal-days span {
+    padding: 0.35rem;
+  }
+
+  .dc-palette {
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+  }
+
+  .dc-swatch {
+    width: 56px;
+    height: 56px;
+  }
+
+  .dc-swatch-name {
+    font-size: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-title.visible,
+  .section-divider.visible,
+  .btn-open::after,
+  .cd-item:last-child .cd-number {
+    animation: none !important;
+  }
+}
+
 @media print {
   *,
   *::before,
