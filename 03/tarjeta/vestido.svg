@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none">
   <defs>
     <linearGradient id="dSatin" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#0A0C18"/>
@@ -28,12 +28,12 @@
     <path d="M120 42 C122 52 124 60 125 70" stroke="#1B2040" stroke-width="3" stroke-linecap="round"/>
 
     <!-- falda -->
-    <path d="M76 120 C70 170 48 238 18 306 C40 316 80 318 100 316 C120 318 160 316 182 306 C152 238 130 170 124 120 C112 126 88 126 76 120 Z" fill="url(#dSatin)"/>
+    <path d="M76 120 C70 150 56 196 40 236 C66 246 134 246 160 236 C144 196 130 150 124 120 C112 126 88 126 76 120 Z" fill="url(#dSatin)"/>
     <!-- pliegues con brillo -->
-    <path d="M96 126 C92 190 82 250 72 314 L84 315 C92 252 100 190 101 127 Z" fill="url(#dSheen)"/>
-    <path d="M82 124 C74 180 58 240 40 310 L48 312 C64 242 80 182 88 125 Z" fill="url(#dSheen)" opacity="0.6"/>
-    <path d="M114 125 C120 182 136 244 150 312 L160 311 C144 244 128 182 118 124 Z" fill="url(#dSheen)" opacity="0.45"/>
-    <path d="M18 306 C40 316 80 318 100 316 C120 318 160 316 182 306 C160 310 130 312 100 310 C70 312 40 310 18 306 Z" fill="#000" opacity="0.35"/>
+    <path d="M96 126 C93 166 86 204 78 242 L90 243 C95 206 100 166 101 127 Z" fill="url(#dSheen)"/>
+    <path d="M82 124 C76 160 66 200 54 238 L62 240 C72 202 82 162 88 125 Z" fill="url(#dSheen)" opacity="0.6"/>
+    <path d="M114 125 C120 162 130 202 140 240 L148 238 C138 200 128 160 118 124 Z" fill="url(#dSheen)" opacity="0.45"/>
+    <path d="M40 236 C66 246 134 246 160 236 C140 240 120 242 100 241 C80 242 60 240 40 236 Z" fill="#000" opacity="0.35"/>
 
     <!-- corpiño escote corazón -->
     <path d="M72 70 C78 62 92 62 100 74 C108 62 122 62 128 70 L125 114 C114 120 86 120 75 114 Z" fill="url(#dSatin)"/>

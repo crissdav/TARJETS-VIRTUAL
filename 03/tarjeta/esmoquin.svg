@@ -1,18 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" fill="none">
   <defs>
     <linearGradient id="tWool" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#050507"/>
-      <stop offset="0.4" stop-color="#22222B"/>
-      <stop offset="0.6" stop-color="#16161D"/>
-      <stop offset="1" stop-color="#030304"/>
+      <stop offset="0" stop-color="#0E1530"/>
+      <stop offset="0.4" stop-color="#2A3866"/>
+      <stop offset="0.6" stop-color="#1F2B52"/>
+      <stop offset="1" stop-color="#0B1026"/>
     </linearGradient>
     <linearGradient id="tLapel" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4A4A58"/>
-      <stop offset="0.5" stop-color="#1A1A22"/>
-      <stop offset="1" stop-color="#0A0A0E"/>
+      <stop offset="0" stop-color="#34447A"/>
+      <stop offset="1" stop-color="#16203F"/>
     </linearGradient>
     <linearGradient id="tShirt" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#DADAE2"/><stop offset="0.5" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D2D2DC"/>
+      <stop offset="0" stop-color="#9FC3E6"/><stop offset="0.5" stop-color="#CFE3F6"/><stop offset="1" stop-color="#97BCE0"/>
+    </linearGradient>
+    <linearGradient id="tPants" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3A3F4A"/><stop offset="0.5" stop-color="#5A606E"/><stop offset="1" stop-color="#33373F"/>
     </linearGradient>
     <linearGradient id="tHanger" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#9A9AA6"/><stop offset="0.5" stop-color="#F4F4F8"/><stop offset="1" stop-color="#9A9AA6"/>
@@ -27,47 +29,43 @@
   <path d="M52 50 L100 26 L148 50" stroke="url(#tHanger)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 
   <g filter="url(#tShadow)">
-    <!-- pantalón con franja satinada -->
-    <path d="M60 196 L140 196 L146 312 L108 312 L100 214 L92 312 L54 312 Z" fill="url(#tWool)"/>
-    <path d="M58 200 L55 310" stroke="#3A3A48" stroke-width="2.5"/>
-    <path d="M142 200 L145 310" stroke="#3A3A48" stroke-width="2.5"/>
-    <path d="M100 214 L100 200" stroke="#000" stroke-width="1"/>
+    <!-- pantalón de vestir gris -->
+    <path d="M60 196 L140 196 L146 312 L108 312 L100 214 L92 312 L54 312 Z" fill="url(#tPants)"/>
+    <path d="M78 206 L74 310 M122 206 L126 310" stroke="#2A2E36" stroke-width="1" opacity="0.6"/>
+    <path d="M100 214 L100 200" stroke="#2A2E36" stroke-width="1"/>
 
     <!-- mangas -->
     <path d="M50 54 C38 62 32 100 31 140 L29 194 L45 196 L48 140 Z" fill="url(#tWool)"/>
     <path d="M150 54 C162 62 168 100 169 140 L171 194 L155 196 L152 140 Z" fill="url(#tWool)"/>
-    <path d="M29 188 L45 190 M171 188 L155 190" stroke="#FFFFFF" stroke-width="3" opacity="0.9"/>
+    <path d="M29 189 L45 191 M171 189 L155 191" stroke="#CFE3F6" stroke-width="3"/>
 
     <!-- saco -->
     <path d="M50 54 C70 46 86 44 100 52 C114 44 130 46 150 54 L158 122 L154 202 L46 202 L42 122 Z" fill="url(#tWool)"/>
 
-    <!-- camisa -->
-    <path d="M86 52 L100 126 L114 52 C108 48 92 48 86 52 Z" fill="url(#tShirt)"/>
-    <path d="M94 54 L100 120 L106 54" stroke="#C4C4CE" stroke-width="0.6"/>
-    <circle cx="100" cy="80" r="1.8" fill="#15151B"/>
-    <circle cx="100" cy="94" r="1.8" fill="#15151B"/>
-    <circle cx="100" cy="108" r="1.8" fill="#15151B"/>
+    <!-- camisa celeste, cuello abierto -->
+    <path d="M84 52 L100 132 L116 52 C110 48 90 48 84 52 Z" fill="url(#tShirt)"/>
+    <path d="M100 60 L100 132" stroke="#7FA6CC" stroke-width="0.8"/>
+    <circle cx="100" cy="84" r="1.6" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="1.6" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
+    <circle cx="100" cy="116" r="1.6" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
+    <!-- cuello de la camisa -->
+    <path d="M86 50 L94 70 L100 58 Z" fill="#DDEBF8" stroke="#8DB2D8" stroke-width="0.8"/>
+    <path d="M114 50 L106 70 L100 58 Z" fill="#DDEBF8" stroke="#8DB2D8" stroke-width="0.8"/>
 
-    <!-- solapas de satén -->
-    <path d="M86 52 L100 126 L92 136 L68 92 L78 66 L70 58 Z" fill="url(#tLapel)"/>
-    <path d="M114 52 L100 126 L108 136 L132 92 L122 66 L130 58 Z" fill="url(#tLapel)"/>
-    <path d="M84 56 L78 66 L94 120" stroke="#6E6E80" stroke-width="0.8" opacity="0.7"/>
-    <path d="M116 56 L122 66 L106 120" stroke="#6E6E80" stroke-width="0.8" opacity="0.7"/>
-
-    <!-- moño -->
-    <path d="M88 58 L100 63 L112 58 L113 71 L100 66 L87 71 Z" fill="#0A0A0E"/>
-    <path d="M88 60 L98 64 M112 60 L102 64" stroke="#4A4A58" stroke-width="0.8"/>
-    <rect x="96.5" y="61.5" width="7" height="7" rx="2" fill="#26262F"/>
+    <!-- solapas -->
+    <path d="M84 52 L100 132 L92 140 L66 94 L76 68 L68 60 Z" fill="url(#tLapel)"/>
+    <path d="M116 52 L100 132 L108 140 L134 94 L124 68 L132 60 Z" fill="url(#tLapel)"/>
+    <path d="M82 58 L76 68 L94 124" stroke="#4A5B94" stroke-width="0.8" opacity="0.8"/>
+    <path d="M118 58 L124 68 L106 124" stroke="#4A5B94" stroke-width="0.8" opacity="0.8"/>
 
     <!-- botones y cierre -->
-    <path d="M100 136 L100 202" stroke="#000" stroke-width="1.2"/>
-    <circle cx="102" cy="152" r="2.6" fill="#2E2E38" stroke="#5A5A68" stroke-width="0.6"/>
-    <circle cx="102" cy="172" r="2.6" fill="#2E2E38" stroke="#5A5A68" stroke-width="0.6"/>
+    <path d="M100 140 L100 202" stroke="#0B1026" stroke-width="1.2"/>
+    <circle cx="102" cy="156" r="2.6" fill="#3A4A7E" stroke="#6A7AB0" stroke-width="0.6"/>
+    <circle cx="102" cy="176" r="2.6" fill="#3A4A7E" stroke="#6A7AB0" stroke-width="0.6"/>
 
-    <!-- pañuelo de bolsillo -->
-    <path d="M124 96 L130 89 L134 95 L140 90 L138 100 L124 100 Z" fill="#FFFFFF"/>
-    <path d="M122 100 L142 100" stroke="#3A3A48" stroke-width="1.5"/>
-    <!-- bolsillos -->
-    <path d="M60 158 L84 158 M116 158 L140 158" stroke="#3A3A48" stroke-width="1.5"/>
+    <!-- pañuelo de bolsillo celeste -->
+    <path d="M124 96 L130 89 L134 95 L140 90 L138 100 L124 100 Z" fill="#CFE3F6"/>
+    <path d="M122 100 L142 100" stroke="#16203F" stroke-width="1.5"/>
+    <path d="M60 160 L84 160 M116 160 L140 160" stroke="#16203F" stroke-width="1.5"/>
   </g>
 </svg>
