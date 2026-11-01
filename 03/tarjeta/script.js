@@ -235,6 +235,51 @@
     setTimeout(() => layer.remove(), (longest + 0.3) * 1000);
   }
 
+  /* ───────── D.5) PALABRAS CAYENDO (fondo de la tarjeta) ───────── */
+  const FALL_TEXTS = ['Máscaras', 'Misterio', 'Antifaz', 'Secreto', 'Enigma', 'Vals', 'Magia',
+    'Sueños', 'Elegancia', 'Masquerade', 'XV Años', 'Grecia', 'Noche de Máscaras', '27 · Nov'];
+  const FALL_TYPES = ['fall-sway', 'fall-spin', 'fall-flip', 'fall-glow'];
+
+  function startFallingWords() {
+    if (document.querySelector('.falling-words')) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const layer = document.createElement('div');
+    layer.className = 'falling-words';
+    layer.setAttribute('aria-hidden', 'true');
+
+    const count = isMobile ? 10 : 16;
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      el.className = 'fall ' + FALL_TYPES[i % FALL_TYPES.length];
+
+      if (i % 5 === 4) {
+        const img = document.createElement('img');
+        img.src = 'mascara-icono.svg';
+        img.alt = '';
+        el.appendChild(img);
+      } else {
+        el.textContent = FALL_TEXTS[Math.floor(Math.random() * FALL_TEXTS.length)];
+        const r = Math.random();
+        if (r < 0.35) el.classList.add('fall-script');
+        else if (r < 0.55) el.classList.add('fall-light');
+      }
+
+      // repartidas a lo ancho, sin pegarse a los bordes
+      el.style.left = (4 + (i / count) * 84 + Math.random() * 6).toFixed(1) + '%';
+      el.style.fontSize = (0.8 + Math.random() * 0.8).toFixed(2) + 'rem';
+      el.style.setProperty('--o', (0.35 + Math.random() * 0.25).toFixed(2));
+      el.style.setProperty('--spin', (Math.random() < 0.5 ? -1 : 1) * (180 + Math.random() * 360) + 'deg');
+      const dur = 14 + Math.random() * 10;
+      el.style.animationDuration = dur.toFixed(1) + 's';
+      el.style.animationDelay = (-Math.random() * dur).toFixed(1) + 's';
+      layer.appendChild(el);
+    }
+
+    document.body.prepend(layer);
+    requestAnimationFrame(() => layer.classList.add('on'));
+  }
+
   /* ───────── E) SPLASH STARS ───────── */
   function createSplashStars() {
     const container = $('#splashStars');
@@ -301,6 +346,7 @@
             envelope.classList.add('hidden');
             document.body.style.overflow = '';
             initScrollReveal();
+            startFallingWords();
           }, 800);
         }
       }, 1200);

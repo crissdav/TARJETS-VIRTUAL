@@ -2860,7 +2860,105 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ============================================================
+   PALABRAS CAYENDO — ambiente de fondo cuando ya se ve la tarjeta
+   (detrás del contenido; solo transform/opacity)
+   ============================================================ */
+.falling-words {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.falling-words.on {
+  opacity: 1;
+}
+
+.fall {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--dorado-light);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.fall-script {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--dorado-dark);
+}
+
+.fall-light {
+  color: #FFFFFF;
+  text-shadow: 0 1px 6px rgba(216, 27, 114, 0.55);
+}
+
+.fall img {
+  display: block;
+  width: 2.4em;
+  height: auto;
+}
+
+/* se mece como hoja */
+.fall-sway { animation-name: fallSway; }
+@keyframes fallSway {
+  0%   { transform: translate3d(0, -12vh, 0) rotate(-8deg); opacity: 0; }
+  8%   { opacity: var(--o); }
+  25%  { transform: translate3d(24px, 18vh, 0) rotate(7deg); }
+  50%  { transform: translate3d(-24px, 48vh, 0) rotate(-7deg); }
+  75%  { transform: translate3d(24px, 78vh, 0) rotate(6deg); }
+  92%  { opacity: var(--o); }
+  100% { transform: translate3d(0, 112vh, 0) rotate(-4deg); opacity: 0; }
+}
+
+/* cae girando */
+.fall-spin { animation-name: fallSpin; }
+@keyframes fallSpin {
+  0%   { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: var(--o); }
+  92%  { opacity: var(--o); }
+  100% { transform: translate3d(-30px, 112vh, 0) rotate(var(--spin, 360deg)); opacity: 0; }
+}
+
+/* revolotea en 3D como una carta */
+.fall-flip { animation-name: fallFlip; }
+@keyframes fallFlip {
+  0%   { transform: translate3d(0, -12vh, 0) perspective(500px) rotateY(0deg); opacity: 0; }
+  8%   { opacity: var(--o); }
+  50%  { transform: translate3d(18px, 50vh, 0) perspective(500px) rotateY(360deg); }
+  92%  { opacity: var(--o); }
+  100% { transform: translate3d(0, 112vh, 0) perspective(500px) rotateY(720deg); opacity: 0; }
+}
+
+/* baja lento y respira (aparece y se esfuma) */
+.fall-glow { animation-name: fallGlow; }
+@keyframes fallGlow {
+  0%   { transform: translate3d(0, -12vh, 0) scale(0.8); opacity: 0; }
+  20%  { opacity: var(--o); transform: translate3d(0, 15vh, 0) scale(1); }
+  45%  { opacity: calc(var(--o) * 0.3); }
+  70%  { opacity: var(--o); transform: translate3d(0, 70vh, 0) scale(1.15); }
+  100% { transform: translate3d(0, 112vh, 0) scale(0.9); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-words { display: none; }
+}
+
 @media print {
+  .falling-words { display: none !important; }
+
   *,
   *::before,
   *::after {
