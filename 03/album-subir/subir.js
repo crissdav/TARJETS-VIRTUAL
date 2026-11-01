@@ -19,6 +19,13 @@
   const camCanvas = document.getElementById('camCanvas');
   const btnCapturar = document.getElementById('btnCapturar');
   const btnCerrarCam = document.getElementById('btnCerrarCam');
+  const doneBanner = document.getElementById('doneBanner');
+  const doneTitle = document.getElementById('doneTitle');
+  const misFotos = document.getElementById('misFotos');
+  const misFotosGrid = document.getElementById('misFotosGrid');
+  const misFotosCount = document.getElementById('misFotosCount');
+  const GUARDADAS_KEY = 'xv-grecia-mis-fotos';
+  const MAX_GUARDADAS = 40;
 
   const esMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   let stream = null;
@@ -174,11 +181,81 @@
   btnCerrarCam.addEventListener('click', cerrarCamara);
   camModal.addEventListener('click', e => { if (e.target === camModal) cerrarCamara(); });
 
+  /* ── Tus fotos: vista previa con estado de cada una ───────── */
+  function leerGuardadas() {
+    try { return JSON.parse(localStorage.getItem(GUARDADAS_KEY)) || []; } catch (e) { return []; }
+  }
+
+  function guardarMiniatura(src) {
+    try {
+      const lista = leerGuardadas();
+      lista.unshift(src);
+      localStorage.setItem(GUARDADAS_KEY, JSON.stringify(lista.slice(0, MAX_GUARDADAS)));
+    } catch (e) { /* sin espacio o modo privado: solo se pierde la vista previa */ }
+  }
+
+  function actualizarConteo() {
+    const n = misFotosGrid.querySelectorAll('.mf-item.ok').length;
+    misFotosCount.textContent = n;
+    misFotos.hidden = !misFotosGrid.children.length;
+  }
+
+  function crearItem(src, estado) {
+    const item = document.createElement('div');
+    item.className = 'mf-item ' + estado;
+    const img = document.createElement('img');
+    img.alt = '';
+    img.src = src;
+    const marca = document.createElement('span');
+    marca.className = 'mf-estado';
+    if (estado === 'ok') marca.textContent = '✓';
+    item.append(img, marca);
+    misFotosGrid.prepend(item);
+    actualizarConteo();
+    return item;
+  }
+
+  function marcarItem(item, estado, texto) {
+    item.className = 'mf-item ' + estado;
+    item.querySelector('.mf-estado').textContent = texto || '';
+    actualizarConteo();
+  }
+
+  // Miniatura chica (máx. 240 px) para guardar en el celular
+  function miniatura(file) {
+    return new Promise(resolve => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const escala = Math.min(1, 240 / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * escala);
+        c.height = Math.round(img.height * escala);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        try { resolve(c.toDataURL('image/jpeg', 0.7)); } catch (e) { resolve(null); }
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+      img.src = url;
+    });
+  }
+
+  function mostrarListo(ok) {
+    doneTitle.textContent = ok > 1
+      ? '¡Tus ' + ok + ' fotos ya están en el álbum!'
+      : '¡Tu foto ya está en el álbum!';
+    doneBanner.hidden = false;
+    doneBanner.classList.remove('pop');
+    void doneBanner.offsetWidth;
+    doneBanner.classList.add('pop');
+  }
+
   async function subir(files) {
     if (!db) { showToast('Falta configurar Supabase en config.js'); return; }
 
     const nombre = autor.value.trim();
     bloquear(true);
+    doneBanner.hidden = true;
     status.textContent = '';
     fill.style.width = '0%';
 
@@ -196,6 +273,10 @@
         continue;
       }
 
+      const thumb = await miniatura(file);
+      const item = crearItem(thumb || URL.createObjectURL(file), 'subiendo');
+      marcarItem(item, 'subiendo', 'Subiendo…');
+
       const path = Date.now() + '-' + Math.random().toString(36).slice(2, 10) + '.' + extension(file);
       try {
         const { error: upErr } = await db.storage.from(BUCKET).upload(path, file, { contentType: file.type });
@@ -207,21 +288,24 @@
           throw new Error(insErr.message);
         }
         ok++;
+        marcarItem(item, 'ok', '✓');
+        if (thumb) guardarMiniatura(thumb);
       } catch (err) {
+        marcarItem(item, 'error', 'No se subió');
         showToast('No se pudo subir: ' + err.message);
       }
       fill.style.width = Math.round(((i + 1) / files.length) * 100) + '%';
     }
 
-    status.textContent = ok
-      ? `¡${ok} foto${ok > 1 ? 's' : ''} en el álbum! 🎭`
-      : 'No se subió ninguna foto.';
+    status.textContent = ok ? '' : 'No se subió ninguna foto. Intenta de nuevo.';
+    if (ok) mostrarListo(ok);
     bloquear(false);
     setTimeout(() => { fill.style.width = '0%'; }, 1200);
   }
 
   function init() {
     crearFondo();
+    leerGuardadas().slice().reverse().forEach(src => crearItem(src, 'ok'));
 
     if (!window.supabase) {
       status.textContent = 'No se pudo cargar Supabase. Revisa la conexión a internet.';

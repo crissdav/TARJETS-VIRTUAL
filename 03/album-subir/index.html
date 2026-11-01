@@ -47,7 +47,24 @@
     </div>
 
     <div class="progress-bar" id="bar"><div class="progress-fill" id="fill"></div></div>
-    <div class="status-note" id="status"></div>
+    <div class="status-note" id="status" role="status" aria-live="polite"></div>
+
+    <div class="done-banner" id="doneBanner" hidden>
+      <span class="done-check" aria-hidden="true">✓</span>
+      <div>
+        <strong id="doneTitle">¡Tu foto ya está en el álbum!</strong>
+        <span>Grecia la podrá ver en su álbum privado.</span>
+      </div>
+    </div>
+
+    <div class="mis-fotos" id="misFotos" hidden>
+      <div class="mis-fotos-head">
+        <span>Tus fotos</span>
+        <b id="misFotosCount">0</b>
+      </div>
+      <div class="mis-fotos-grid" id="misFotosGrid"></div>
+      <p class="mis-fotos-nota">Solo tú ves esta vista previa en tu celular.</p>
+    </div>
     <p class="unlimited">✨ Se suben solas al álbum · Sin límite de fotos ✨</p>
   </div>
 </section>
