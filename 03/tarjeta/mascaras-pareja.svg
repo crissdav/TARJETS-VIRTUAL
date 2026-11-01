@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 40 460 410" fill="none">
+  <defs>
+    <linearGradient id="mkBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF7DB8"/>
+      <stop offset="0.45" stop-color="#E0287F"/>
+      <stop offset="1" stop-color="#8E0E4A"/>
+    </linearGradient>
+    <linearGradient id="mkRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF4F9"/>
+      <stop offset="0.5" stop-color="#F9B9D6"/>
+      <stop offset="1" stop-color="#E889B5"/>
+    </linearGradient>
+    <linearGradient id="mkGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="mkFeather" x1="0" y1="1" x2="0.3" y2="0">
+      <stop offset="0" stop-color="#C2185B"/>
+      <stop offset="0.6" stop-color="#F06BA8"/>
+      <stop offset="1" stop-color="#FFD3E6"/>
+    </linearGradient>
+    <linearGradient id="mkFeather2" x1="0" y1="1" x2="0.3" y2="0">
+      <stop offset="0" stop-color="#880E4F"/>
+      <stop offset="1" stop-color="#E0287F"/>
+    </linearGradient>
+    <radialGradient id="mkEye" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#5A0F36"/>
+      <stop offset="1" stop-color="#2A0518"/>
+    </radialGradient>
+    <radialGradient id="mkGem" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.4" stop-color="#FFC2DD"/>
+      <stop offset="1" stop-color="#C2185B"/>
+    </radialGradient>
+    <filter id="mkShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#7A1248" flood-opacity="0.35"/>
+    </filter>
+  
+    <linearGradient id="hBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A4A55"/>
+      <stop offset="0.5" stop-color="#1C1C24"/>
+      <stop offset="1" stop-color="#050508"/>
+    </linearGradient>
+    <linearGradient id="hRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#C9C9D2"/>
+      <stop offset="1" stop-color="#8C8C99"/>
+    </linearGradient>
+    <radialGradient id="hEye" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#FCE4EF"/>
+      <stop offset="1" stop-color="#F7C6DB"/>
+    </radialGradient>
+    <radialGradient id="hGem" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#D9D9E3"/>
+      <stop offset="1" stop-color="#6E6E7A"/>
+    </radialGradient>
+    <linearGradient id="stick" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8C8C99"/><stop offset="0.5" stop-color="#FFFFFF"/><stop offset="1" stop-color="#8C8C99"/>
+    </linearGradient>
+  </defs>
+  <!-- antifaz de él: negro y plata, con bastón -->
+  <g transform="translate(330 150) rotate(14) scale(0.62) translate(-250 -150)">
+    <rect x="452" y="150" width="14" height="430" rx="7" fill="url(#stick)" transform="rotate(-6 459 150)"/>
+    
+  
+
+
+  <!-- cuerpo del antifaz -->
+  <g filter="url(#mkShadow)">
+    <path d="M250 112 C280 92 330 78 380 80 C420 82 455 62 478 40 C476 80 462 120 440 150 C425 172 410 195 380 205 C345 216 305 210 285 195 C272 186 262 168 250 166 C238 168 228 186 215 195 C195 210 155 216 120 205 C90 195 75 172 60 150 C38 120 24 80 22 40 C45 62 80 82 120 80 C170 78 220 92 250 112 Z"
+          fill="url(#hBody)" stroke="url(#hRim)" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+  <!-- brillo satinado -->
+  <path d="M250 118 C280 100 330 88 380 90 C415 92 445 76 466 58 C460 84 450 104 438 118 C390 112 300 116 250 140 C200 116 110 112 62 118 C50 104 40 84 34 58 C55 76 85 92 120 90 C170 88 220 100 250 118 Z" fill="url(#mkGloss)"/>
+
+  <!-- encaje / filigrana -->
+  <g stroke="#E6E6EE" stroke-width="1.6" stroke-linecap="round" opacity="0.75">
+    <path d="M250 128 C262 118 276 118 280 128 C284 138 272 142 266 136"/>
+    <path d="M250 128 C238 118 224 118 220 128 C216 138 228 142 234 136"/>
+    <path d="M400 96 C420 98 440 86 452 70"/>
+    <path d="M410 108 C428 108 444 98 456 84 C446 104 434 116 418 120"/>
+    <path d="M100 96 C80 98 60 86 48 70"/>
+    <path d="M90 108 C72 108 56 98 44 84 C54 104 66 116 82 120"/>
+    <path d="M330 196 C350 202 372 200 390 190"/>
+    <path d="M170 196 C150 202 128 200 110 190"/>
+  </g>
+
+  <!-- ojos rasgados -->
+  <path d="M283 152 C298 120 346 108 392 124 C378 152 344 172 302 168 C292 166 286 160 283 152 Z" fill="url(#hEye)" stroke="url(#hRim)" stroke-width="4"/>
+  <path d="M217 152 C202 120 154 108 108 124 C122 152 156 172 198 168 C208 166 214 160 217 152 Z" fill="url(#hEye)" stroke="url(#hRim)" stroke-width="4"/>
+
+  <!-- pedrería alrededor de los ojos -->
+  <g fill="#FFFFFF">
+    <circle cx="300" cy="126" r="3.2"/><circle cx="322" cy="114" r="3.6"/><circle cx="348" cy="110" r="3.6"/><circle cx="374" cy="114" r="3.2"/><circle cx="398" cy="122" r="2.8"/>
+    <circle cx="200" cy="126" r="3.2"/><circle cx="178" cy="114" r="3.6"/><circle cx="152" cy="110" r="3.6"/><circle cx="126" cy="114" r="3.2"/><circle cx="102" cy="122" r="2.8"/>
+    <circle cx="318" cy="182" r="2.6" opacity="0.85"/><circle cx="344" cy="184" r="2.6" opacity="0.85"/><circle cx="368" cy="178" r="2.4" opacity="0.85"/>
+    <circle cx="182" cy="182" r="2.6" opacity="0.85"/><circle cx="156" cy="184" r="2.6" opacity="0.85"/><circle cx="132" cy="178" r="2.4" opacity="0.85"/>
+  </g>
+
+  <!-- joya central -->
+  <path d="M250 84 L264 104 L250 124 L236 104 Z" fill="url(#hGem)" stroke="#F4F4F8" stroke-width="2.5"/>
+  <path d="M250 84 L256 104 L250 124" stroke="#FFFFFF" stroke-width="1" opacity="0.6"/>
+
+  </g>
+  <!-- antifaz de ella: rosa nube con plumas -->
+  <g transform="translate(250 230) rotate(-10) scale(0.82) translate(-250 -150)">
+    
+  
+
+  <!-- cintas de satén -->
+  <path d="M34 112 C20 150 30 210 12 270" stroke="#F06BA8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M34 112 C46 160 36 220 52 285" stroke="#C2185B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M466 112 C480 150 470 210 488 270" stroke="#F06BA8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M466 112 C454 160 464 220 448 285" stroke="#C2185B" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- plumas (lado izquierdo, asimétrico como una máscara real) -->
+  <g>
+    <path d="M124 98 C66 84 14 40 26 -16 C56 14 96 50 136 92 Z" fill="url(#mkFeather2)" opacity="0.85"/>
+    <path d="M126 96 C150 60 170 20 166 -20 C146 6 132 50 128 92 Z" fill="url(#mkFeather)" opacity="0.9"/>
+    <path d="M126 96 C100 60 60 20 34 -10" stroke="#FFE6F0" stroke-width="1.2" opacity="0.6"/>
+    <path d="M118 100 C80 70 50 30 58 -6 C82 18 112 52 132 92 Z" fill="url(#mkFeather)"/>
+    <path d="M132 92 C112 50 100 10 118 -18 C136 12 146 52 146 90 Z" fill="url(#mkFeather2)"/>
+    <path d="M104 106 C66 92 30 66 18 30 C50 42 86 68 116 98 Z" fill="url(#mkFeather)" opacity="0.9"/>
+    <path d="M118 100 C90 60 70 25 60 -2" stroke="#FFE6F0" stroke-width="1.6" opacity="0.8"/>
+    <path d="M140 90 C130 50 122 15 118 -14" stroke="#FFC2DD" stroke-width="1.4" opacity="0.7"/>
+    <path d="M110 102 C80 84 46 60 22 32" stroke="#FFE6F0" stroke-width="1.4" opacity="0.7"/>
+    <g stroke="#FFFFFF" stroke-width="0.8" opacity="0.35">
+      <path d="M96 66 L80 70 M88 52 L72 54 M80 38 L64 38 M104 80 L90 86"/>
+      <path d="M128 60 L140 56 M124 40 L136 34 M120 20 L132 14"/>
+      <path d="M70 72 L62 82 M54 58 L44 66 M40 46 L30 52"/>
+    </g>
+  </g>
+
+  <!-- cuerpo del antifaz -->
+  <g filter="url(#mkShadow)">
+    <path d="M250 112 C280 92 330 78 380 80 C420 82 455 62 478 40 C476 80 462 120 440 150 C425 172 410 195 380 205 C345 216 305 210 285 195 C272 186 262 168 250 166 C238 168 228 186 215 195 C195 210 155 216 120 205 C90 195 75 172 60 150 C38 120 24 80 22 40 C45 62 80 82 120 80 C170 78 220 92 250 112 Z"
+          fill="url(#mkBody)" stroke="url(#mkRim)" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+  <!-- brillo satinado -->
+  <path d="M250 118 C280 100 330 88 380 90 C415 92 445 76 466 58 C460 84 450 104 438 118 C390 112 300 116 250 140 C200 116 110 112 62 118 C50 104 40 84 34 58 C55 76 85 92 120 90 C170 88 220 100 250 118 Z" fill="url(#mkGloss)"/>
+
+  <!-- encaje / filigrana -->
+  <g stroke="#FFE6F0" stroke-width="1.6" stroke-linecap="round" opacity="0.75">
+    <path d="M250 128 C262 118 276 118 280 128 C284 138 272 142 266 136"/>
+    <path d="M250 128 C238 118 224 118 220 128 C216 138 228 142 234 136"/>
+    <path d="M400 96 C420 98 440 86 452 70"/>
+    <path d="M410 108 C428 108 444 98 456 84 C446 104 434 116 418 120"/>
+    <path d="M100 96 C80 98 60 86 48 70"/>
+    <path d="M90 108 C72 108 56 98 44 84 C54 104 66 116 82 120"/>
+    <path d="M330 196 C350 202 372 200 390 190"/>
+    <path d="M170 196 C150 202 128 200 110 190"/>
+  </g>
+
+  <!-- ojos rasgados -->
+  <path d="M283 152 C298 120 346 108 392 124 C378 152 344 172 302 168 C292 166 286 160 283 152 Z" fill="#FCE4EF" stroke="url(#mkRim)" stroke-width="4"/>
+  <path d="M217 152 C202 120 154 108 108 124 C122 152 156 172 198 168 C208 166 214 160 217 152 Z" fill="#FCE4EF" stroke="url(#mkRim)" stroke-width="4"/>
+
+  <!-- pedrería alrededor de los ojos -->
+  <g fill="#FFFFFF">
+    <circle cx="300" cy="126" r="3.2"/><circle cx="322" cy="114" r="3.6"/><circle cx="348" cy="110" r="3.6"/><circle cx="374" cy="114" r="3.2"/><circle cx="398" cy="122" r="2.8"/>
+    <circle cx="200" cy="126" r="3.2"/><circle cx="178" cy="114" r="3.6"/><circle cx="152" cy="110" r="3.6"/><circle cx="126" cy="114" r="3.2"/><circle cx="102" cy="122" r="2.8"/>
+    <circle cx="318" cy="182" r="2.6" opacity="0.85"/><circle cx="344" cy="184" r="2.6" opacity="0.85"/><circle cx="368" cy="178" r="2.4" opacity="0.85"/>
+    <circle cx="182" cy="182" r="2.6" opacity="0.85"/><circle cx="156" cy="184" r="2.6" opacity="0.85"/><circle cx="132" cy="178" r="2.4" opacity="0.85"/>
+  </g>
+
+  <!-- joya central -->
+  <path d="M250 84 L264 104 L250 124 L236 104 Z" fill="url(#mkGem)" stroke="#FFF4F9" stroke-width="2.5"/>
+  <path d="M250 84 L256 104 L250 124" stroke="#FFFFFF" stroke-width="1" opacity="0.6"/>
+  <!-- joya de las plumas -->
+  <circle cx="126" cy="98" r="11" fill="url(#mkGem)" stroke="#FFF4F9" stroke-width="2.5"/>
+  <circle cx="122" cy="94" r="3" fill="#FFFFFF" opacity="0.9"/>
+
+  </g>
+</svg>

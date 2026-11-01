@@ -46,7 +46,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 body {
@@ -395,6 +395,8 @@ h1, h2, h3, h4, h5, h6 {
 .splash-mask {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  transform: scale(1.12);
   filter: drop-shadow(0 0 20px rgba(224, 40, 127, 0.4));
 }
 
@@ -841,6 +843,19 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 
+.hero-masks {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+  filter: drop-shadow(0 12px 24px rgba(122, 18, 72, 0.22));
+  animation: masksFloat 6s ease-in-out infinite;
+}
+
+@keyframes masksFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-10px) rotate(-1.5deg); }
+}
+
 .hero-people {
   display: flex;
   align-items: flex-end;
@@ -1157,7 +1172,7 @@ h1, h2, h3, h4, h5, h6 {
    ============================================================ */
 .dresscode {
   position: relative;
-  padding: 5rem 1.5rem;
+  padding: 4rem 1.5rem 1.5rem;
 }
 
 .dresscode .section-sub {
@@ -1294,13 +1309,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .dresscode-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.2rem;
   max-width: 500px;
   margin: 0 auto;
 }
 
 .dc-card {
+  min-width: 0;
   background: var(--glass-bg);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -1333,8 +1349,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dc-img-wrap {
-  width: 120px;
-  height: 150px;
+  width: 100%;
+  max-width: 130px;
+  height: 180px;
   margin: 0 auto 0.8rem;
   display: flex;
   align-items: center;
@@ -1378,7 +1395,7 @@ h1, h2, h3, h4, h5, h6 {
    ============================================================ */
 .rsvp {
   position: relative;
-  padding: 5rem 1.5rem;
+  padding: 2rem 1.5rem 4rem;
   text-align: center;
   overflow: hidden;
 }
@@ -1429,8 +1446,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .note-emoji,
 .badge-emoji {
-  width: 1.1em;
-  height: 0.72em;
+  width: 1.6em;
+  height: 1em;
   vertical-align: middle;
   filter: drop-shadow(0 0 4px rgba(224, 40, 127, 0.45));
 }
@@ -2440,12 +2457,30 @@ h1, h2, h3, h4, h5, h6 {
   .dc-swatch-name {
     font-size: 0.8rem;
   }
+
+  .dresscode {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .dresscode-grid {
+    gap: 0.75rem;
+  }
+
+  .dc-card {
+    padding: 0.9rem 0.6rem;
+  }
+
+  .family-section {
+    padding-top: 2rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .section-title.visible,
   .section-divider.visible,
   .btn-open::after,
+  .hero-masks,
   .cd-item:last-child .cd-number {
     animation: none !important;
   }

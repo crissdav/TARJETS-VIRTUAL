@@ -42,7 +42,7 @@
 }
 
 html {
-  font-size: 20px;
+  font-size: 22px;
 }
 
 body {
@@ -177,10 +177,11 @@ body::before {
 }
 
 .head-mask {
-  width: 64px;
-  height: 64px;
+  display: block;
+  width: 110px;
+  height: 70px;
+  object-fit: contain;
   margin: 0 auto 0.8rem;
-  opacity: 0.65;
   filter: drop-shadow(0 0 12px rgba(224, 40, 127, 0.35));
 }
 
@@ -893,10 +894,11 @@ td.es-confirmado .nombre {
 }
 
 .login-mask {
-  width: 72px;
-  height: 72px;
+  display: block;
+  width: 130px;
+  height: 84px;
+  object-fit: contain;
   margin: 0 auto 1rem;
-  opacity: 0.7;
   filter: drop-shadow(0 0 14px rgba(224, 40, 127, 0.4));
 }
 
@@ -987,7 +989,7 @@ td.es-confirmado .nombre {
 /* A partir de aquí la tabla se vuelve a tarjetas: con menos de ~900px
    las cinco columnas apretaban los botones y la botonera se salía. */
 @media (max-width: 900px) {
-  html { font-size: 18px; }
+  html { font-size: 20px; }
 
   .toolbar { gap: 0.6rem; }
   .select { flex: 1 1 100%; }
