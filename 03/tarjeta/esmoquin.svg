@@ -1,71 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none">
   <defs>
-    <linearGradient id="tWool" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="mBlazer" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#0E1530"/>
-      <stop offset="0.4" stop-color="#2A3866"/>
+      <stop offset="0.45" stop-color="#2A3866"/>
       <stop offset="0.6" stop-color="#1F2B52"/>
       <stop offset="1" stop-color="#0B1026"/>
     </linearGradient>
-    <linearGradient id="tLapel" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="mLapel" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#34447A"/>
       <stop offset="1" stop-color="#16203F"/>
     </linearGradient>
-    <linearGradient id="tShirt" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#9FC3E6"/><stop offset="0.5" stop-color="#CFE3F6"/><stop offset="1" stop-color="#97BCE0"/>
+    <linearGradient id="mShirt" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9FC3E6"/><stop offset="0.5" stop-color="#D3E6F7"/><stop offset="1" stop-color="#97BCE0"/>
     </linearGradient>
-    <linearGradient id="tPants" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#3A3F4A"/><stop offset="0.5" stop-color="#5A606E"/><stop offset="1" stop-color="#33373F"/>
+    <linearGradient id="mChino" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A8957A"/><stop offset="0.5" stop-color="#CDBB9E"/><stop offset="1" stop-color="#9F8C71"/>
     </linearGradient>
-    <linearGradient id="tHanger" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#9A9AA6"/><stop offset="0.5" stop-color="#F4F4F8"/><stop offset="1" stop-color="#9A9AA6"/>
+    <linearGradient id="mLeather" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9A5B34"/>
+      <stop offset="1" stop-color="#4E2A14"/>
     </linearGradient>
-    <filter id="tShadow" x="-20%" y="-10%" width="140%" height="130%">
-      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#3A0A24" flood-opacity="0.3"/>
+    <filter id="mShadow" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3A0A24" flood-opacity="0.28"/>
     </filter>
   </defs>
 
-  <!-- gancho -->
-  <path d="M100 26 L100 16 C100 8 110 8 110 14" stroke="url(#tHanger)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M52 50 L100 26 L148 50" stroke="url(#tHanger)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g filter="url(#mShadow)">
+    <!-- pantalón chino -->
+    <path d="M70 120 L130 120 L136 214 L106 214 L100 140 L94 214 L64 214 Z" fill="url(#mChino)"/>
+    <rect x="70" y="116" width="60" height="8" rx="1.5" fill="url(#mLeather)"/>
+    <rect x="96" y="115" width="9" height="10" rx="1.5" fill="none" stroke="#C9C9D2" stroke-width="1.4"/>
+    <path d="M82 128 L78 212 M118 128 L122 212" stroke="#8C7A60" stroke-width="1" opacity="0.6"/>
 
-  <g filter="url(#tShadow)">
-    <!-- pantalón de vestir gris -->
-    <path d="M60 196 L140 196 L146 312 L108 312 L100 214 L92 312 L54 312 Z" fill="url(#tPants)"/>
-    <path d="M78 206 L74 310 M122 206 L126 310" stroke="#2A2E36" stroke-width="1" opacity="0.6"/>
-    <path d="M100 214 L100 200" stroke="#2A2E36" stroke-width="1"/>
-
-    <!-- mangas -->
-    <path d="M50 54 C38 62 32 100 31 140 L29 194 L45 196 L48 140 Z" fill="url(#tWool)"/>
-    <path d="M150 54 C162 62 168 100 169 140 L171 194 L155 196 L152 140 Z" fill="url(#tWool)"/>
-    <path d="M29 189 L45 191 M171 189 L155 191" stroke="#CFE3F6" stroke-width="3"/>
+    <!-- mangas del saco -->
+    <path d="M52 30 C42 38 38 70 37 100 L36 116 L50 117 L52 98 Z" fill="url(#mBlazer)"/>
+    <path d="M148 30 C158 38 162 70 163 100 L164 116 L150 117 L148 98 Z" fill="url(#mBlazer)"/>
+    <path d="M36 111 L50 112 M164 111 L150 112" stroke="#D3E6F7" stroke-width="3"/>
 
     <!-- saco -->
-    <path d="M50 54 C70 46 86 44 100 52 C114 44 130 46 150 54 L158 122 L154 202 L46 202 L42 122 Z" fill="url(#tWool)"/>
+    <path d="M52 30 C70 22 86 20 100 28 C114 20 130 22 148 30 L154 76 L150 112 L50 112 L46 76 Z" fill="url(#mBlazer)"/>
 
     <!-- camisa celeste, cuello abierto -->
-    <path d="M84 52 L100 132 L116 52 C110 48 90 48 84 52 Z" fill="url(#tShirt)"/>
-    <path d="M100 60 L100 132" stroke="#7FA6CC" stroke-width="0.8"/>
-    <circle cx="100" cy="84" r="1.6" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
-    <circle cx="100" cy="100" r="1.6" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
-    <circle cx="100" cy="116" r="1.6" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
-    <!-- cuello de la camisa -->
-    <path d="M86 50 L94 70 L100 58 Z" fill="#DDEBF8" stroke="#8DB2D8" stroke-width="0.8"/>
-    <path d="M114 50 L106 70 L100 58 Z" fill="#DDEBF8" stroke="#8DB2D8" stroke-width="0.8"/>
+    <path d="M84 28 L100 92 L116 28 C110 24 90 24 84 28 Z" fill="url(#mShirt)"/>
+    <path d="M86 26 L94 44 L100 34 Z" fill="#E1EEFA" stroke="#8DB2D8" stroke-width="0.8"/>
+    <path d="M114 26 L106 44 L100 34 Z" fill="#E1EEFA" stroke="#8DB2D8" stroke-width="0.8"/>
+    <circle cx="100" cy="58" r="1.4" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
+    <circle cx="100" cy="72" r="1.4" fill="#E9F2FB" stroke="#7FA6CC" stroke-width="0.5"/>
 
     <!-- solapas -->
-    <path d="M84 52 L100 132 L92 140 L66 94 L76 68 L68 60 Z" fill="url(#tLapel)"/>
-    <path d="M116 52 L100 132 L108 140 L134 94 L124 68 L132 60 Z" fill="url(#tLapel)"/>
-    <path d="M82 58 L76 68 L94 124" stroke="#4A5B94" stroke-width="0.8" opacity="0.8"/>
-    <path d="M118 58 L124 68 L106 124" stroke="#4A5B94" stroke-width="0.8" opacity="0.8"/>
+    <path d="M84 28 L100 92 L92 100 L68 62 L76 42 L70 36 Z" fill="url(#mLapel)"/>
+    <path d="M116 28 L100 92 L108 100 L132 62 L124 42 L130 36 Z" fill="url(#mLapel)"/>
 
-    <!-- botones y cierre -->
-    <path d="M100 140 L100 202" stroke="#0B1026" stroke-width="1.2"/>
-    <circle cx="102" cy="156" r="2.6" fill="#3A4A7E" stroke="#6A7AB0" stroke-width="0.6"/>
-    <circle cx="102" cy="176" r="2.6" fill="#3A4A7E" stroke="#6A7AB0" stroke-width="0.6"/>
+    <!-- botones y bolsillos -->
+    <path d="M100 100 L100 112" stroke="#0B1026" stroke-width="1.2"/>
+    <circle cx="102" cy="104" r="2.4" fill="#3A4A7E" stroke="#6A7AB0" stroke-width="0.6"/>
+    <path d="M124 64 L140 64" stroke="#16203F" stroke-width="1.4"/>
+    <path d="M126 64 L130 58 L134 63 L138 59 L138 64 Z" fill="#D3E6F7"/>
 
-    <!-- pañuelo de bolsillo celeste -->
-    <path d="M124 96 L130 89 L134 95 L140 90 L138 100 L124 100 Z" fill="#CFE3F6"/>
-    <path d="M122 100 L142 100" stroke="#16203F" stroke-width="1.5"/>
-    <path d="M60 160 L84 160 M116 160 L140 160" stroke="#16203F" stroke-width="1.5"/>
+    <!-- mocasines -->
+    <path d="M30 236 C30 226 44 222 58 224 L84 230 C90 232 90 240 84 240 L36 240 C32 240 30 239 30 236 Z" fill="url(#mLeather)"/>
+    <path d="M46 228 C54 226 62 228 66 232" stroke="#2E170A" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M110 236 C110 226 124 222 138 224 L164 230 C170 232 170 240 164 240 L116 240 C112 240 110 239 110 236 Z" fill="url(#mLeather)" opacity="0.92"/>
+    <path d="M126 228 C134 226 142 228 146 232" stroke="#2E170A" stroke-width="1.4" stroke-linecap="round"/>
   </g>
 </svg>

@@ -14,9 +14,9 @@
   --blanco: #3F0A27;
   --gris: #6E1A45;
   --gris-light: #7E2453;
-  --gris-dark: #F3BCD5;
+  --gris-dark: #EAB8C4;
   --negro: #FFF5F9;
-  --bg-dark: #FCD9E8;
+  --bg-dark: #F2C4CE;
 
   --font-display: 'Cinzel', serif;
   --font-body: 'Cormorant Garamond', serif;
@@ -363,7 +363,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at center, var(--negro) 0%, #FCD3E3 60%, #F7A8CB 100%);
+  background: radial-gradient(ellipse at center, #FBE6EB 0%, #F2C4CE 60%, #EAB8C4 100%);
   transition: opacity 0.8s var(--ease-smooth), visibility 0.8s;
   overflow: hidden;
 }
@@ -516,7 +516,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at center, #FFE6F0 0%, var(--negro) 100%);
+  background: radial-gradient(ellipse at center, #FBE6EB 0%, #F2C4CE 70%, #EAB8C4 100%);
   transition: opacity 0.6s var(--ease-smooth), visibility 0.6s;
 }
 
@@ -2398,7 +2398,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 14px;
   height: 18px;
   border-radius: 80% 0 80% 0;
-  background: linear-gradient(135deg, #FFD3E6, #F48FBF);
+  background: linear-gradient(135deg, #FBE6EB, #D98FA5);
   box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.8);
   will-change: transform;
   animation: petalFall linear infinite;
@@ -2632,7 +2632,7 @@ h1, h2, h3, h4, h5, h6 {
   background:
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.16) 0 1.5px, transparent 1.5px 16px),
     repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 1.5px, transparent 1.5px 16px),
-    linear-gradient(160deg, #FFCFE3 0%, #F59AC4 60%, #E8679F 100%);
+    linear-gradient(160deg, #F7D6DE 0%, #F2C4CE 45%, #EAB8C4 75%, #DDA0B1 100%);
   border-color: rgba(255, 255, 255, 0.6);
 }
 
@@ -3104,6 +3104,43 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--dorado-light);
+}
+
+.dc-tag {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  background: var(--dorado-light);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dc-tag {
+  white-space: nowrap;
+  letter-spacing: 0.06em;
+}
+
+.dc-img-wrap {
+  max-width: 160px;
+  height: 190px;
+}
+
+@media (max-width: 480px) {
+  .dc-tag {
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .dc-card h3 {
+    letter-spacing: 0.04em;
+    font-size: 0.9rem;
+  }
 }
 
 @media print {

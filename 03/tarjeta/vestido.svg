@@ -1,48 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none">
   <defs>
-    <linearGradient id="dSatin" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#0A0C18"/>
-      <stop offset="0.35" stop-color="#232846"/>
-      <stop offset="0.55" stop-color="#151a33"/>
-      <stop offset="1" stop-color="#05060d"/>
+    <linearGradient id="bSilk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3FA37A"/>
+      <stop offset="0.5" stop-color="#21704F"/>
+      <stop offset="1" stop-color="#134A34"/>
     </linearGradient>
-    <linearGradient id="dSheen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#7C86C2" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#7C86C2" stop-opacity="0"/>
+    <linearGradient id="bSkirt" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#141B36"/>
+      <stop offset="0.5" stop-color="#2B3866"/>
+      <stop offset="1" stop-color="#111730"/>
     </linearGradient>
-    <linearGradient id="dHanger" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#9A9AA6"/><stop offset="0.5" stop-color="#F4F4F8"/><stop offset="1" stop-color="#9A9AA6"/>
+    <linearGradient id="bShoe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3A3A44"/>
+      <stop offset="1" stop-color="#0D0D12"/>
     </linearGradient>
-    <filter id="dShadow" x="-20%" y="-10%" width="140%" height="130%">
-      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#3A0A24" flood-opacity="0.3"/>
+    <filter id="bShadow" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3A0A24" flood-opacity="0.28"/>
     </filter>
   </defs>
 
-  <!-- gancho -->
-  <path d="M100 24 L100 16 C100 8 110 8 110 14" stroke="url(#dHanger)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M58 44 L100 24 L142 44" stroke="url(#dHanger)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g filter="url(#bShadow)">
+    <!-- blusa de seda cruzada -->
+    <path d="M72 22 L100 46 L128 22 L150 32 L164 64 L148 72 L140 58 L138 100 L62 100 L60 58 L52 72 L36 64 L50 32 Z" fill="url(#bSilk)"/>
+    <path d="M72 22 L100 46 L118 80" stroke="#0E3B29" stroke-width="1.4" opacity="0.7"/>
+    <path d="M128 22 L100 46" stroke="#0E3B29" stroke-width="1.4" opacity="0.7"/>
+    <path d="M78 30 C86 40 94 46 100 50" stroke="#7DD3AE" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M62 92 C80 96 120 96 138 92" stroke="#0E3B29" stroke-width="1.2" opacity="0.6"/>
+    <path d="M44 62 L54 58 M156 62 L146 58" stroke="#7DD3AE" stroke-width="1.4" opacity="0.6"/>
 
-  <g filter="url(#dShadow)">
-    <!-- tirantes -->
-    <path d="M80 42 C78 52 76 60 75 70" stroke="#1B2040" stroke-width="3" stroke-linecap="round"/>
-    <path d="M120 42 C122 52 124 60 125 70" stroke="#1B2040" stroke-width="3" stroke-linecap="round"/>
+    <!-- falda midi plisada -->
+    <rect x="66" y="104" width="68" height="9" rx="2" fill="#0F1530"/>
+    <path d="M66 113 L134 113 L160 200 L40 200 Z" fill="url(#bSkirt)"/>
+    <g stroke="#0B1026" stroke-width="1.2" opacity="0.75">
+      <path d="M78 113 L64 200 M90 113 L84 200 M100 113 L100 200 M110 113 L116 200 M122 113 L136 200"/>
+    </g>
+    <g stroke="#5A6AA6" stroke-width="1" opacity="0.45">
+      <path d="M84 113 L74 200 M105 113 L108 200 M116 113 L126 200"/>
+    </g>
 
-    <!-- falda -->
-    <path d="M76 120 C70 150 56 196 40 236 C66 246 134 246 160 236 C144 196 130 150 124 120 C112 126 88 126 76 120 Z" fill="url(#dSatin)"/>
-    <!-- pliegues con brillo -->
-    <path d="M96 126 C93 166 86 204 78 242 L90 243 C95 206 100 166 101 127 Z" fill="url(#dSheen)"/>
-    <path d="M82 124 C76 160 66 200 54 238 L62 240 C72 202 82 162 88 125 Z" fill="url(#dSheen)" opacity="0.6"/>
-    <path d="M114 125 C120 162 130 202 140 240 L148 238 C138 200 128 160 118 124 Z" fill="url(#dSheen)" opacity="0.45"/>
-    <path d="M40 236 C66 246 134 246 160 236 C140 240 120 242 100 241 C80 242 60 240 40 236 Z" fill="#000" opacity="0.35"/>
+    <!-- tacones -->
+    <path d="M104 236 C112 226 124 222 136 226 L150 232 C153 234 152 238 148 238 L114 238 Z" fill="url(#bShoe)"/>
+    <path d="M104 236 L104 248 L108 248 L110 238" fill="#0D0D12"/>
+    <path d="M140 236 C148 226 160 222 172 226 L186 232 C189 234 188 238 184 238 L150 238 Z" fill="url(#bShoe)" opacity="0.92"/>
+    <path d="M140 236 L140 248 L144 248 L146 238" fill="#0D0D12"/>
 
-    <!-- corpiño escote corazón -->
-    <path d="M72 70 C78 62 92 62 100 74 C108 62 122 62 128 70 L125 114 C114 120 86 120 75 114 Z" fill="url(#dSatin)"/>
-    <path d="M80 70 C86 66 94 68 98 76 L96 112 C90 113 84 112 79 110 Z" fill="url(#dSheen)" opacity="0.7"/>
-    <path d="M100 76 L100 114" stroke="#000" stroke-width="1" opacity="0.4"/>
-
-    <!-- cinturón satinado -->
-    <path d="M75 113 C86 119 114 119 125 113 L126 122 C114 128 86 128 74 122 Z" fill="#2B3156"/>
-    <path d="M75 115 C86 120 114 120 125 115" stroke="#8C95CF" stroke-width="0.8" opacity="0.6"/>
-    <circle cx="100" cy="120" r="3.4" fill="#C9CFF2"/>
+    <!-- cartera de mano -->
+    <rect x="18" y="214" width="62" height="32" rx="6" fill="#1B1B24"/>
+    <path d="M18 224 C36 236 62 236 80 224" fill="#2A2A36"/>
+    <circle cx="49" cy="231" r="3" fill="#7DD3AE"/>
   </g>
 </svg>
