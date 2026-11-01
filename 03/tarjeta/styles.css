@@ -2806,6 +2806,60 @@ h1, h2, h3, h4, h5, h6 {
   .envelope-seal { animation: none; }
 }
 
+/* ============================================================
+   CONFIRMAR ASISTENCIA — espaciado del formulario
+   ============================================================ */
+.rsvp-mask-wrap {
+  margin-bottom: 0.6rem;
+}
+
+.rsvp-intro {
+  margin-bottom: 1.1rem;
+  line-height: 1.5;
+}
+
+.pass-badge {
+  margin-bottom: 1.6rem;
+}
+
+.rsvp-field {
+  display: block;
+  margin-bottom: 1.25rem;
+}
+
+.rsvp-field:last-of-type {
+  margin-bottom: 0;
+}
+
+.rsvp-field-label {
+  line-height: 1.35;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.rsvp-field-label .opt {
+  display: inline-block;
+  margin-left: 0.3em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.rsvp-field input {
+  padding: 0.75rem 1rem;
+}
+
+@media (max-width: 480px) {
+  .rsvp {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .rsvp-card {
+    margin-top: 1.25rem;
+    padding: 1.6rem 1.25rem 1.75rem;
+  }
+}
+
 @media print {
   *,
   *::before,
