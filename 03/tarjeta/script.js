@@ -268,7 +268,7 @@
       // repartidas a lo ancho, sin pegarse a los bordes
       el.style.left = (4 + (i / count) * 84 + Math.random() * 6).toFixed(1) + '%';
       el.style.fontSize = (0.8 + Math.random() * 0.8).toFixed(2) + 'rem';
-      el.style.setProperty('--o', (0.35 + Math.random() * 0.25).toFixed(2));
+      el.style.setProperty('--o', (0.12 + Math.random() * 0.08).toFixed(2));
       el.style.setProperty('--spin', (Math.random() < 0.5 ? -1 : 1) * (180 + Math.random() * 360) + 'deg');
       const dur = 14 + Math.random() * 10;
       el.style.animationDuration = dur.toFixed(1) + 's';
