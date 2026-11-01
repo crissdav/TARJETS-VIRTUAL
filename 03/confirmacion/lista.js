@@ -223,13 +223,34 @@
     return (f.confirmadoInvitado ? 1 : 0) + (f.confirmadoAcompanante ? 1 : 0);
   }
 
-  /* Nombre de una persona + su botón de confirmar/desconfirmar. */
+  /* Ícono SVG en línea (los emojis ✎ y 🗑 se ven distintos en cada teléfono). */
+  const ICONOS = {
+    check: 'M5 12.5l4.5 4.5L19 7.5',
+    cruz: 'M6.5 6.5l11 11M17.5 6.5l-11 11',
+    lapiz: 'M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4',
+    basura: 'M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6'
+  };
+  function conIcono(btn, icono, texto) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', 'ico');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', ICONOS[icono]);
+    svg.appendChild(path);
+    btn.textContent = '';
+    btn.appendChild(svg);
+    btn.appendChild(document.createTextNode(texto));
+    return btn;
+  }
+
   /* Botón de confirmar / desconfirmar de UNA persona. */
   function botonCheck(nombre, confirmado, alCambiar) {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'btn-check' + (confirmado ? ' btn-uncheck' : '');
-    btn.textContent = confirmado ? '✕ Desconfirmar' : '✓ Confirmar';
+    conIcono(btn, confirmado ? 'cruz' : 'check', confirmado ? 'Quitar' : 'Confirmar');
     btn.setAttribute('aria-pressed', confirmado ? 'true' : 'false');
     btn.title = confirmado
       ? 'Quitar la marca de confirmada a ' + nombre
@@ -280,7 +301,7 @@
     tdNum.dataset.label = 'Registro';
     const num = document.createElement('span');
     num.className = 'fila-id';
-    num.textContent = f.id;
+    num.textContent = '#' + f.id;
     tdNum.appendChild(num);
 
     const pill = document.createElement('span');
@@ -304,7 +325,7 @@
       ));
     } else {
       const tdAcomp = document.createElement('td');
-      tdAcomp.className = 'col-acomp';
+      tdAcomp.className = 'col-acomp col-vacio';
       tdAcomp.dataset.label = 'Acompañante';
       const wrap = document.createElement('div');
       wrap.className = 'persona';
@@ -322,9 +343,9 @@
     tdEstado.dataset.label = 'Confirmado';
     const marca = document.createElement('span');
     marca.className = 'estado-pill' + (cuantas === f.personas ? ' completo' : cuantas ? ' parcial' : '');
-    if (cuantas === f.personas) marca.textContent = '✓ ' + f.personas + '/' + f.personas;
-    else if (cuantas) marca.textContent = '✓ ' + cuantas + '/' + f.personas;
-    else marca.textContent = f.personas === 1 ? '— pendiente' : '— ' + f.personas + ' pendientes';
+    if (cuantas === f.personas) conIcono(marca, 'check', 'Confirmado');
+    else if (cuantas) marca.textContent = cuantas + ' de ' + f.personas;
+    else marca.textContent = 'Pendiente';
     tdEstado.appendChild(marca);
     tr.appendChild(tdEstado);
 
@@ -340,21 +361,21 @@
     const btnTodos = document.createElement('button');
     btnTodos.className = 'btn btn-sm ' + (todoListo ? 'btn-green' : 'btn-gold');
     btnTodos.type = 'button';
-    btnTodos.textContent = todoListo ? '✕ Desconfirmar todos' : '✓ Confirmar todos';
+    conIcono(btnTodos, todoListo ? 'cruz' : 'check', todoListo ? 'Desconfirmar todos' : 'Confirmar todos');
     btnTodos.title = (todoListo ? 'Quitar la marca de confirmada a ' : 'Marcar como confirmados a ') + quienes;
     btnTodos.addEventListener('click', () => cambiarEstado(f, { invitado: !todoListo, acompanante: !todoListo }));
 
     const btnEdit = document.createElement('button');
     btnEdit.className = 'btn btn-sm';
     btnEdit.type = 'button';
-    btnEdit.textContent = '✎ Editar';
+    conIcono(btnEdit, 'lapiz', 'Editar');
     btnEdit.title = 'Corregir los datos de ' + f.nombre;
     btnEdit.addEventListener('click', () => abrirModal(f));
 
     const btnDel = document.createElement('button');
     btnDel.className = 'btn btn-sm btn-red';
     btnDel.type = 'button';
-    btnDel.textContent = '🗑 Eliminar';
+    conIcono(btnDel, 'basura', 'Eliminar');
     btnDel.title = 'Eliminar el registro de ' + f.nombre;
     btnDel.addEventListener('click', () => eliminar(f));
 

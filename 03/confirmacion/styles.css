@@ -1345,3 +1345,134 @@ td.es-confirmado .nombre {
     letter-spacing: 0.08em;
   }
 }
+
+/* ── Tarjeta de invitado (rediseño) ──────────────────────── */
+.ico {
+  width: 1.05em;
+  height: 1.05em;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.btn-check,
+.estado-pill,
+.acciones .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+}
+
+/* Confirmado: nombre en verde con su marca, sin tachar */
+td.es-confirmado .nombre {
+  text-decoration: none;
+  color: var(--verde-oscuro);
+}
+
+.estado-pill {
+  border: 1.5px solid #EAB8C4;
+  background: #FFFFFF;
+  color: var(--gris);
+}
+
+.estado-pill.parcial {
+  border-color: #E8A33D;
+  background: #FFF4E0;
+  color: #8A5300;
+}
+
+.estado-pill.completo {
+  border-color: rgba(30, 142, 78, 0.6);
+}
+
+@media (max-width: 900px) {
+  tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "num estado"
+      "nombre nombre"
+      "acomp acomp"
+      "acc acc";
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid #EAB8C4;
+    border-radius: 18px;
+    box-shadow: 0 0 0 4px rgba(242, 196, 206, 0.5), 0 10px 22px rgba(122, 18, 72, 0.1);
+  }
+
+  tbody tr:last-child { margin-bottom: 0; }
+
+  tbody tr.fila-lista { border-color: rgba(30, 142, 78, 0.45); }
+
+  .col-num { grid-area: num; margin-bottom: 0; }
+  .col-estado { grid-area: estado; align-self: center; }
+  .col-nombre { grid-area: nombre; }
+  .col-acomp { grid-area: acomp; }
+  .col-acciones { grid-area: acc; margin-top: 0.2rem; }
+
+  .col-estado::before { display: none; }
+
+  tbody tr > td { min-width: 0; }
+
+  tbody td.col-vacio { display: none; }
+
+  .col-num { flex-wrap: wrap; }
+
+  .fila-id { font-size: 0.85rem; letter-spacing: 0.06em; }
+
+  /* Cada persona en su propio recuadro */
+  tbody td.col-nombre,
+  tbody td.col-acomp {
+    padding: 0.7rem 0.8rem;
+    background: #FFF7F9;
+    border: 1.5px solid #F2C4CE;
+    border-radius: 12px;
+  }
+
+  tbody td.es-confirmado {
+    background: #EEF9F2;
+    border-color: rgba(30, 142, 78, 0.4);
+  }
+
+  tbody td.col-nombre::before,
+  tbody td.col-acomp::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .persona-linea {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .persona-linea .nombre {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .persona-pie { font-size: 0.8rem; }
+
+  .btn-check {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    border-width: 1.5px;
+  }
+
+  .acciones .btn { padding: 0.65rem 0.5rem; }
+}
+
+@media (max-width: 900px) {
+  .persona-linea .nombre { flex: 1 1 auto; }
+  .col-num { gap: 0.4rem; }
+  .col-num .pill,
+  .col-estado .estado-pill { font-size: 0.7rem; padding: 0.2rem 0.6rem; }
+}
