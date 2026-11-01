@@ -1125,3 +1125,223 @@ td.es-confirmado .nombre {
     display: none !important;
   }
 }
+
+/* ============================================================
+   LEGIBILIDAD — verde más oscuro, textos más grandes y firmes
+   ============================================================ */
+:root {
+  --verde: #1E8E4E;
+  --verde-oscuro: #146B39;
+}
+
+/* Insignia "Solo la quinceañera": icono junto al texto */
+.pass-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+/* Estadísticas */
+.stat {
+  padding: 1rem 0.8rem;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.stat-value {
+  text-shadow: none;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gris);
+}
+
+.stat-ok {
+  border: 1.5px solid rgba(30, 142, 78, 0.55);
+  background: rgba(232, 248, 238, 0.9);
+}
+
+.stat-ok .stat-value {
+  color: var(--verde);
+  text-shadow: none;
+}
+
+.stat-ok .stat-label {
+  color: var(--verde-oscuro);
+}
+
+/* Indicador "Actualizado hace…" */
+.live {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--verde-oscuro);
+  background: #E3F6EA;
+  border: 1.5px solid rgba(30, 142, 78, 0.55);
+  padding: 0.4rem 0.95rem;
+}
+
+.live::before {
+  width: 9px;
+  height: 9px;
+  background: var(--verde);
+  box-shadow: 0 0 0 3px rgba(30, 142, 78, 0.18);
+}
+
+/* Botones con texto más firme */
+.btn {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.btn-red {
+  border-color: var(--dorado-light);
+  color: var(--dorado);
+}
+
+.btn-sm {
+  font-size: 0.66rem;
+}
+
+.btn-green {
+  border-color: var(--verde);
+  color: var(--verde-oscuro);
+  background: #E3F6EA;
+}
+
+.btn-green:hover {
+  color: #FFFFFF;
+}
+
+.hint {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Tarjeta de cada invitado */
+.col-nombre .nombre,
+.col-acomp .nombre {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--blanco);
+}
+
+.persona-pie {
+  font-size: 0.78rem;
+  color: var(--gris);
+}
+
+/* Ya confirmó: se ve en verde y con una raya fina, sin perder legibilidad */
+td.es-confirmado .nombre {
+  color: var(--verde-oscuro);
+  text-decoration-color: rgba(30, 142, 78, 0.55);
+  text-decoration-thickness: 1.5px;
+  opacity: 1;
+}
+
+.btn-check {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
+}
+
+.btn-uncheck {
+  border-color: rgba(30, 142, 78, 0.6);
+  color: var(--verde-oscuro);
+  background: #E3F6EA;
+}
+
+.estado-pill {
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.estado-pill.completo {
+  color: var(--verde-oscuro);
+  background: #E3F6EA;
+}
+
+.pill {
+  font-weight: 600;
+}
+
+.fila-id {
+  font-weight: 700;
+  color: var(--dorado);
+}
+
+@media (max-width: 900px) {
+  /* La quinta estadística ("Última anotación") ocupa toda la fila */
+  .stat:last-child {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .stat:last-child .stat-label {
+    margin-top: 0;
+  }
+
+  .stats {
+    gap: 0.75rem;
+  }
+
+  /* CSV y Salir lado a lado */
+  .live {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  #btnCsv,
+  #btnSalir {
+    flex: 1 1 0;
+  }
+
+  tbody td[data-label]::before {
+    font-size: 0.66rem;
+    font-weight: 600;
+  }
+}
+
+.badge-emoji {
+  width: 1.6em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.fila-lista .col-nombre .nombre,
+.fila-lista .col-acomp .nombre {
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  #btnCsv,
+  #btnSalir {
+    padding: 0.7rem 0.6rem;
+    letter-spacing: 0.08em;
+  }
+
+  #btnSalir {
+    flex: 0 1 34%;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Editar y Eliminar siguen lado a lado */
+  .acciones {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .acciones .btn:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .acciones .btn {
+    letter-spacing: 0.08em;
+  }
+}
