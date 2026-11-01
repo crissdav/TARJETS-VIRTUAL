@@ -11,7 +11,7 @@
     </linearGradient>
     <linearGradient id="hairM" x1="50%" y1="0%" x2="50%" y2="100%">
       <stop offset="0%" stop-color="#1A1A1A"/>
-      <stop offset="100%" stop-color="#0D0D0D"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
     </linearGradient>
     <linearGradient id="hairHM" x1="0%" y1="0%" x2="100%" y2="50%">
       <stop offset="0%" stop-color="#2A2A2A"/>
@@ -24,9 +24,9 @@
       <stop offset="100%" stop-color="#696969"/>
     </linearGradient>
     <linearGradient id="mGoldM" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFD700"/>
-      <stop offset="50%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#B8860B"/>
+      <stop offset="0%" stop-color="#FF5FA8"/>
+      <stop offset="50%" stop-color="#E0287F"/>
+      <stop offset="100%" stop-color="#B3135F"/>
     </linearGradient>
     <linearGradient id="suit" x1="50%" y1="0%" x2="50%" y2="100%">
       <stop offset="0%" stop-color="#1a1a1a"/>
@@ -72,13 +72,13 @@
     <path d="M100 218 Q120 210 140 215" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.15"/>
     <path d="M300 218 Q280 210 260 215" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.15"/>
     <!-- Center gold diamond -->
-    <path d="M195 190 L200 178 L205 190 L200 196Z" fill="url(#mGoldM)" stroke="#FFD700" stroke-width="1.5"/>
-    <circle cx="200" cy="187" r="2.5" fill="#C41E3A" filter="url(#glowM)"/>
+    <path d="M195 190 L200 178 L205 190 L200 196Z" fill="url(#mGoldM)" stroke="#FF5FA8" stroke-width="1.5"/>
+    <circle cx="200" cy="187" r="2.5" fill="#FF8DC0" filter="url(#glowM)"/>
     <!-- Eye holes - more angular -->
-    <path d="M128 210 L155 198 L185 210 L155 222Z" fill="#0d0000"/>
-    <path d="M128 210 L155 198 L185 210 L155 222Z" fill="none" stroke="#D4AF37" stroke-width="2"/>
-    <path d="M215 210 L245 198 L272 210 L245 222Z" fill="#0d0000"/>
-    <path d="M215 210 L245 198 L272 210 L245 222Z" fill="none" stroke="#D4AF37" stroke-width="2"/>
+    <path d="M128 210 L155 198 L185 210 L155 222Z" fill="#5A0F36"/>
+    <path d="M128 210 L155 198 L185 210 L155 222Z" fill="none" stroke="#E0287F" stroke-width="2"/>
+    <path d="M215 210 L245 198 L272 210 L245 222Z" fill="#5A0F36"/>
+    <path d="M215 210 L245 198 L272 210 L245 222Z" fill="none" stroke="#E0287F" stroke-width="2"/>
     <!-- Eyes visible -->
     <ellipse cx="155" cy="212" rx="14" ry="9" fill="#3D2517"/>
     <ellipse cx="245" cy="212" rx="14" ry="9" fill="#3D2517"/>
@@ -89,13 +89,13 @@
     <circle cx="158" cy="214" r="1.2" fill="#FFF" opacity="0.4"/>
     <circle cx="248" cy="214" r="1.2" fill="#FFF" opacity="0.4"/>
     <!-- Gold trim lines -->
-    <path d="M95 218 L108 210" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M305 218 L292 210" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M108 252 L118 245" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
-    <path d="M292 252 L282 245" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+    <path d="M95 218 L108 210" stroke="#E0287F" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M305 218 L292 210" stroke="#E0287F" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M108 252 L118 245" stroke="#E0287F" stroke-width="1" opacity="0.5"/>
+    <path d="M292 252 L282 245" stroke="#E0287F" stroke-width="1" opacity="0.5"/>
     <!-- Side accent lines -->
-    <path d="M98 228 L108 222" stroke="#D4AF37" stroke-width="0.8" opacity="0.4"/>
-    <path d="M302 228 L292 222" stroke="#D4AF37" stroke-width="0.8" opacity="0.4"/>
+    <path d="M98 228 L108 222" stroke="#E0287F" stroke-width="0.8" opacity="0.4"/>
+    <path d="M302 228 L292 222" stroke="#E0287F" stroke-width="0.8" opacity="0.4"/>
   </g>
 
   <!-- Nose (masculine, stronger) -->
@@ -116,13 +116,13 @@
   <path d="M145 405 L175 385 L200 378" fill="none" stroke="#2a2a2a" stroke-width="2"/>
   <path d="M255 405 L225 385 L200 378" fill="none" stroke="#2a2a2a" stroke-width="2"/>
   <!-- Lapel edges -->
-  <path d="M145 405 L175 385" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
-  <path d="M255 405 L225 385" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+  <path d="M145 405 L175 385" fill="none" stroke="#E0287F" stroke-width="1" opacity="0.4"/>
+  <path d="M255 405 L225 385" fill="none" stroke="#E0287F" stroke-width="1" opacity="0.4"/>
   <!-- Shirt collar -->
   <path d="M170 385 L180 375 L200 370 L220 375 L230 385" fill="none" stroke="#FFF" stroke-width="1.5" opacity="0.6"/>
   <!-- Bow tie -->
-  <path d="M188 372 L200 368 L212 372 L200 376Z" fill="#8B0000"/>
-  <circle cx="200" cy="372" r="2" fill="#FFD700"/>
+  <path d="M188 372 L200 368 L212 372 L200 376Z" fill="#D94A8C"/>
+  <circle cx="200" cy="372" r="2" fill="#FF5FA8"/>
   <!-- Pocket square hint -->
-  <path d="M260 410 L268 400 L275 410" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+  <path d="M260 410 L268 400 L275 410" fill="none" stroke="#E0287F" stroke-width="1" opacity="0.3"/>
 </svg>

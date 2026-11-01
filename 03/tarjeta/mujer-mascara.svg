@@ -19,26 +19,26 @@
       <stop offset="100%" stop-color="#2C1810"/>
     </linearGradient>
     <linearGradient id="mGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFD700"/>
-      <stop offset="35%" stop-color="#D4AF37"/>
-      <stop offset="70%" stop-color="#B8860B"/>
-      <stop offset="100%" stop-color="#8B6914"/>
+      <stop offset="0%" stop-color="#FF5FA8"/>
+      <stop offset="35%" stop-color="#E0287F"/>
+      <stop offset="70%" stop-color="#B3135F"/>
+      <stop offset="100%" stop-color="#8E0E4A"/>
     </linearGradient>
     <linearGradient id="mRed" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C41E3A"/>
-      <stop offset="100%" stop-color="#8B0000"/>
+      <stop offset="0%" stop-color="#FF8DC0"/>
+      <stop offset="100%" stop-color="#D94A8C"/>
     </linearGradient>
     <radialGradient id="eyeGlow" cx="50%" cy="50%">
       <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.15"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="lip" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#C41E3A"/>
-      <stop offset="100%" stop-color="#8B0000"/>
+      <stop offset="0%" stop-color="#FF8DC0"/>
+      <stop offset="100%" stop-color="#D94A8C"/>
     </linearGradient>
     <linearGradient id="dress" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#1a1a2e"/>
-      <stop offset="100%" stop-color="#0d0d1a"/>
+      <stop offset="0%" stop-color="#FFC1DC"/>
+      <stop offset="100%" stop-color="#F28DBB"/>
     </linearGradient>
     <filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/></filter>
     <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -76,7 +76,7 @@
   <!-- MASQUERADE MASK -->
   <g filter="url(#shadow)">
     <!-- Mask base -->
-    <path d="M85 215 Q85 185 120 175 Q150 165 200 180 Q250 165 280 175 Q315 185 315 215 Q315 245 290 258 Q265 268 240 260 Q220 275 200 280 Q180 275 160 260 Q135 268 110 258 Q85 245 85 215Z" fill="url(#mGold)" stroke="#8B6914" stroke-width="2"/>
+    <path d="M85 215 Q85 185 120 175 Q150 165 200 180 Q250 165 280 175 Q315 185 315 215 Q315 245 290 258 Q265 268 240 260 Q220 275 200 280 Q180 275 160 260 Q135 268 110 258 Q85 245 85 215Z" fill="url(#mGold)" stroke="#8E0E4A" stroke-width="2"/>
     <!-- Mask raised area / bridge -->
     <path d="M170 200 Q185 185 200 182 Q215 185 230 200" fill="none" stroke="#FFF" stroke-width="1" opacity="0.2"/>
     <!-- Mask filigree swirls left -->
@@ -86,14 +86,14 @@
     <path d="M300 210 Q290 195 275 200 Q270 202 272 210" fill="none" stroke="#FFF" stroke-width="1.2" opacity="0.25"/>
     <path d="M305 225 Q292 218 282 225" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.2"/>
     <!-- Center jewel -->
-    <path d="M195 188 L200 175 L205 188 L200 195Z" fill="url(#mRed)" stroke="#FFD700" stroke-width="1.5"/>
-    <circle cx="200" cy="184" r="3" fill="#FFD700" filter="url(#glow)"/>
+    <path d="M195 188 L200 175 L205 188 L200 195Z" fill="url(#mRed)" stroke="#FF5FA8" stroke-width="1.5"/>
+    <circle cx="200" cy="184" r="3" fill="#FF5FA8" filter="url(#glow)"/>
     <!-- Eye holes -->
-    <ellipse cx="160" cy="215" rx="32" ry="20" fill="#0d0000"/>
-    <ellipse cx="160" cy="215" rx="32" ry="20" fill="none" stroke="#FFD700" stroke-width="2"/>
+    <ellipse cx="160" cy="215" rx="32" ry="20" fill="#5A0F36"/>
+    <ellipse cx="160" cy="215" rx="32" ry="20" fill="none" stroke="#FF5FA8" stroke-width="2"/>
     <ellipse cx="160" cy="215" rx="28" ry="16" fill="none" stroke="#FFF" stroke-width="0.5" opacity="0.15"/>
-    <ellipse cx="240" cy="215" rx="32" ry="20" fill="#0d0000"/>
-    <ellipse cx="240" cy="215" rx="32" ry="20" fill="none" stroke="#FFD700" stroke-width="2"/>
+    <ellipse cx="240" cy="215" rx="32" ry="20" fill="#5A0F36"/>
+    <ellipse cx="240" cy="215" rx="32" ry="20" fill="none" stroke="#FF5FA8" stroke-width="2"/>
     <ellipse cx="240" cy="215" rx="28" ry="16" fill="none" stroke="#FFF" stroke-width="0.5" opacity="0.15"/>
     <!-- Eyes visible through mask -->
     <ellipse cx="160" cy="217" rx="12" ry="8" fill="#4A2511"/>
@@ -122,19 +122,19 @@
   <!-- FEATHERS on mask (left) -->
   <g opacity="0.95">
     <path d="M100 185 Q70 130 80 80 Q95 110 110 160" fill="url(#mRed)"/>
-    <path d="M90 178 Q55 125 68 72 Q85 105 100 155" fill="#C41E3A" opacity="0.7"/>
-    <path d="M110 175 Q85 120 95 75 Q108 105 118 152" fill="#8B0000" opacity="0.6"/>
+    <path d="M90 178 Q55 125 68 72 Q85 105 100 155" fill="#FF8DC0" opacity="0.7"/>
+    <path d="M110 175 Q85 120 95 75 Q108 105 118 152" fill="#D94A8C" opacity="0.6"/>
     <!-- Quill lines -->
-    <line x1="100" y1="185" x2="82" y2="85" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
-    <line x1="90" y1="178" x2="68" y2="78" stroke="#FFD700" stroke-width="0.6" opacity="0.3"/>
+    <line x1="100" y1="185" x2="82" y2="85" stroke="#FF5FA8" stroke-width="0.8" opacity="0.4"/>
+    <line x1="90" y1="178" x2="68" y2="78" stroke="#FF5FA8" stroke-width="0.6" opacity="0.3"/>
   </g>
   <!-- FEATHERS on mask (right) -->
   <g opacity="0.95">
     <path d="M300 185 Q330 130 320 80 Q305 110 290 160" fill="url(#mRed)"/>
-    <path d="M310 178 Q345 125 332 72 Q315 105 300 155" fill="#C41E3A" opacity="0.7"/>
-    <path d="M290 175 Q315 120 305 75 Q292 105 282 152" fill="#8B0000" opacity="0.6"/>
-    <line x1="300" y1="185" x2="318" y2="85" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
-    <line x1="310" y1="178" x2="332" y2="78" stroke="#FFD700" stroke-width="0.6" opacity="0.3"/>
+    <path d="M310 178 Q345 125 332 72 Q315 105 300 155" fill="#FF8DC0" opacity="0.7"/>
+    <path d="M290 175 Q315 120 305 75 Q292 105 282 152" fill="#D94A8C" opacity="0.6"/>
+    <line x1="300" y1="185" x2="318" y2="85" stroke="#FF5FA8" stroke-width="0.8" opacity="0.4"/>
+    <line x1="310" y1="178" x2="332" y2="78" stroke="#FF5FA8" stroke-width="0.6" opacity="0.3"/>
   </g>
 
   <!-- Nose (subtle, below mask) -->
@@ -150,11 +150,11 @@
   <!-- Shoulders / dress top -->
   <path d="M60 430 Q100 390 160 380 Q180 375 200 373 Q220 375 240 380 Q300 390 340 430 L360 500 L40 500Z" fill="url(#dress)"/>
   <!-- Dress neckline -->
-  <path d="M140 410 Q170 385 200 382 Q230 385 260 410" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.6"/>
-  <path d="M145 415 Q175 390 200 387 Q225 390 255 415" fill="none" stroke="#D4AF37" stroke-width="0.8" opacity="0.3"/>
+  <path d="M140 410 Q170 385 200 382 Q230 385 260 410" fill="none" stroke="#E0287F" stroke-width="1.5" opacity="0.6"/>
+  <path d="M145 415 Q175 390 200 387 Q225 390 255 415" fill="none" stroke="#E0287F" stroke-width="0.8" opacity="0.3"/>
   <!-- Necklace -->
-  <path d="M155 370 Q175 380 200 383 Q225 380 245 370" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
-  <circle cx="200" cy="383" r="4" fill="#C41E3A" stroke="#FFD700" stroke-width="1"/>
-  <circle cx="182" cy="379" r="2" fill="#FFD700" opacity="0.7"/>
-  <circle cx="218" cy="379" r="2" fill="#FFD700" opacity="0.7"/>
+  <path d="M155 370 Q175 380 200 383 Q225 380 245 370" fill="none" stroke="#E0287F" stroke-width="1.5"/>
+  <circle cx="200" cy="383" r="4" fill="#FF8DC0" stroke="#FF5FA8" stroke-width="1"/>
+  <circle cx="182" cy="379" r="2" fill="#FF5FA8" opacity="0.7"/>
+  <circle cx="218" cy="379" r="2" fill="#FF5FA8" opacity="0.7"/>
 </svg>

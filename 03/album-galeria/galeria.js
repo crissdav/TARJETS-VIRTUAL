@@ -55,7 +55,7 @@
     if (!bgDecor) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const colores = ['rgba(212, 175, 55,', 'rgba(196, 30, 58,', 'rgba(255, 215, 0,'];
+    const colores = ['rgba(224, 40, 127,', 'rgba(255, 95, 168,', 'rgba(255, 141, 192,'];
     for (let i = 0, n = isMobile ? 4 : 6; i < n; i++) {
       const blob = document.createElement('div');
       blob.className = 'glow-blob';

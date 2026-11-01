@@ -1,18 +1,18 @@
 :root {
-  --rojo: #8B0000;
-  --rojo-bright: #C41E3A;
-  --rojo-light: #E85D5D;
-  --dorado: #D4AF37;
-  --dorado-light: #FFD700;
-  --dorado-dark: #B8860B;
-  --blanco: #FFFFFF;
-  --gris: #808080;
-  --gris-light: #A9A9A9;
-  --gris-dark: #4A4A4A;
-  --negro: #0D0D0D;
-  --bg-dark: #1a0a0a;
-  --glass-bg: rgba(13, 13, 13, 0.45);
-  --glass-border: rgba(212, 175, 55, 0.25);
+  --rojo: #D94A8C;
+  --rojo-bright: #F06BA8;
+  --rojo-light: #D81B60;
+  --dorado: #C2185B;
+  --dorado-light: #E91E7A;
+  --dorado-dark: #8E0E47;
+  --blanco: #4A0D2E;
+  --gris: #8A2D5C;
+  --gris-light: #9E3A6E;
+  --gris-dark: #F3BCD5;
+  --negro: #FFF0F6;
+  --bg-dark: #FCD3E3;
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(224, 40, 127, 0.25);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,8 +41,8 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(139, 0, 0, 0.5) 0%, transparent 55%),
-    radial-gradient(ellipse at 100% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+    radial-gradient(ellipse at 50% -10%, rgba(217, 74, 140, 0.5) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(224, 40, 127, 0.08) 0%, transparent 50%);
 }
 
 button, a, label, input { touch-action: manipulation; }
@@ -80,7 +80,7 @@ img { max-width: 100%; display: block; }
   line-height: 1;
   user-select: none;
   will-change: transform;
-  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.35));
+  filter: grayscale(1) sepia(1) saturate(5) hue-rotate(290deg) drop-shadow(0 0 12px rgba(224, 40, 127, 0.35));
   animation: maskDrift 16s ease-in-out infinite alternate;
 }
 
@@ -163,7 +163,7 @@ img { max-width: 100%; display: block; }
   color: var(--dorado-light);
   letter-spacing: 0.08em;
   margin-bottom: 0.3rem;
-  text-shadow: 0 0 24px rgba(212, 175, 55, 0.35);
+  text-shadow: 0 0 24px rgba(224, 40, 127, 0.35);
 }
 
 .page-head .sub {
@@ -187,7 +187,7 @@ img { max-width: 100%; display: block; }
   backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(122, 18, 72, 0.25);
 }
 
 .btn {
@@ -201,7 +201,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--dorado);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(139, 0, 0, 0.2));
+  background: linear-gradient(135deg, rgba(224, 40, 127, 0.15), rgba(217, 74, 140, 0.2));
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 0.85rem 1.75rem;
@@ -211,7 +211,7 @@ img { max-width: 100%; display: block; }
 
 .btn:hover {
   border-color: var(--dorado);
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 30px rgba(224, 40, 127, 0.3);
 }
 
 .btn:disabled {
@@ -265,7 +265,7 @@ img { max-width: 100%; display: block; }
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.05rem;
   color: var(--blanco);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.32);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   outline: none;
@@ -290,7 +290,7 @@ img { max-width: 100%; display: block; }
 .progress-bar {
   height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.48);
   overflow: hidden;
   margin-top: 0.4rem;
 }
@@ -323,7 +323,7 @@ img { max-width: 100%; display: block; }
 }
 
 .upload-actions .btn.ghost {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.32);
 }
 
 .unlimited {
@@ -345,10 +345,18 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(58, 8, 34, 0.9);
 }
 
 .cam-modal[hidden] { display: none; }
+
+/* el modal de cámara es oscuro: aclara los tonos de texto dentro */
+.cam-modal {
+  --blanco: #FFF0F6;
+  --gris-light: #F7B2D2;
+  --dorado: #FF7AB8;
+  --dorado-light: #FF9FCB;
+}
 
 .cam-box {
   width: min(520px, 100%);
@@ -410,7 +418,7 @@ footer {
   text-align: center;
   padding: 2.5rem 1.5rem 3rem;
   padding-bottom: calc(3rem + env(safe-area-inset-bottom));
-  color: var(--gris-dark);
+  color: var(--gris-light);
   font-family: 'Cinzel', serif;
   font-size: 0.62rem;
   letter-spacing: 0.2em;

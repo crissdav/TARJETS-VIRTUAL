@@ -75,9 +75,9 @@
     if (!container) return;
 
     const glowColors = [
-      'rgba(212, 175, 55,',
-      'rgba(196, 30, 58,',
-      'rgba(255, 215, 0,'
+      'rgba(224, 40, 127,',
+      'rgba(255, 95, 168,',
+      'rgba(255, 141, 192,'
     ];
     const blobCount = isMobile ? 5 : 7;
     for (let i = 0; i < blobCount; i++) {
@@ -132,8 +132,8 @@
 
     container.innerHTML = '';
     const colors = [
-      'rgba(196, 30, 58,',    // rojo
-      'rgba(212, 175, 55,',   // dorado
+      'rgba(255, 95, 168,',    // rojo
+      'rgba(224, 40, 127,',   // dorado
       'rgba(255, 255, 255,'   // blanco
     ];
     const count = isMobile ? 36 : 58;
@@ -180,7 +180,7 @@
       star.style.top = Math.random() * 100 + '%';
       star.style.animationDelay = Math.random() * 4 + 's';
       star.style.animationDuration = 2 + Math.random() * 3 + 's';
-      star.style.backgroundColor = Math.random() > 0.5 ? '#D4AF37' : '#8B0000';
+      star.style.backgroundColor = Math.random() > 0.5 ? '#E0287F' : '#D94A8C';
       container.appendChild(star);
     }
   }
