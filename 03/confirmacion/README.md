@@ -43,8 +43,8 @@ En **Settings → API** aparecen dos valores: **Project URL** y **anon public ke
 
   ```js
   SUPABASE_URL: 'https://xxxxxxxx.supabase.co',
-  SUPABASE_ANON_KEY: 'eyJhbGciOi...',
-  ADMIN_EMAIL: 'correo@del.panel'
+  SUPABASE_ANON_KEY: 'eyJhbGciOi...'
+
   ```
 
 - `../tarjeta/script.js`, constante `CONFIG`: las mismas dos

@@ -15,13 +15,14 @@ create table if not exists public.confirmaciones (
 
 alter table public.confirmaciones enable row level security;
 
--- Solo el panel autenticado puede leer o modificar.
+-- Solo el usuario marcado con panel = lista puede leer o modificar.
+-- La marca se pone en auth.users.raw_app_meta_data (el usuario no puede cambiarla).
 drop policy if exists "panel lee"   on public.confirmaciones;
 drop policy if exists "panel edita" on public.confirmaciones;
 drop policy if exists "panel borra" on public.confirmaciones;
-create policy "panel lee"   on public.confirmaciones for select to authenticated using (true);
-create policy "panel edita" on public.confirmaciones for update to authenticated using (true);
-create policy "panel borra" on public.confirmaciones for delete to authenticated using (true);
+create policy "panel lee"   on public.confirmaciones for select to authenticated using ((auth.jwt() -> 'app_metadata' ->> 'panel') = 'lista');
+create policy "panel edita" on public.confirmaciones for update to authenticated using ((auth.jwt() -> 'app_metadata' ->> 'panel') = 'lista');
+create policy "panel borra" on public.confirmaciones for delete to authenticated using ((auth.jwt() -> 'app_metadata' ->> 'panel') = 'lista');
 
 -- No hay policy de insert: nadie inserta directo.
 -- La tarjeta escribe con esta función (security definer) vía RPC anon.

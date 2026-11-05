@@ -79,8 +79,7 @@
     const pass = $('#pass');
     const btn = $('#btnEntrar');
 
-    if (CFG.ADMIN_EMAIL && !email.value) email.value = CFG.ADMIN_EMAIL;
-    pass.focus();
+    email.focus();
 
     if (!window.supabase) {
       error('No se pudo cargar Supabase. Revisa la conexión a internet.');
