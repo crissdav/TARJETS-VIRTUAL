@@ -2,7 +2,7 @@
   'use strict';
 
   const CONFIG = {
-    EVENT_DATE: new Date('2026-11-27T19:00:00'),
+    EVENT_DATE: new Date('2026-11-27T18:30:00'),
     PHONE: '917845115',
     /* Supabase: donde queda anotado el invitado al confirmar por WhatsApp.
        Copia estos dos valores de tu proyecto Supabase (Settings → API).
@@ -573,8 +573,8 @@
       let msg = `🎭 *Confirmación de Asistencia — XV Años de Grecia*\n\n` +
         `👤 *Nombre:* ${name}\n` +
         (companion.trim() ? `👥 *Acompañante:* ${companion.trim()}\n` : '') +
-        `📅 *Fecha:* 27 de Noviembre, 2026\n` +
-        `📍 *Lugar:* Por confirmar\n\n` +
+        `📅 *Fecha:* 27 de Noviembre, 2026 · 6:30 p.m.\n` +
+        `📍 *Lugar:* Av. Pascual Gusman s/n, Castillo Grande (ingreso al recreo Monte de los Olivos)\n\n` +
         `¡Nos vemos en la Noche de Máscaras! 🎭✨`;
       return msg;
     }
