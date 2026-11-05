@@ -15,7 +15,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 | Fecha | Viernes 27 de Noviembre, 2026 |
 | Hora | 7:00 PM |
 | Lugar | Por confirmar (demo) |
-| RSVP WhatsApp | `917845115` |
+| RSVP WhatsApp | `51950585086` |
 
 ## Archivos
 
@@ -114,7 +114,7 @@ Invitacion digital interactiva y animada para la celebracion de XV anos con tema
 - El QR abre **WhatsApp con el mensaje de confirmacion ya escrito** (nombre +
   acompanante), para que el invitado solo escanee y le de enviar. No lleva a
   ninguna pagina: la lista de invitados del proyecto `../confirmacion` es privada
-- Si el contenido no llegara a caber en el QR, cae al enlace `wa.me/917845115` sin
+- Si el contenido no llegara a caber en el QR, cae al enlace `wa.me/51950585086` sin
   mensaje en vez de romperse
 - PNG 300px con margen blanco de seguridad (facil de escanear)
 - Boton **"Descargar QR"** (aparece antes que el de WhatsApp)
