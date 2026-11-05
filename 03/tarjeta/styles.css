@@ -3237,30 +3237,6 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
-/* Lugar de la fiesta (tarjeta de la fecha) y botón "Cómo llegar" (tras el dress code) */
-.hd-place {
-  margin-top: 0.7rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid rgba(216, 27, 114, 0.25);
-  font-family: var(--font-body);
-  font-style: normal;
-  line-height: 1.35;
-  color: var(--gris);
-}
-
-.hd-place strong {
-  display: block;
-  font-size: 1.02rem;
-  font-weight: 600;
-  color: var(--blanco);
-}
-
-.hd-place span {
-  display: block;
-  margin-top: 0.2rem;
-  font-size: 0.92rem;
-}
-
 /* Tarjeta de ubicación: mismo marco que las de Damas y Caballeros */
 .dc-map {
   max-width: 700px;
