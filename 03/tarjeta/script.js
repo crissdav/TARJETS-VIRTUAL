@@ -3,7 +3,7 @@
 
   const CONFIG = {
     EVENT_DATE: new Date('2026-11-27T18:30:00'),
-    PHONE: '917845115',
+    PHONE: '51950585086',
     /* Supabase: donde queda anotado el invitado al confirmar por WhatsApp.
        Copia estos dos valores de tu proyecto Supabase (Settings → API).
        La lista es privada: la clave anónima solo puede insertar por la
