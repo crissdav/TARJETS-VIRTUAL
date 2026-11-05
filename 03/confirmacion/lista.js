@@ -424,6 +424,223 @@
     }
   }
 
+  /* ── Escáner del pase ───────────────────────────────────── */
+  const ESCANEO_CADA_MS = 150;
+  const ESCANEO_LADO_MAX = 640;
+  let camara = null;
+  let escaneando = false;
+  let lienzoQr = null;
+
+  /* Misma comparación que la función anotar de Supabase. */
+  function claveNombre(texto) {
+    return (texto || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  /* El pase es un enlace de WhatsApp con el mensaje ya escrito:
+     "Confirmo asistencia - Nombre: X - Acompanante: Y". Los nombres muy
+     largos llevan el enlace sin mensaje (ver generarQR en la tarjeta). */
+  function leerPase(contenido) {
+    let url;
+    try { url = new URL(contenido); } catch (e) { return null; }
+    if (url.hostname !== 'wa.me') return null;
+    const texto = url.searchParams.get('text');
+    if (!texto) return { sinNombre: true };
+    const m = texto.match(/Nombre:\s*(.+?)(?:\s+-\s+Acompanante:\s*(.*))?$/);
+    if (!m) return null;
+    return { nombre: m[1].trim(), acompanante: (m[2] || '').trim() };
+  }
+
+  function detenerCamara() {
+    escaneando = false;
+    if (camara) camara.getTracks().forEach(t => t.stop());
+    camara = null;
+    $('#qrVideo').srcObject = null;
+  }
+
+  function buscarQr() {
+    if (!escaneando) return;
+    const video = $('#qrVideo');
+    if (video.readyState >= 2 && video.videoWidth) {
+      const escala = Math.min(1, ESCANEO_LADO_MAX / Math.max(video.videoWidth, video.videoHeight));
+      const w = Math.round(video.videoWidth * escala);
+      const h = Math.round(video.videoHeight * escala);
+      lienzoQr = lienzoQr || document.createElement('canvas');
+      lienzoQr.width = w;
+      lienzoQr.height = h;
+      const ctx = lienzoQr.getContext('2d', { willReadFrequently: true });
+      ctx.drawImage(video, 0, 0, w, h);
+      const codigo = window.jsQR(ctx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: 'dontInvert' });
+      if (codigo && codigo.data) {
+        detenerCamara();
+        procesarPase(codigo.data);
+        return;
+      }
+    }
+    setTimeout(buscarQr, ESCANEO_CADA_MS);
+  }
+
+  async function iniciarEscaneo() {
+    $('#qrResultado').hidden = true;
+    $('#qrResultado').textContent = '';
+    $('#btnQrOtro').hidden = true;
+    $('#qrVisor').hidden = false;
+    const ayuda = $('#qrAyuda');
+    ayuda.hidden = false;
+    ayuda.textContent = 'Abriendo la cámara…';
+
+    if (!window.jsQR) {
+      ayuda.textContent = 'No se pudo cargar el lector. Revisa la conexión y recarga la página.';
+      return;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      ayuda.textContent = 'Este navegador no permite usar la cámara. Busca al invitado por su nombre.';
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' } },
+        audio: false
+      });
+      /* Se cerró mientras el navegador pedía permiso. */
+      if ($('#modalQr').hidden) {
+        stream.getTracks().forEach(t => t.stop());
+        return;
+      }
+      camara = stream;
+      const video = $('#qrVideo');
+      video.srcObject = stream;
+      await video.play();
+      ayuda.textContent = 'Apunta al código QR del invitado.';
+      escaneando = true;
+      buscarQr();
+    } catch (e) {
+      detenerCamara();
+      ayuda.textContent = e && e.name === 'NotAllowedError'
+        ? 'Falta el permiso de la cámara. Actívalo en el navegador y vuelve a intentar.'
+        : 'No se pudo abrir la cámara. Busca al invitado por su nombre.';
+    }
+  }
+
+  function abrirEscaner() {
+    $('#modalQr').hidden = false;
+    iniciarEscaneo();
+  }
+
+  function cerrarEscaner() {
+    detenerCamara();
+    $('#modalQr').hidden = true;
+  }
+
+  function avisoQr(clase, titulo, detalle) {
+    const caja = document.createElement('div');
+    caja.className = 'qr-aviso ' + clase;
+    const fuerte = document.createElement('strong');
+    fuerte.textContent = titulo;
+    caja.appendChild(fuerte);
+    if (detalle) {
+      const texto = document.createElement('span');
+      texto.textContent = detalle;
+      caja.appendChild(texto);
+    }
+    return caja;
+  }
+
+  function personaQr(etiqueta, nombre, confirmado, alCambiar) {
+    const fila = document.createElement('div');
+    fila.className = 'qr-persona' + (confirmado ? ' es-confirmado' : '');
+    const datos = document.createElement('div');
+    const rotulo = document.createElement('small');
+    rotulo.textContent = etiqueta;
+    const texto = document.createElement('b');
+    texto.textContent = nombre;
+    datos.appendChild(rotulo);
+    datos.appendChild(texto);
+    fila.appendChild(datos);
+    fila.appendChild(botonCheck(nombre, confirmado, alCambiar));
+    return fila;
+  }
+
+  /* Cambia el estado y vuelve a pintar el resultado con los datos nuevos. */
+  async function cambiarDesdeQr(id, pase, cambios) {
+    const f = items.find(x => x.id === id);
+    if (!f) return;
+    await cambiarEstado(f, cambios);
+    pintarInvitadoQr(id, pase, false);
+  }
+
+  function pintarInvitadoQr(id, pase, recienEscaneado) {
+    const caja = $('#qrResultado');
+    caja.textContent = '';
+    const f = items.find(x => x.id === id);
+    if (!f) {
+      caja.appendChild(avisoQr('qr-mal', 'Este registro ya no está en la lista'));
+      return;
+    }
+
+    const completo = confirmadosDe(f) === f.personas;
+    if (completo) {
+      caja.appendChild(recienEscaneado
+        ? avisoQr('qr-alerta', 'Este pase ya estaba confirmado', 'Revisa que no lo estén usando dos veces.')
+        : avisoQr('qr-ok', 'Confirmado', 'Ya puede pasar.'));
+    }
+
+    caja.appendChild(personaQr('Invitado', f.nombre, f.confirmadoInvitado,
+      v => cambiarDesdeQr(id, pase, { invitado: v })));
+    if (f.acompanante) {
+      caja.appendChild(personaQr('Acompañante', f.acompanante, f.confirmadoAcompanante,
+        v => cambiarDesdeQr(id, pase, { acompanante: v })));
+    }
+
+    if (pase.acompanante && claveNombre(pase.acompanante) !== claveNombre(f.acompanante)) {
+      caja.appendChild(avisoQr('qr-alerta', 'El acompañante no coincide', 'En el pase figura: ' + pase.acompanante));
+    }
+
+    if (!completo) {
+      const todos = document.createElement('button');
+      todos.type = 'button';
+      todos.className = 'btn btn-green qr-todos';
+      conIcono(todos, 'check', f.personas === 1 ? 'Confirmar' : 'Confirmar a los dos');
+      todos.addEventListener('click', () => cambiarDesdeQr(id, pase, { invitado: true, acompanante: true }));
+      caja.appendChild(todos);
+    }
+  }
+
+  async function procesarPase(contenido) {
+    $('#qrVisor').hidden = true;
+    $('#qrAyuda').hidden = true;
+    $('#btnQrOtro').hidden = false;
+    const caja = $('#qrResultado');
+    caja.hidden = false;
+    caja.textContent = 'Buscando en la lista…';
+
+    const pase = leerPase(contenido);
+    if (!pase) {
+      caja.textContent = '';
+      caja.appendChild(avisoQr('qr-mal', 'Este código no es un pase de la fiesta'));
+      return;
+    }
+    if (pase.sinNombre) {
+      caja.textContent = '';
+      caja.appendChild(avisoQr('qr-alerta', 'Este pase no trae el nombre', 'Pregúntale su nombre y búscalo en la lista.'));
+      return;
+    }
+
+    /* Con los datos más recientes: pudo anotarse hace un momento. */
+    try { await cargar(); } catch (e) { showToast('Sin conexión: se usa la última lista cargada'); }
+
+    const clave = claveNombre(pase.nombre);
+    const f = items.find(x => claveNombre(x.nombre) === clave);
+    if (!f) {
+      caja.textContent = '';
+      caja.appendChild(avisoQr('qr-mal', pase.nombre + ' no está en la lista',
+        'Puede que no haya confirmado por WhatsApp o que su nombre se haya corregido. Búscalo a mano.'));
+      return;
+    }
+    pintarInvitadoQr(f.id, pase, true);
+  }
+
   /* ── Modal: editar ──────────────────────────────────────── */
   function abrirModal(f) {
     editando = f;
@@ -519,6 +736,14 @@
 
     $('#btnCsv').addEventListener('click', descargarCsv);
 
+    $('#btnEscanear').addEventListener('click', abrirEscaner);
+    $('#btnQrCerrar').addEventListener('click', cerrarEscaner);
+    $('#btnQrOtro').addEventListener('click', iniciarEscaneo);
+    $('#modalQr').addEventListener('click', e => {
+      if (e.target === $('#modalQr')) cerrarEscaner();
+    });
+    window.addEventListener('pagehide', detenerCamara);
+
     $('#btnCancelar').addEventListener('click', cerrarModal);
     $('#modal').addEventListener('click', e => {
       if (e.target === $('#modal')) cerrarModal();
@@ -527,6 +752,7 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && !$('#modal').hidden) cerrarModal();
+      if (e.key === 'Escape' && !$('#modalQr').hidden) cerrarEscaner();
     });
 
     if (!window.supabase) {
