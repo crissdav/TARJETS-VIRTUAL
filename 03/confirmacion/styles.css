@@ -1673,7 +1673,7 @@ td.es-confirmado .nombre {
 .modal-qr .modal-actions .btn {
   min-width: 0;
   padding: 0.65rem 0.4rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
 }
 
 /* Sin "Escanear otro" a la vista, Cerrar ocupa toda la fila */
