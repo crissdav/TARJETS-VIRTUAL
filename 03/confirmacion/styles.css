@@ -1694,3 +1694,12 @@ td.es-confirmado .nombre {
 .qr-aviso strong {
   font-weight: 700;
 }
+
+/* En móvil, cada acción en su propia fila */
+@media (max-width: 900px) {
+  #btnCsv,
+  #btnPdf,
+  #btnSalir {
+    flex: 1 1 100%;
+  }
+}

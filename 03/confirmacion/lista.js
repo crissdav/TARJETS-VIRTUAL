@@ -727,6 +727,139 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
 
+  /* ── Exportar en PDF ────────────────────────────────────── */
+  const PDF_LIBS = [
+    'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js',
+    'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js'
+  ];
+
+  /* Se cargan al pulsar el botón: pesan mucho para abrirlas siempre. */
+  function cargarScript(src) {
+    return new Promise((ok, mal) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = ok;
+      s.onerror = () => mal(new Error('No se pudo cargar ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  /* La letra del PDF solo tiene caracteres latinos: un emoji en un nombre
+     saldría como símbolos raros. */
+  function textoPdf(texto) {
+    return String(texto || '').replace(/[^ -ÿ]/g, '').replace(/\s+/g, ' ').trim();
+  }
+
+  function estadoPdf(f) {
+    if (confirmadosDe(f) === f.personas) return 'Confirmado';
+    if (f.confirmadoInvitado) return 'Falta acompañante';
+    if (f.confirmadoAcompanante) return 'Falta invitado';
+    return 'Pendiente';
+  }
+
+  function generarPdf() {
+    const doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+    const ancho = doc.internal.pageSize.getWidth();
+    const alto = doc.internal.pageSize.getHeight();
+    const margen = 14;
+    const FUCSIA = [194, 24, 91];
+    const OSCURO = [63, 10, 39];
+    const VERDE = [20, 107, 57];
+
+    const lista = items.slice().sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+    const personas = lista.reduce((n, f) => n + f.personas, 0);
+    const confirmados = lista.reduce((n, f) => n + confirmadosDe(f), 0);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(...FUCSIA);
+    doc.text('Lista de Invitados', ancho / 2, 18, { align: 'center' });
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(...OSCURO);
+    doc.text('XV Años de Grecia Peña · Noche de Máscaras', ancho / 2, 25, { align: 'center' });
+    doc.text('Viernes 27 de noviembre de 2026 · 6:30 p.m.', ancho / 2, 30.5, { align: 'center' });
+    doc.setDrawColor(...FUCSIA);
+    doc.setLineWidth(0.5);
+    doc.line(margen, 34.5, ancho - margen, 34.5);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.text(
+      'Registros: ' + lista.length + '     Personas: ' + personas +
+      '     Confirmadas: ' + confirmados + '     Pendientes: ' + (personas - confirmados),
+      ancho / 2, 41, { align: 'center' }
+    );
+
+    doc.autoTable({
+      startY: 46,
+      margin: { left: margen, right: margen, bottom: 16 },
+      head: [['N.º', 'Invitado', 'Acompañante', 'Personas', 'Estado', 'Anotado']],
+      body: lista.map((f, i) => [
+        i + 1,
+        textoPdf(f.nombre),
+        textoPdf(f.acompanante) || '—',
+        f.personas,
+        estadoPdf(f),
+        textoPdf(fechaBonita(f.fecha))
+      ]),
+      foot: [['', 'Total', '', personas, confirmados + ' de ' + personas, '']],
+      showFoot: 'lastPage', rowPageBreak: 'avoid',
+      styles: { font: 'helvetica', fontSize: 9.5, cellPadding: 2.2, valign: 'middle', textColor: OSCURO, lineColor: [234, 184, 196], lineWidth: 0.2 },
+      headStyles: { fillColor: FUCSIA, textColor: 255, fontStyle: 'bold' },
+      footStyles: { fillColor: [242, 196, 206], textColor: OSCURO, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [255, 245, 249] },
+      columnStyles: {
+        0: { cellWidth: 11, halign: 'center' },
+        3: { cellWidth: 22, halign: 'center' },
+        4: { cellWidth: 36, fontSize: 9 },
+        5: { cellWidth: 39, fontSize: 8.5 }
+      },
+      didParseCell(celda) {
+        if (celda.section === 'body' && celda.column.index === 4) {
+          celda.cell.styles.fontStyle = 'bold';
+          celda.cell.styles.textColor = celda.cell.raw === 'Confirmado' ? VERDE : celda.cell.raw === 'Pendiente' ? OSCURO : [138, 83, 0];
+        }
+      }
+    });
+
+    const hoy = new Date();
+    const generado = 'Generado el ' + textoPdf(fechaBonita(hoy.toISOString()));
+    const paginas = doc.internal.getNumberOfPages();
+    for (let p = 1; p <= paginas; p++) {
+      doc.setPage(p);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...OSCURO);
+      doc.text(generado, margen, alto - 8);
+      doc.text('Página ' + p + ' de ' + paginas, ancho - margen, alto - 8, { align: 'right' });
+    }
+
+    const pad = n => String(n).padStart(2, '0');
+    doc.save('lista-invitados-xv-grecia-' + hoy.getFullYear() + '-' + pad(hoy.getMonth() + 1) + '-' + pad(hoy.getDate()) + '.pdf');
+  }
+
+  async function descargarPdf() {
+    const btn = $('#btnPdf');
+    btn.disabled = true;
+    try {
+      /* Con los datos más recientes, si hay conexión. */
+      try { await cargar(); } catch (e) { showToast('Sin conexión: se usa la última lista cargada'); }
+      if (!items.length) {
+        showToast('Aún no hay invitados anotados para descargar');
+        return;
+      }
+      for (const src of PDF_LIBS) {
+        await cargarScript(src);
+      }
+      generarPdf();
+    } catch (e) {
+      showToast('No se pudo crear el PDF. Revisa la conexión e inténtalo otra vez.');
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
   /* ── Init ───────────────────────────────────────────────── */
   async function init() {
     crearFondo();
@@ -735,6 +868,7 @@
     $('#orden').addEventListener('change', pintar);
 
     $('#btnCsv').addEventListener('click', descargarCsv);
+    $('#btnPdf').addEventListener('click', descargarPdf);
 
     $('#btnEscanear').addEventListener('click', abrirEscaner);
     $('#btnQrCerrar').addEventListener('click', cerrarEscaner);
