@@ -574,7 +574,7 @@
         `👤 *Nombre:* ${name}\n` +
         (companion.trim() ? `👥 *Acompañante:* ${companion.trim()}\n` : '') +
         `📅 *Fecha:* 27 de Noviembre, 2026 · 6:30 p.m.\n` +
-        `📍 *Lugar:* Av. Pascual Gusman s/n, Castillo Grande (ingreso al recreo Monte de los Olivos)\n\n` +
+        `📍 *Lugar:* Villa Los Naranjos, salón de eventos. Av. Pascual Gusman s/n, Castillo Grande (ingreso al recreo Monte de los Olivos)\n\n` +
         `¡Nos vemos en la Noche de Máscaras! 🎭✨`;
       return msg;
     }

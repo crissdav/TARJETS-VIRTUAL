@@ -3273,6 +3273,22 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--gris);
 }
 
+.dc-map-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--dorado-dark);
+}
+
+.dc-map-kind {
+  display: block;
+  margin-bottom: 0.55rem;
+  font-size: 0.98rem;
+  color: var(--gris);
+}
+
 .dc-map-place strong {
   display: block;
   font-size: 1.08rem;
