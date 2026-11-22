@@ -44,7 +44,7 @@ window.BodaFX = (function () {
     const nuevo = inicio => ({
       x: Math.random() * W,
       y: inicio ? Math.random() * H : -20 - Math.random() * 60,
-      s: 6 + Math.random() * 8,
+      s: 8 + Math.random() * 10,
       vy: 0.35 + Math.random() * 0.55,
       vx: (Math.random() - 0.5) * 0.3,
       fase: Math.random() * 6.28,
