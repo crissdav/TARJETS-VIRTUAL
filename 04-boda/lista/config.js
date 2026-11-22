@@ -9,7 +9,7 @@ window.BODA_PANEL = {
   FECHA_TEXTO: 'Sábado 20 de febrero de 2027',     // ← CAMBIAR
 
   /* Dirección pública de la tarjeta en Vercel (termina en /). */
-  TARJETA_URL: 'https://TU-TARJETA.vercel.app/',   // ← CAMBIAR
+  TARJETA_URL: 'https://boda-01-mu.vercel.app/',
 
   /* Mensaje que se envía por WhatsApp con la invitación.
      {nombre}, {pases} y {enlace} se reemplazan solos. */
