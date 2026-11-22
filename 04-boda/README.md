@@ -23,6 +23,17 @@ Dos sitios estáticos que se publican en **Vercel** y comparten una base de dato
 - **`tarjeta/datos.js`**: nombres, fecha, lugares y enlaces de Google Maps, padres, padrinos, itinerario, dress code, regalos, WhatsApp, hashtag y música. Todo lo que dice `← CAMBIAR` son datos de ejemplo.
 - **`lista/config.js`**: nombres, fecha, la URL pública de la tarjeta (`TARJETA_URL`) y el mensaje de WhatsApp para las invitaciones.
 - Música (opcional): copia el `.mp3` en `tarjeta/` y pon su nombre en `MUSICA`.
+- Fotos (opcional): crea `tarjeta/fotos/`, copia las fotos y escribe sus rutas en `FOTO_PORTADA` (va dentro del arco de la portada; mejor vertical) y en `GALERIA` (sección «Nuestra historia» con visor). Vacío = no se muestra.
+- Hospedaje (opcional): lista `HOSPEDAJE` con `nombre`, `texto` y `enlace`. `[]` = se oculta.
+
+## Diseño y animaciones
+
+- **Ilustraciones** (`flora.js`): rosas en capas, eucalipto, olivo, bayas y el sello de lacre se dibujan por código en SVG. No hay imágenes que descargar y se ven nítidas en cualquier pantalla.
+- **Sobre**: papel con textura, sello de lacre en relieve que se parte en dos, solapa que gira en 3D con forro salvia y filete dorado, y la carta que sale del sobre.
+- **Animaciones** (`animaciones.js`, con GSAP + ScrollTrigger): entrada de la portada (flores, arco dorado que se dibuja, nombres que aparecen como escritos), contenido que aparece al bajar, línea del itinerario que se dibuja con el scroll, flores con parallax, pétalos que caen en canvas y confeti al confirmar.
+- **Cuenta regresiva**: muestra meses · días · horas · min mientras falte más de un mes; en el último mes pasa a días · horas · min · seg.
+- **Mobile-first**: los estilos base son para celular; tablet (≥ 768 px) y escritorio (≥ 1024 px) solo agregan cambios.
+- Si GSAP no carga o el teléfono tiene activado «reducir movimiento», la tarjeta funciona con animaciones simples. En teléfonos modestos se dibujan menos pétalos.
 
 ## 2. Supabase
 
@@ -74,6 +85,8 @@ npx serve 04-boda
 │   ├── index.html          estructura
 │   ├── styles.css          estilos (marfil, salvia y dorado)
 │   ├── script.js           relleno desde datos.js, sobre, cuenta, confirmación, pase QR
+│   ├── flora.js            ilustraciones botánicas y sello de lacre (SVG)
+│   ├── animaciones.js      GSAP, pétalos, confeti
 │   ├── datos.js            ← DATOS DE LA BODA
 │   ├── qrcode-generator.js QR (Kazuhiko Arase, MIT)
 │   ├── favicon.svg

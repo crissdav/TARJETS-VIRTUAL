@@ -58,41 +58,134 @@
       else n.hidden = true;
     });
     document.title = D.NOVIA + ' & ' + D.NOVIO + ' · Nuestra Boda';
-    $('#selloIniciales').textContent = (D.NOVIA || ' ').charAt(0) + (D.NOVIO || ' ').charAt(0);
+    const iniciales = (D.NOVIA || ' ').trim().charAt(0) + (D.NOVIO || ' ').trim().charAt(0);
+    $$('.sello-mitad').forEach(m => {
+      if (window.Flora) m.appendChild(Flora.sello(iniciales));
+      else m.textContent = iniciales;
+    });
   }
 
-  /* ── Pétalos ── */
-  function crearPetalos() {
-    if (reducido) return;
-    const cont = $('#petalos');
-    const n = isMobile ? 10 : 18;
-    for (let i = 0; i < n; i++) {
-      const p = el('span', 'petalo' + (i % 3 === 0 ? ' hoja' : ''));
-      const s = 0.6 + Math.random() * 0.8;
-      p.style.left = Math.random() * 100 + '%';
-      p.style.transform = 'scale(' + s + ')';
-      p.style.width = 12 * s + 'px';
-      p.style.height = 16 * s + 'px';
-      p.style.animationDuration = 12 + Math.random() * 14 + 's';
-      p.style.animationDelay = -Math.random() * 20 + 's';
-      cont.appendChild(p);
+  /* ── Ilustraciones ── */
+  function flores() {
+    if (!window.Flora) return;
+    $$('.titulo').forEach((t, i) => {
+      const g = el('div', 'titulo-flor');
+      g.dataset.flora = 'guirnalda';
+      g.dataset.semilla = String(101 + i * 13);
+      g.setAttribute('aria-hidden', 'true');
+      t.insertAdjacentElement('afterend', g);
+    });
+    Flora.pintarTodo();
+  }
+
+  /* ── Fotos ── */
+  function fotos() {
+    if (D.FOTO_PORTADA) {
+      $('#portadaImg').src = D.FOTO_PORTADA;
+      $('#portadaImg').alt = 'Foto de ' + D.NOVIA + ' y ' + D.NOVIO;
+      $('#portadaFoto').hidden = false;
+      $('#portada').classList.add('con-foto');
     }
+    const lista = (D.GALERIA || []).filter(Boolean);
+    if (!lista.length) return;
+    $('#secGaleria').hidden = false;
+    const cont = $('#galeria');
+    lista.forEach((src, i) => {
+      const b = el('button', 'galeria-item reveal');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Ver foto ' + (i + 1));
+      const img = el('img');
+      img.src = src;
+      img.alt = '';
+      img.loading = 'lazy';
+      b.appendChild(img);
+      b.addEventListener('click', () => {
+        $('#visorImg').src = src;
+        $('#visorFoto').hidden = false;
+      });
+      cont.appendChild(b);
+    });
+    const cerrar = () => { $('#visorFoto').hidden = true; };
+    $('#visorFoto').addEventListener('click', cerrar);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); });
   }
 
-  /* ── Cuenta regresiva ── */
+  /* ── Hospedaje ── */
+  function hospedaje() {
+    const lista = D.HOSPEDAJE || [];
+    if (!lista.length) return;
+    $('#secHospedaje').hidden = false;
+    const cont = $('#hospedaje');
+    lista.forEach(h => {
+      const t = el('article', 'tarjeta regalo reveal');
+      t.appendChild(el('h3', '', h.nombre || ''));
+      if (h.texto) t.appendChild(el('p', '', h.texto));
+      if (h.enlace) {
+        const a = el('a', 'btn btn-borde', 'Ver más');
+        a.href = h.enlace;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        t.appendChild(a);
+      }
+      cont.appendChild(t);
+    });
+  }
+
+  /* ── Cuenta regresiva ──
+     Más de un mes: meses · días · horas · min.
+     Último mes:    días · horas · min · seg. */
+  function sumarMeses(d, m) {
+    const r = new Date(d);
+    const dia = r.getDate();
+    r.setDate(1);
+    r.setMonth(r.getMonth() + m);
+    r.setDate(Math.min(dia, new Date(r.getFullYear(), r.getMonth() + 1, 0).getDate()));
+    return r;
+  }
+  function mesesEntre(desde, hasta) {
+    let m = (hasta.getFullYear() - desde.getFullYear()) * 12 + hasta.getMonth() - desde.getMonth();
+    if (sumarMeses(desde, m) > hasta) m--;
+    return Math.max(0, m);
+  }
+  function poner(n, valor, etiqueta) {
+    const b = $('#cU' + n);
+    if (b.textContent !== valor) {
+      b.textContent = valor;
+      const caja = b.parentNode;
+      caja.classList.remove('gira');
+      void caja.offsetWidth;
+      caja.classList.add('gira');
+    }
+    $('#cL' + n).textContent = etiqueta;
+  }
+  const plural = (n, uno, varios) => (n === 1 ? uno : varios);
   function cuenta() {
-    const diff = FECHA - Date.now();
+    const ahora = new Date();
+    const diff = FECHA - ahora;
     if (isNaN(diff)) return;
     if (diff <= 0) {
       $('#cuenta').hidden = true;
       $('#cuentaFin').hidden = false;
       return true;
     }
-    const s = Math.floor(diff / 1000);
-    $('#cDias').textContent = Math.floor(s / 86400);
-    $('#cHoras').textContent = pad(Math.floor(s / 3600) % 24);
-    $('#cMin').textContent = pad(Math.floor(s / 60) % 60);
-    $('#cSeg').textContent = pad(s % 60);
+    const meses = mesesEntre(ahora, FECHA);
+    if (meses >= 1) {
+      const resto = Math.floor((FECHA - sumarMeses(ahora, meses)) / 1000);
+      const dias = Math.floor(resto / 86400);
+      const horas = Math.floor(resto / 3600) % 24;
+      poner(1, String(meses), plural(meses, 'mes', 'meses'));
+      poner(2, String(dias), plural(dias, 'día', 'días'));
+      poner(3, pad(horas), plural(horas, 'hora', 'horas'));
+      poner(4, pad(Math.floor(resto / 60) % 60), 'min');
+    } else {
+      const s2 = Math.floor(diff / 1000);
+      const dias = Math.floor(s2 / 86400);
+      const horas = Math.floor(s2 / 3600) % 24;
+      poner(1, String(dias), plural(dias, 'día', 'días'));
+      poner(2, pad(horas), plural(horas, 'hora', 'horas'));
+      poner(3, pad(Math.floor(s2 / 60) % 60), 'min');
+      poner(4, pad(s2 % 60), 'seg');
+    }
   }
   function iniciarCuenta() {
     if (cuenta()) return;
@@ -238,6 +331,7 @@
 
   /* ── Aparición al hacer scroll ── */
   function reveal() {
+    if (window.BodaFX && BodaFX.activo()) return;
     const items = $$('.reveal');
     if (!('IntersectionObserver' in window)) { items.forEach(i => i.classList.add('visible')); return; }
     const io = new IntersectionObserver(entradas => {
@@ -272,13 +366,16 @@
     const caja = $('#sobreCaja');
     if (caja.classList.contains('abierto')) return;
     caja.classList.add('abierto');
+    $('#sobre').classList.add('abriendo');
     musica(true);
     setTimeout(() => {
       $('#sobre').classList.add('fuera');
       document.body.classList.remove('cerrado');
       window.scrollTo(0, 0);
-      $$('.portada .reveal').forEach(n => n.classList.add('visible'));
-    }, reducido ? 0 : 1700);
+      if (window.BodaFX && BodaFX.activo()) BodaFX.portada();
+      else $$('.portada .intro, .portada .nombre').forEach(n => n.classList.add('visible'));
+      if (window.BodaFX) BodaFX.refrescar();
+    }, reducido ? 0 : 2900);
   }
 
   /* ════════ CONFIRMACIÓN ════════ */
@@ -466,6 +563,7 @@
     btn.textContent = 'Enviar confirmación';
     if (!invitacion) guardar(r);
     mostrarListo(r);
+    if (r.guardado && r.asiste && window.BodaFX) BodaFX.confeti();
     $('#rsvp').scrollIntoView({ behavior: reducido ? 'auto' : 'smooth', block: 'start' });
   }
 
@@ -632,7 +730,8 @@
   /* ── Inicio ── */
   function init() {
     rellenar();
-    crearPetalos();
+    flores();
+    fotos();
     iniciarCuenta();
     calendario();
     padres();
@@ -640,6 +739,7 @@
     itinerario();
     dress();
     regalos();
+    hospedaje();
     iniciarMusica();
     reveal();
     iniciarRsvp();

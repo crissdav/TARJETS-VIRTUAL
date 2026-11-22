@@ -63,8 +63,7 @@ textarea.input { resize: vertical; font-size: 14px; }
 .campo > span { display: block; font-size: 12px; font-weight: 600; color: var(--salvia-osc); margin-bottom: 5px; }
 .campo small { font-weight: 400; color: var(--suave); }
 .nota { font-size: 13px; color: var(--suave); margin-bottom: 12px; }
-.fila2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 420px) { .fila2 { grid-template-columns: 1fr; gap: 0; } }
+.fila2 { display: grid; grid-template-columns: 1fr; gap: 0; }
 
 /* ── Login ── */
 .login { min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 20px 16px; }
@@ -86,9 +85,7 @@ textarea.input { resize: vertical; font-size: 14px; }
 .vivo.off { color: var(--pend); background: var(--pend-fondo); }
 @keyframes titila { 50% { opacity: .3; } }
 
-.stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 18px; }
-@media (max-width: 860px) { .stats { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 420px) { .stats { gap: 8px; } }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
 .stat { background: var(--papel); border: 1px solid var(--linea); border-radius: 12px; padding: 12px 8px; text-align: center; box-shadow: var(--sombra); }
 .stat b { font-variant-numeric: lining-nums tabular-nums; display: block; font-family: var(--f-titulo); font-size: 32px; font-weight: 600; color: var(--bosque); line-height: 1.1; }
 .stat span { font-size: 11px; font-weight: 500; color: var(--suave); }
@@ -98,17 +95,16 @@ textarea.input { resize: vertical; font-size: 14px; }
 .stat-in b { color: var(--salvia-osc); }
 
 .barra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
-.barra-sep { flex: 1; }
-.filtros { display: grid; grid-template-columns: 1fr 200px 200px; gap: 8px; margin-bottom: 10px; }
-@media (max-width: 720px) { .filtros { grid-template-columns: 1fr 1fr; } .buscar { grid-column: 1 / -1; } }
-.buscar { position: relative; }
+.barra .btn { flex: 1 1 auto; }
+.barra-sep { display: none; flex: 1; }
+.filtros { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.buscar { position: relative; grid-column: 1 / -1; }
 .buscar .ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--suave); }
 .buscar .input { padding-left: 36px; }
 .contador { font-size: 13px; color: var(--suave); margin-bottom: 8px; min-height: 1em; }
 
 /* ── Lista ── */
-.lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
-@media (max-width: 380px) { .lista { grid-template-columns: 1fr; } }
+.lista { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .inv { background: var(--papel); border: 1px solid var(--linea); border-left: 4px solid var(--pend); border-radius: 12px; padding: 14px 14px 12px; box-shadow: var(--sombra); display: flex; flex-direction: column; gap: 10px; }
 .inv-asiste { border-left-color: var(--ok); }
 .inv-no_asiste { border-left-color: var(--no); }
@@ -155,9 +151,23 @@ textarea.input { resize: vertical; font-size: 14px; }
 .toast { position: fixed; left: 50%; bottom: 20px; z-index: 60; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; max-width: calc(100vw - 32px); background: var(--bosque); color: #fff; font-size: 14px; padding: 11px 18px; border-radius: 999px; transition: opacity .3s, transform .3s; text-align: center; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-@media (max-width: 520px) {
-  .barra .btn { flex: 1 1 auto; }
-  .barra-sep { display: none; }
+/* ════════ ADAPTACIÓN (mobile-first) ════════ */
+@media (min-width: 440px) {
+  .fila2 { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stats { gap: 10px; }
+}
+@media (min-width: 600px) {
+  .barra .btn { flex: 0 0 auto; }
+  .barra-sep { display: block; }
+}
+@media (min-width: 720px) {
+  .pagina { padding: 32px 24px 70px; }
+  .filtros { grid-template-columns: 1fr 200px 200px; }
+  .buscar { grid-column: auto; }
+  .lista { grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+}
+@media (min-width: 900px) {
+  .stats { grid-template-columns: repeat(6, 1fr); }
 }
 
 /* ── Apartados ── */

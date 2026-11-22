@@ -68,6 +68,17 @@ window.BODA = {
   RSVP_ABIERTO: true,
 
   HASHTAG: '#NuestraBoda',            // ← CAMBIAR
+  /* Fotos (opcional). Copia las fotos a la carpeta tarjeta/fotos/ y
+     escribe sus nombres. Vacío = no se muestra.
+     FOTO_PORTADA va dentro del arco de la portada (vertical queda mejor). */
+  FOTO_PORTADA: '',                       // ej.: 'fotos/portada.jpg'
+  HISTORIA: 'Cada momento juntos nos trajo hasta aquí.',
+  GALERIA: [],                            // ej.: ['fotos/1.jpg', 'fotos/2.jpg', 'fotos/3.jpg']
+
+  /* Hospedaje para invitados de fuera (opcional). [] = se oculta. */
+  HOSPEDAJE_TEXTO: 'Si vienes de fuera, estos lugares quedan cerca:',
+  HOSPEDAJE: [],                          // ej.: [{ nombre: 'Hotel X', texto: 'A 5 min del salón', enlace: 'https://...' }]
+
   /* Música de fondo: pon el .mp3 en esta carpeta y escribe su nombre.
      Vacío '' = sin música. */
   MUSICA: '',

@@ -19,43 +19,39 @@
 </head>
 <body class="cerrado">
 
-<!-- Ramita de hojas reutilizable -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <symbol id="rama" viewBox="0 0 240 60">
-      <path d="M4 32 C60 30 120 28 236 30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-      <g fill="currentColor" opacity=".85">
-        <path d="M40 31c-6-10-16-14-24-12 6 7 14 11 24 12z"/>
-        <path d="M40 31c-8 8-18 10-25 7 7-6 15-8 25-7z"/>
-        <path d="M78 30c-5-11-15-16-24-15 6 8 14 13 24 15z"/>
-        <path d="M78 30c-8 9-18 12-26 9 7-7 16-10 26-9z"/>
-        <path d="M118 29c-4-12-13-18-22-18 5 9 12 15 22 18z"/>
-        <path d="M118 29c-9 9-19 12-27 10 8-7 17-11 27-10z"/>
-        <path d="M158 29c-3-11-11-18-20-19 4 9 11 16 20 19z"/>
-        <path d="M158 29c-9 8-19 11-26 9 7-6 16-9 26-9z"/>
-        <path d="M196 30c-3-9-10-15-17-16 4 8 10 13 17 16z"/>
-        <path d="M196 30c-7 7-15 9-21 7 6-5 13-7 21-7z"/>
-      </g>
-      <g fill="#C9A9A6"><circle cx="232" cy="30" r="4"/><circle cx="224" cy="25" r="2.6"/><circle cx="225" cy="36" r="2.4"/></g>
-    </symbol>
-  </defs>
-</svg>
-
-<div class="petalos" id="petalos" aria-hidden="true"></div>
+<canvas class="petalos" id="petalos" aria-hidden="true"></canvas>
 
 <!-- ═════════ SOBRE ═════════ -->
 <div class="sobre-pantalla" id="sobre">
+  <div class="sobre-flor flor-a" data-flora="esquina" data-semilla="53" aria-hidden="true"></div>
+  <div class="sobre-flor flor-b" data-flora="esquina" data-semilla="71" aria-hidden="true"></div>
+
   <p class="sobre-para" id="sobrePara" hidden>Para <strong id="sobreNombre"></strong></p>
   <div class="sobre" id="sobreCaja">
+    <div class="sobre-atras" aria-hidden="true"></div>
     <div class="sobre-carta">
+      <div class="carta-flor" data-flora="guirnalda" data-semilla="17" aria-hidden="true"></div>
       <span class="eyebrow">Nos casamos</span>
       <p class="carta-nombres"><span data-b="NOVIA"></span> <i>&amp;</i> <span data-b="NOVIO"></span></p>
       <p class="carta-fecha" data-b="FECHA_CORTA"></p>
     </div>
-    <div class="sobre-cuerpo" aria-hidden="true"></div>
-    <div class="sobre-solapa" aria-hidden="true"></div>
+    <svg class="sobre-frente" viewBox="0 0 340 234" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="sfIzq" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#EDE3D1"/><stop offset="1" stop-color="#E2D5BE"/></linearGradient>
+        <linearGradient id="sfDer" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#E9DECB"/><stop offset="1" stop-color="#DCCDB4"/></linearGradient>
+        <linearGradient id="sfAba" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F3EBDD"/><stop offset="1" stop-color="#E6DAC5"/></linearGradient>
+      </defs>
+      <path d="M0 0 L176 124 Q170 130 164 126 L0 234Z" fill="url(#sfIzq)"/>
+      <path d="M340 0 L164 124 Q170 130 176 126 L340 234Z" fill="url(#sfDer)"/>
+      <path d="M0 234 L158 120 Q170 112 182 120 L340 234Z" fill="url(#sfAba)"/>
+      <path d="M0 234 L158 120 Q170 112 182 120 L340 234" fill="none" stroke="#B9A17A" stroke-opacity=".35" stroke-width="1"/>
+    </svg>
+    <div class="sobre-solapa" aria-hidden="true">
+      <div class="solapa-cara solapa-fuera"></div>
+      <div class="solapa-cara solapa-dentro"><div class="forro-base"><div class="forro" data-flora="ramo" data-semilla="23"></div></div></div>
+    </div>
     <button class="sello" id="sello" type="button" aria-label="Abrir la invitación">
-      <span id="selloIniciales"></span>
+      <span class="sello-mitad izq"></span><span class="sello-mitad der"></span>
     </button>
   </div>
   <p class="sobre-ayuda">Toca el sello para abrir</p>
@@ -64,19 +60,31 @@
 <main id="contenido">
 
   <!-- ═════════ PORTADA ═════════ -->
-  <header class="portada">
-    <svg class="rama rama-top" aria-hidden="true"><use href="#rama"/></svg>
-    <span class="eyebrow reveal">¡Nos casamos!</span>
-    <h1 class="nombres reveal">
-      <span data-b="NOVIA"></span>
-      <span class="amp">&amp;</span>
-      <span data-b="NOVIO"></span>
-    </h1>
-    <p class="portada-fecha reveal" data-b="FECHA_PUNTOS"></p>
-    <p class="portada-ciudad reveal" data-b="CIUDAD"></p>
-    <p class="portada-invitado reveal" id="portadaInvitado" hidden></p>
-    <svg class="rama rama-bottom" aria-hidden="true"><use href="#rama"/></svg>
-    <a class="bajar" href="#frase" aria-label="Ver más">
+  <header class="portada" id="portada">
+    <div class="portada-flor flor-sup" data-flora="esquina" data-semilla="11" data-parallax="-60" aria-hidden="true"></div>
+    <div class="portada-flor flor-inf" data-flora="esquina" data-semilla="29" data-parallax="60" aria-hidden="true"></div>
+
+    <div class="portada-centro">
+      <svg class="arco" viewBox="0 0 300 480" preserveAspectRatio="none" aria-hidden="true">
+        <path class="arco-linea" pathLength="1" d="M8 478 V150 A142 142 0 0 1 292 150 V478" />
+        <path class="arco-linea fina" pathLength="1" d="M18 478 V152 A132 132 0 0 1 282 152 V478" />
+      </svg>
+
+      <div class="portada-foto intro" id="portadaFoto" hidden><img id="portadaImg" alt=""></div>
+      <span class="eyebrow intro">¡Nos casamos!</span>
+      <h1 class="nombres">
+        <span class="nombre" data-b="NOVIA"></span>
+        <span class="amp intro">&amp;</span>
+        <span class="nombre" data-b="NOVIO"></span>
+      </h1>
+      <div class="portada-fecha intro">
+        <span class="fecha-linea"></span><span data-b="FECHA_PUNTOS"></span><span class="fecha-linea"></span>
+      </div>
+      <p class="portada-ciudad intro" data-b="CIUDAD"></p>
+      <p class="portada-invitado intro" id="portadaInvitado" hidden></p>
+    </div>
+
+    <a class="bajar intro" href="#frase" aria-label="Ver más">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9l6 6 6-6"/></svg>
     </a>
   </header>
@@ -84,6 +92,7 @@
   <!-- ═════════ FRASE ═════════ -->
   <section class="seccion frase" id="frase">
     <blockquote class="reveal">
+      <span class="comillas" aria-hidden="true">“</span>
       <p data-b="FRASE"></p>
       <cite data-b="FRASE_AUTOR"></cite>
     </blockquote>
@@ -93,10 +102,10 @@
   <section class="seccion">
     <span class="eyebrow reveal">Faltan</span>
     <div class="cuenta reveal" id="cuenta">
-      <div><b id="cDias">0</b><small>días</small></div>
-      <div><b id="cHoras">0</b><small>horas</small></div>
-      <div><b id="cMin">0</b><small>min</small></div>
-      <div><b id="cSeg">0</b><small>seg</small></div>
+      <div class="flip"><b id="cU1">0</b><small id="cL1">meses</small></div>
+      <div class="flip"><b id="cU2">0</b><small id="cL2">días</small></div>
+      <div class="flip"><b id="cU3">0</b><small id="cL3">horas</small></div>
+      <div class="flip"><b id="cU4">0</b><small id="cL4">min</small></div>
     </div>
     <p class="cuenta-fin" id="cuentaFin" hidden>¡Hoy es el gran día!</p>
   </section>
@@ -156,12 +165,27 @@
     <div class="regalos" id="regalos"></div>
   </section>
 
+  <!-- ═════════ GALERÍA ═════════ -->
+  <section class="seccion" id="secGaleria" hidden>
+    <h2 class="titulo reveal">Nuestra historia</h2>
+    <p class="texto reveal" data-b="HISTORIA"></p>
+    <div class="galeria" id="galeria"></div>
+  </section>
+
+  <!-- ═════════ HOSPEDAJE ═════════ -->
+  <section class="seccion" id="secHospedaje" hidden>
+    <h2 class="titulo reveal">Hospedaje</h2>
+    <p class="texto reveal" data-b="HOSPEDAJE_TEXTO"></p>
+    <div class="regalos" id="hospedaje"></div>
+  </section>
+
   <!-- ═════════ CONFIRMAR ═════════ -->
   <section class="seccion" id="confirmar">
     <h2 class="titulo reveal">Confirma tu asistencia</h2>
     <p class="texto reveal">Por favor confírmanos antes del <b data-b="CONFIRMAR_ANTES"></b>.</p>
 
     <div class="tarjeta rsvp reveal" id="rsvp">
+      <div class="tarjeta-flor" data-flora="ramita" data-semilla="61" aria-hidden="true"></div>
       <div class="rsvp-cargando" id="rsvpCargando">Buscando tu invitación…</div>
 
       <!-- Saludo de la invitación personal -->
@@ -230,7 +254,7 @@
   </section>
 
   <footer class="pie">
-    <svg class="rama" aria-hidden="true"><use href="#rama"/></svg>
+    <div class="pie-flor reveal" data-flora="ramo" data-semilla="41" aria-hidden="true"></div>
     <p class="pie-gracias">Gracias por ser parte de nuestra historia</p>
     <p class="pie-nombres"><span data-b="NOVIA"></span> &amp; <span data-b="NOVIO"></span></p>
     <p class="pie-hashtag" data-b="HASHTAG"></p>
@@ -243,10 +267,20 @@
 </button>
 <audio id="audio" loop preload="none"></audio>
 
+<div class="visor-foto" id="visorFoto" hidden>
+  <button class="visor-cerrar" type="button" aria-label="Cerrar foto">×</button>
+  <img id="visorImg" alt="">
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="qrcode-generator.js"></script>
 <script src="datos.js"></script>
+<script src="flora.js"></script>
 <script src="script.js"></script>
+<script src="animaciones.js"></script>
 </body>
 </html>
