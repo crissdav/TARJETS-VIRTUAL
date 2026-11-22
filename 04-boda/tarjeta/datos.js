@@ -87,6 +87,6 @@ window.BODA = {
 
   /* Supabase (Settings → API). Igual que en lista/config.js.
      Sin configurar, la tarjeta confirma solo por WhatsApp. */
-  SUPABASE_URL: 'https://TU-PROYECTO.supabase.co',
-  SUPABASE_ANON_KEY: 'TU-ANON-KEY'
+  SUPABASE_URL: 'https://dgogtngftdqibxrwmgzs.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnb2d0bmdmdGRxaWJ4cndtZ3pzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2Njg0NDEsImV4cCI6MjEwMTI0NDQ0MX0.uPAoAVgW13JwzaGoKX3k8CNYGZSvjroB29PGaP6frhA'
 };
