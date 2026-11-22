@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestra Boda</title>
+<meta name="description" content="Invitación digital a nuestra boda">
+<meta property="og:title" content="¡Nos casamos!">
+<meta property="og:description" content="Abre tu invitación y confirma tu asistencia">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F7F3EC">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="cerrado">
+
+<!-- Ramita de hojas reutilizable -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="rama" viewBox="0 0 240 60">
+      <path d="M4 32 C60 30 120 28 236 30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <g fill="currentColor" opacity=".85">
+        <path d="M40 31c-6-10-16-14-24-12 6 7 14 11 24 12z"/>
+        <path d="M40 31c-8 8-18 10-25 7 7-6 15-8 25-7z"/>
+        <path d="M78 30c-5-11-15-16-24-15 6 8 14 13 24 15z"/>
+        <path d="M78 30c-8 9-18 12-26 9 7-7 16-10 26-9z"/>
+        <path d="M118 29c-4-12-13-18-22-18 5 9 12 15 22 18z"/>
+        <path d="M118 29c-9 9-19 12-27 10 8-7 17-11 27-10z"/>
+        <path d="M158 29c-3-11-11-18-20-19 4 9 11 16 20 19z"/>
+        <path d="M158 29c-9 8-19 11-26 9 7-6 16-9 26-9z"/>
+        <path d="M196 30c-3-9-10-15-17-16 4 8 10 13 17 16z"/>
+        <path d="M196 30c-7 7-15 9-21 7 6-5 13-7 21-7z"/>
+      </g>
+      <g fill="#C9A9A6"><circle cx="232" cy="30" r="4"/><circle cx="224" cy="25" r="2.6"/><circle cx="225" cy="36" r="2.4"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="petalos" id="petalos" aria-hidden="true"></div>
+
+<!-- ═════════ SOBRE ═════════ -->
+<div class="sobre-pantalla" id="sobre">
+  <p class="sobre-para" id="sobrePara" hidden>Para <strong id="sobreNombre"></strong></p>
+  <div class="sobre" id="sobreCaja">
+    <div class="sobre-carta">
+      <span class="eyebrow">Nos casamos</span>
+      <p class="carta-nombres"><span data-b="NOVIA"></span> <i>&amp;</i> <span data-b="NOVIO"></span></p>
+      <p class="carta-fecha" data-b="FECHA_CORTA"></p>
+    </div>
+    <div class="sobre-cuerpo" aria-hidden="true"></div>
+    <div class="sobre-solapa" aria-hidden="true"></div>
+    <button class="sello" id="sello" type="button" aria-label="Abrir la invitación">
+      <span id="selloIniciales"></span>
+    </button>
+  </div>
+  <p class="sobre-ayuda">Toca el sello para abrir</p>
+</div>
+
+<main id="contenido">
+
+  <!-- ═════════ PORTADA ═════════ -->
+  <header class="portada">
+    <svg class="rama rama-top" aria-hidden="true"><use href="#rama"/></svg>
+    <span class="eyebrow reveal">¡Nos casamos!</span>
+    <h1 class="nombres reveal">
+      <span data-b="NOVIA"></span>
+      <span class="amp">&amp;</span>
+      <span data-b="NOVIO"></span>
+    </h1>
+    <p class="portada-fecha reveal" data-b="FECHA_PUNTOS"></p>
+    <p class="portada-ciudad reveal" data-b="CIUDAD"></p>
+    <p class="portada-invitado reveal" id="portadaInvitado" hidden></p>
+    <svg class="rama rama-bottom" aria-hidden="true"><use href="#rama"/></svg>
+    <a class="bajar" href="#frase" aria-label="Ver más">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </header>
+
+  <!-- ═════════ FRASE ═════════ -->
+  <section class="seccion frase" id="frase">
+    <blockquote class="reveal">
+      <p data-b="FRASE"></p>
+      <cite data-b="FRASE_AUTOR"></cite>
+    </blockquote>
+  </section>
+
+  <!-- ═════════ CUENTA REGRESIVA ═════════ -->
+  <section class="seccion">
+    <span class="eyebrow reveal">Faltan</span>
+    <div class="cuenta reveal" id="cuenta">
+      <div><b id="cDias">0</b><small>días</small></div>
+      <div><b id="cHoras">0</b><small>horas</small></div>
+      <div><b id="cMin">0</b><small>min</small></div>
+      <div><b id="cSeg">0</b><small>seg</small></div>
+    </div>
+    <p class="cuenta-fin" id="cuentaFin" hidden>¡Hoy es el gran día!</p>
+  </section>
+
+  <!-- ═════════ CALENDARIO ═════════ -->
+  <section class="seccion">
+    <h2 class="titulo reveal">Guarda la fecha</h2>
+    <div class="calendario tarjeta reveal">
+      <p class="cal-mes" id="calMes"></p>
+      <div class="cal-grid" id="calGrid"></div>
+      <p class="cal-texto" data-b="FECHA_LARGA"></p>
+      <a class="btn btn-borde" id="btnAgendar" target="_blank" rel="noopener">Agendar en mi calendario</a>
+    </div>
+  </section>
+
+  <!-- ═════════ PADRES ═════════ -->
+  <section class="seccion" id="secPadres">
+    <h2 class="titulo reveal">Con la bendición de</h2>
+    <div class="padres">
+      <div class="reveal" id="padresNovia"><h3>Padres de la novia</h3></div>
+      <div class="reveal" id="padresNovio"><h3>Padres del novio</h3></div>
+      <div class="reveal" id="padrinos"><h3>Nuestros padrinos</h3></div>
+    </div>
+  </section>
+
+  <!-- ═════════ LUGARES ═════════ -->
+  <section class="seccion">
+    <h2 class="titulo reveal">¿Dónde?</h2>
+    <div class="lugares" id="lugares"></div>
+  </section>
+
+  <!-- ═════════ ITINERARIO ═════════ -->
+  <section class="seccion">
+    <h2 class="titulo reveal">Itinerario</h2>
+    <ol class="itinerario" id="itinerario"></ol>
+  </section>
+
+  <!-- ═════════ DRESS CODE ═════════ -->
+  <section class="seccion">
+    <h2 class="titulo reveal">Código de vestimenta</h2>
+    <div class="tarjeta dress reveal">
+      <svg class="dress-ico" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M22 6l4 8-6 10 4 4-8 30h32l-8-30 4-4-6-10 4-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M26 14h12" stroke="currentColor" stroke-width="1.8"/>
+      </svg>
+      <p class="dress-tipo" data-b="DRESS_CODE"></p>
+      <p data-b="DRESS_TEXTO"></p>
+      <div class="dress-colores" id="dressColores"></div>
+      <p class="dress-nota" data-b="DRESS_NOTA"></p>
+    </div>
+  </section>
+
+  <!-- ═════════ REGALOS ═════════ -->
+  <section class="seccion" id="secRegalos">
+    <h2 class="titulo reveal">Regalos</h2>
+    <p class="texto reveal" data-b="REGALOS_TEXTO"></p>
+    <div class="regalos" id="regalos"></div>
+  </section>
+
+  <!-- ═════════ CONFIRMAR ═════════ -->
+  <section class="seccion" id="confirmar">
+    <h2 class="titulo reveal">Confirma tu asistencia</h2>
+    <p class="texto reveal">Por favor confírmanos antes del <b data-b="CONFIRMAR_ANTES"></b>.</p>
+
+    <div class="tarjeta rsvp reveal" id="rsvp">
+      <div class="rsvp-cargando" id="rsvpCargando">Buscando tu invitación…</div>
+
+      <!-- Saludo de la invitación personal -->
+      <div class="rsvp-invitacion" id="rsvpInvitacion" hidden>
+        <p class="rsvp-hola">Querido(s)</p>
+        <p class="rsvp-nombre" id="rsvpNombre"></p>
+        <p class="rsvp-pases" id="rsvpPases"></p>
+      </div>
+
+      <!-- Solo con enlace personal -->
+      <div class="rsvp-cerrado" id="rsvpCerrado" hidden>
+        <p>Para confirmar, abre el enlace personal que te enviamos por WhatsApp.</p>
+      </div>
+
+      <form class="rsvp-form" id="rsvpForm" autocomplete="off" hidden>
+        <div class="campo" id="campoNombre">
+          <label for="rNombre">Tu nombre completo</label>
+          <input type="text" id="rNombre" maxlength="80" placeholder="Nombre y apellido">
+        </div>
+
+        <fieldset class="campo opciones">
+          <legend>¿Nos acompañas?</legend>
+          <label class="opcion"><input type="radio" name="asiste" value="si" checked><span>Sí, ahí estaré</span></label>
+          <label class="opcion"><input type="radio" name="asiste" value="no"><span>No podré asistir</span></label>
+        </fieldset>
+
+        <div class="campo" id="campoPersonas">
+          <label for="rPersonas">¿Cuántas personas asistirán?</label>
+          <select id="rPersonas"></select>
+        </div>
+
+        <div class="campo acomp" id="campoAcomp" hidden>
+          <p class="campo-titulo">Nombre de quienes te acompañan</p>
+          <div id="listaAcomp"></div>
+        </div>
+
+        <div class="campo">
+          <label for="rMensaje">Un mensaje para los novios <span class="opt">(opcional)</span></label>
+          <textarea id="rMensaje" rows="3" maxlength="500" placeholder="Escribe tus buenos deseos…"></textarea>
+        </div>
+
+        <button class="btn" type="submit" id="btnEnviar">Enviar confirmación</button>
+      </form>
+
+      <!-- Resultado -->
+      <div class="rsvp-listo" id="rsvpListo" hidden>
+        <p class="rsvp-listo-titulo" id="listoTitulo"></p>
+        <p class="rsvp-listo-texto" id="listoTexto"></p>
+        <p class="rsvp-acomp" id="listoAcomp" hidden></p>
+
+        <div class="pase" id="pase" hidden>
+          <p class="pase-titulo">Tu pase de entrada</p>
+          <canvas id="paseCanvas" width="300" height="300" hidden></canvas>
+          <img id="paseImg" alt="Código QR de tu pase de entrada">
+          <p class="pase-ayuda">Muéstralo en la entrada el día de la boda.</p>
+          <p class="pase-ios" id="paseIos" hidden>Mantén presionada la imagen y elige «Guardar en Fotos».</p>
+          <button class="btn" type="button" id="btnPase">Descargar pase</button>
+        </div>
+
+        <div class="rsvp-acciones">
+          <a class="btn btn-borde" id="btnWhatsapp" target="_blank" rel="noopener">Avisar por WhatsApp</a>
+          <button class="btn-link" type="button" id="btnCambiar">Cambiar mi respuesta</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pie">
+    <svg class="rama" aria-hidden="true"><use href="#rama"/></svg>
+    <p class="pie-gracias">Gracias por ser parte de nuestra historia</p>
+    <p class="pie-nombres"><span data-b="NOVIA"></span> &amp; <span data-b="NOVIO"></span></p>
+    <p class="pie-hashtag" data-b="HASHTAG"></p>
+  </footer>
+</main>
+
+<button class="musica" id="btnMusica" type="button" aria-label="Pausar música" hidden>
+  <svg class="ico-on" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="16" r="2.4"/></svg>
+  <svg class="ico-off" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="7" y="5" width="3.2" height="14" rx="1"/><rect x="13.8" y="5" width="3.2" height="14" rx="1"/></svg>
+</button>
+<audio id="audio" loop preload="none"></audio>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="qrcode-generator.js"></script>
+<script src="datos.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
