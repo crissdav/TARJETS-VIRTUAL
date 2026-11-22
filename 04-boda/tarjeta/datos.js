@@ -79,9 +79,11 @@ window.BODA = {
   HOSPEDAJE_TEXTO: 'Si vienes de fuera, estos lugares quedan cerca:',
   HOSPEDAJE: [],                          // ej.: [{ nombre: 'Hotel X', texto: 'A 5 min del salón', enlace: 'https://...' }]
 
-  /* Música de fondo: pon el .mp3 en esta carpeta y escribe su nombre.
-     Vacío '' = sin música. */
-  MUSICA: '',
+  /* Música de fondo: copia la canción (.mp3) en esta carpeta (tarjeta/)
+     con el nombre musica.mp3, o escribe aquí el nombre de tu archivo.
+     Suena al abrir el sobre; el botón de abajo a la derecha la pausa.
+     Si el archivo no existe, el botón no aparece. Vacío '' = sin música. */
+  MUSICA: 'musica.mp3',
 
   /* Supabase (Settings → API). Igual que en lista/config.js.
      Sin configurar, la tarjeta confirma solo por WhatsApp. */

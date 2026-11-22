@@ -356,9 +356,12 @@
   }
   function iniciarMusica() {
     if (!D.MUSICA) return;
+    audio.preload = 'auto';
     audio.src = D.MUSICA;
     btnMusica.hidden = false;
     btnMusica.addEventListener('click', () => musica(audio.paused));
+    /* Si el archivo no está, no se muestra un botón que no hace nada. */
+    audio.addEventListener('error', () => { btnMusica.hidden = true; });
   }
 
   /* ── Sobre ── */
