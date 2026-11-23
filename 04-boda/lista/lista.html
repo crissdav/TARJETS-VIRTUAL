@@ -152,6 +152,24 @@
   </div>
 </div>
 
+<!-- Modal: confirmar una acción -->
+<div class="modal modal-arriba" id="mConfirmar" hidden>
+  <div class="modal-caja modal-confirmar" role="alertdialog" aria-modal="true" aria-labelledby="mcTitulo" aria-describedby="mcTexto">
+    <div class="mc-ico" aria-hidden="true">
+      <svg class="mc-ico-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      <svg class="mc-ico-peligro" viewBox="0 0 24 24"><path d="M12 8v5M12 16.5v.5M10.3 3.9L2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    </div>
+    <h2 id="mcTitulo"></h2>
+    <p class="mc-texto" id="mcTexto"></p>
+    <ul class="mc-personas" id="mcPersonas"></ul>
+    <p class="nota mc-nota" id="mcNota"></p>
+    <div class="modal-botones mc-botones">
+      <button class="btn btn-borde" type="button" data-cerrar>Cancelar</button>
+      <button class="btn btn-verde" type="button" id="mcSi">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>

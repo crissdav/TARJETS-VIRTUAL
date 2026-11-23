@@ -165,6 +165,30 @@ textarea.input { resize: vertical; font-size: 17px; }
 .modal-caja h2 { font-family: var(--f-titulo); font-size: 31px; color: var(--bosque); margin-bottom: 14px; }
 .modal-botones { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 
+/* Modal de confirmación */
+.modal-arriba { z-index: 45; }
+.modal-confirmar { max-width: 420px; text-align: center; animation: aparecer .22s ease-out; }
+@keyframes aparecer { from { transform: translateY(12px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+.mc-ico { width: 60px; height: 60px; margin: 0 auto 10px; border-radius: 50%; display: grid; place-items: center; background: var(--ok-fondo); color: var(--ok); }
+.mc-ico svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.mc-ico-peligro { display: none; }
+.peligro .mc-ico { background: var(--no-fondo); color: var(--no); }
+.peligro .mc-ico-ok { display: none; }
+.peligro .mc-ico-peligro { display: block; }
+.modal-confirmar h2 { margin-bottom: 6px; }
+.mc-texto { color: var(--suave); margin-bottom: 12px; }
+.mc-personas { list-style: none; display: grid; gap: 8px; margin-bottom: 12px; text-align: left; }
+.mc-personas li { display: grid; padding: 10px 14px; border: 1px solid var(--linea); border-radius: 12px; background: #fff; }
+.mc-personas li.hecho { background: var(--ok-fondo); border-color: rgba(46, 125, 79, .3); }
+.mc-personas li.hecho span::before { content: '✓ '; color: var(--ok); font-weight: 700; }
+.mc-personas small { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--oro); }
+.mc-personas span { font-size: 18px; font-weight: 500; color: var(--bosque); overflow-wrap: anywhere; }
+.peligro .mc-personas li { border-color: rgba(166, 69, 58, .25); }
+.mc-nota { margin-bottom: 4px; }
+.mc-botones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.btn-peligro { background: var(--no); border-color: var(--no); color: #fff; }
+.btn-peligro:hover { background: #8a362d; border-color: #8a362d; }
+
 .visor { position: relative; aspect-ratio: 1; background: #111; border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
 .visor video { width: 100%; height: 100%; object-fit: cover; }
 .visor-marco { position: absolute; inset: 18%; border: 3px solid rgba(255, 255, 255, .85); border-radius: 14px; box-shadow: 0 0 0 999px rgba(0, 0, 0, .3); }

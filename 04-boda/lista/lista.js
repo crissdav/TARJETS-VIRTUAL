@@ -289,17 +289,34 @@
     if (pres.size >= total) {
       return boton('btn-sm btn-confirmado', 'check', total === 1 ? 'Ingresó' : 'Ingresaron todos',
         'Ya ingresaron todos. Toca para deshacer.',
-        () => {
-          if (confirm('¿Quitar el ingreso de ' + (total === 1 ? '«' + i.nombre + '»' : 'las ' + total + ' personas') + '?')) {
-            guardarPresentes(i, new Set(), 'Ingreso de ' + i.nombre + ' quitado').then(listo);
-          }
+        async () => {
+          const ok = await preguntar({
+            tipo: 'peligro',
+            titulo: total === 1 ? 'Quitar ingreso' : 'Quitar el ingreso de todos',
+            texto: total === 1 ? 'Se quitará la marca de ingreso de:' : 'Se quitará la marca de ingreso de las ' + total + ' personas:',
+            personas: gente,
+            si: 'Quitar ingreso'
+          });
+          if (ok) guardarPresentes(i, new Set(), 'Ingreso de ' + i.nombre + ' quitado').then(listo);
         });
     }
     const texto = total === 1 ? 'Confirmar ingreso' : 'Confirmar a los ' + total;
     return boton('btn-sm btn-confirmar', 'check', texto,
       'Registrar que ingresaron ' + (total === 1 ? i.nombre : 'las ' + total + ' personas'),
-      () => guardarPresentes(i, new Set(gente.map(g => g.idx)),
-        total === 1 ? i.nombre + ': ingreso confirmado' : 'Ingresaron las ' + total + ' personas').then(listo));
+      async () => {
+        const faltan = gente.filter(g => !pres.has(g.idx));
+        const ok = await preguntar({
+          titulo: total === 1 ? 'Confirmar ingreso' : 'Confirmar a los ' + total,
+          texto: total === 1 ? 'Se registrará el ingreso de:' : 'Se registrará el ingreso de todas estas personas:',
+          personas: gente.map(g => Object.assign({ hecho: pres.has(g.idx) }, g)),
+          nota: faltan.length < total ? 'Las marcadas con ✓ ya habían ingresado.' : '',
+          si: total === 1 ? 'Confirmar ingreso' : 'Confirmar a los ' + total
+        });
+        if (ok) {
+          guardarPresentes(i, new Set(gente.map(g => g.idx)),
+            total === 1 ? i.nombre + ': ingreso confirmado' : 'Ingresaron las ' + total + ' personas').then(listo);
+        }
+      });
   }
 
   /* Ingreso: cuántos llegaron y, si son varios, un botón por persona
@@ -323,11 +340,20 @@
         fila.appendChild(boton('btn-sm ' + (dentro ? 'btn-quitar' : 'btn-persona'), dentro ? 'cruz' : 'check',
           dentro ? 'Quitar' : 'Confirmar',
           (dentro ? 'Quitar el ingreso de ' : 'Confirmar el ingreso de ') + g.nombre,
-          () => {
+          async () => {
+            const ok = await preguntar({
+              tipo: dentro ? 'peligro' : 'ok',
+              titulo: dentro ? 'Quitar ingreso' : 'Confirmar ingreso',
+              texto: dentro ? 'Se quitará la marca de ingreso de:' : 'Se registrará el ingreso de:',
+              personas: [g],
+              nota: 'Invitación de ' + i.nombre + ' · ' + (pres.size + (dentro ? -1 : 1)) + ' de ' + gente.length + ' quedarán dentro.',
+              si: dentro ? 'Quitar ingreso' : 'Confirmar ingreso'
+            });
+            if (!ok) return;
             const nuevo = new Set(presentesDe(i));
             if (dentro) nuevo.delete(g.idx); else nuevo.add(g.idx);
             guardarPresentes(i, nuevo, g.nombre + (dentro ? ': ingreso quitado' : ': ingresó'))
-              .then(ok => { if (ok && despues) despues(); });
+              .then(r => { if (r && despues) despues(); });
           }));
         caja.appendChild(fila);
       });
@@ -335,8 +361,15 @@
     return caja;
   }
 
-  function confirmarAsistencia(i) {
-    if (!confirm('¿Confirmar que «' + i.nombre + '» asistirá con ' + personas(i.pases) + '?')) return;
+  async function confirmarAsistencia(i) {
+    const ok = await preguntar({
+      titulo: 'Confirmar asistencia',
+      texto: 'Se marcará que asistirá con ' + personas(i.pases) + ':',
+      personas: [{ rol: 'Invitación', nombre: i.nombre }],
+      nota: 'Úsalo si te confirmó por teléfono o en persona.',
+      si: 'Confirmar asistencia'
+    });
+    if (!ok) return;
     actualizar(i.id, { estado: 'asiste', asistentes: i.pases, respondido: new Date().toISOString() },
       i.nombre + ': asistencia confirmada');
   }
@@ -373,6 +406,45 @@
   function cerrar(modal) {
     modal.hidden = true;
     if (modal.id === 'mQr') detenerCamara();
+    if (modal.id === 'mConfirmar' && responder) { const r = responder; responder = null; r(false); }
+  }
+
+  /* Ventana de confirmación con estilo propio (reemplaza a confirm()).
+     opciones: { titulo, texto, personas: [{ rol, nombre, hecho }], nota, si, tipo: 'ok' | 'peligro' }
+     Devuelve una promesa: true si acepta, false si cancela. */
+  let responder = null;
+  let focoPrevio = null;
+  function preguntar(o) {
+    if (responder) { const r = responder; responder = null; r(false); }
+    const peligro = o.tipo === 'peligro';
+    const caja = $('#mConfirmar .modal-caja');
+    caja.classList.toggle('peligro', peligro);
+    $('#mcTitulo').textContent = o.titulo || '¿Confirmar?';
+    $('#mcTexto').textContent = o.texto || '';
+    const lista = $('#mcPersonas');
+    lista.textContent = '';
+    (o.personas || []).forEach(p => {
+      const li = el('li', p.hecho ? 'hecho' : '');
+      li.appendChild(el('small', '', p.rol || ''));
+      li.appendChild(el('span', '', p.nombre));
+      lista.appendChild(li);
+    });
+    lista.hidden = !lista.childElementCount;
+    $('#mcNota').textContent = o.nota || '';
+    $('#mcNota').hidden = !o.nota;
+    const si = $('#mcSi');
+    si.textContent = o.si || 'Confirmar';
+    si.className = 'btn ' + (peligro ? 'btn-peligro' : 'btn-verde');
+    focoPrevio = document.activeElement;
+    $('#mConfirmar').hidden = false;
+    si.focus();
+    return new Promise(ok => {
+      responder = valor => {
+        $('#mConfirmar').hidden = true;
+        if (focoPrevio && focoPrevio.focus) focoPrevio.focus();
+        ok(valor);
+      };
+    });
   }
 
   /* Error de la base por nombre repetido (índice único). */
@@ -440,7 +512,13 @@
   }
 
   async function volverALista(i) {
-    if (!confirm('¿Pasar a «' + i.nombre + '» a la lista de invitados como «sin responder»?')) return;
+    const ok = await preguntar({
+      titulo: 'Volver a la lista',
+      texto: 'Pasará a la lista de invitados como «sin responder»:',
+      personas: [{ rol: 'Invitación', nombre: i.nombre }],
+      si: 'Volver a la lista'
+    });
+    if (!ok) return;
     await actualizar(i.id, { estado: 'pendiente', asistentes: 0, acompanantes: [], respondido: null, presentes: [], ingresaron: 0 }, i.nombre + ' volvió a la lista');
   }
 
@@ -459,7 +537,15 @@
   }
 
   async function eliminar(i) {
-    if (!confirm('¿Eliminar a «' + i.nombre + '» de la lista? Su enlace dejará de funcionar.')) return;
+    const ok = await preguntar({
+      tipo: 'peligro',
+      titulo: 'Eliminar invitado',
+      texto: 'Se eliminará de la lista:',
+      personas: [{ rol: 'Invitación', nombre: i.nombre }],
+      nota: 'Su enlace y su pase dejarán de funcionar. No se puede deshacer.',
+      si: 'Eliminar'
+    });
+    if (!ok) return;
     const { error } = await db.from(TABLA).delete().eq('id', i.id);
     if (error) { toast(error.message || 'No se pudo eliminar'); return; }
     await recargar();
@@ -864,8 +950,11 @@
       m.addEventListener('click', e => { if (e.target === m || e.target.hasAttribute('data-cerrar')) cerrar(m); });
     });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.querySelectorAll('.modal:not([hidden])').forEach(cerrar);
+      if (e.key !== 'Escape') return;
+      if (!$('#mConfirmar').hidden) { cerrar($('#mConfirmar')); return; }
+      document.querySelectorAll('.modal:not([hidden])').forEach(cerrar);
     });
+    $('#mcSi').addEventListener('click', () => { if (responder) { const r = responder; responder = null; r(true); } });
     window.addEventListener('pagehide', detenerCamara);
 
     if (!window.supabase) { toast('No se pudo cargar Supabase. Revisa la conexión.'); return; }
