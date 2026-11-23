@@ -8,6 +8,9 @@ window.BODA_PANEL = {
   NOVIOS: 'Nombre de la novia & Nombre del novio',                     // ← CAMBIAR
   FECHA_TEXTO: 'Sábado 20 de febrero de 2027',     // ← CAMBIAR
 
+  /* Minutos sin usar el panel antes de cerrar la sesión. */
+  INACTIVIDAD_MIN: 30,
+
   /* Dirección pública de la tarjeta en Vercel (termina en /). */
   TARJETA_URL: 'https://boda-01-mu.vercel.app/',
 

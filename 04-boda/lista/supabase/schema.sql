@@ -20,12 +20,15 @@ create table if not exists public.boda_invitados (
   -- lista = lo agregaron los novios · tarjeta = se anotó solo, sin enlace personal
   origen      text not null default 'lista' check (origen in ('lista', 'tarjeta')),
   ingresaron  int  not null default 0 check (ingresaron >= 0),
+  -- Quiénes ingresaron: 0 = invitado, 1..n = acompañantes (en orden).
+  presentes   int[] not null default '{}',
   creado      timestamptz not null default now(),
   respondido  timestamptz
 );
 
 -- Para bases creadas con una versión anterior de este archivo.
 alter table public.boda_invitados add column if not exists acompanantes text[] not null default '{}';
+alter table public.boda_invitados add column if not exists presentes int[] not null default '{}';
 
 alter table public.boda_invitados enable row level security;
 

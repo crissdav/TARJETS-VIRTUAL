@@ -15,6 +15,8 @@ Dos sitios estáticos que se publican en **Vercel** y comparten una base de dato
 4. El invitado responde **sí / no**, cuántas personas van (hasta sus pases), el **nombre de cada acompañante** (un campo por persona extra, obligatorio) y un mensaje. Queda guardado al instante en el panel.
    - El panel tiene dos apartados: **Invitados** (los que asisten y los que aún no responden; es la lista para confirmar asistentes y controlar el ingreso) y **No asistirán** (quienes marcaron «No podré asistir», con su mensaje). Desde «No asistirán», **Volver a la lista** lo devuelve a *sin responder* si cambia de opinión. El PDF trae las dos listas por separado.
 5. Si confirma, recibe un **pase QR** que puede descargar. El día de la boda, en la puerta, se escanea desde el panel (**Escanear pase**) y se registra el ingreso. El panel avisa si un pase ya se usó.
+   - En la ficha del panel, el ingreso se marca **por persona**: un botón para el invitado y uno para cada acompañante (independientes), más un botón general («Confirmar a los 2») que confirma o quita a todos. Lo mismo al escanear el pase en la puerta.
+   - Por seguridad, la sesión del panel se cierra tras **30 minutos sin usarlo** (`INACTIVIDAD_MIN` en `lista/config.js`), con aviso un minuto antes.
 6. Si `RSVP_ABIERTO: true`, quien no tenga enlace personal también puede confirmar escribiendo su nombre. En el panel aparece como *"se anotó desde la tarjeta"*.
 7. Si Supabase no está configurado o no hay internet, la tarjeta igual permite confirmar **por WhatsApp**.
 

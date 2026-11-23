@@ -119,6 +119,22 @@ textarea.input { resize: vertical; font-size: 17px; }
 .inv-acciones { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; margin-top: auto; }
 .inv-acciones .btn { padding-left: 6px; padding-right: 6px; min-width: 0; }
 .inv-acciones .btn { padding-left: 8px; padding-right: 8px; }
+/* Ingreso por persona */
+.ingreso { display: grid; gap: 8px; }
+.ingreso-cab { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; color: var(--suave); font-weight: 500; }
+.ingreso-cab b { font-size: 18px; color: var(--bosque); }
+.ingreso-cab b.completo { color: var(--ok); }
+.ingreso-persona { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 12px; border: 1px solid var(--linea); border-radius: 12px; background: #fff; }
+.ingreso-persona.dentro { background: var(--ok-fondo); border-color: rgba(46, 125, 79, .3); }
+.ingreso-datos { min-width: 0; display: grid; }
+.ingreso-datos small { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--oro); }
+.ingreso-datos span { font-size: 16px; font-weight: 500; color: var(--bosque); overflow-wrap: anywhere; }
+.ingreso-persona.dentro .ingreso-datos span::before { content: '✓ '; color: var(--ok); font-weight: 700; }
+.btn-persona { flex: none; background: var(--papel); color: var(--ok); border-color: rgba(46, 125, 79, .45); font-weight: 600; }
+.btn-persona:hover { background: var(--ok); color: #fff; border-color: var(--ok); }
+.btn-quitar { flex: none; background: transparent; color: var(--suave); border-color: var(--linea); }
+.btn-quitar:hover { background: var(--no-fondo); color: var(--no); border-color: rgba(166, 69, 58, .4); }
+.qr-resultado .ingreso { text-align: left; }
 /* Celular: Confirmar arriba a todo el ancho; Editar y Eliminar debajo */
 .inv-acciones .btn-confirmar, .inv-acciones .btn-confirmado, .inv-acciones-no .btn:first-child { grid-column: 1 / -1; }
 .btn-confirmar { background: linear-gradient(180deg, #34935F, var(--ok)); border-color: var(--ok); color: #fff; font-weight: 600; }

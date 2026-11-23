@@ -25,8 +25,19 @@
     return !!meta && meta.panel === 'boda';
   }
 
+  /* Misma regla que el panel: minutos sin usarlo. */
+  function inactivo() {
+    try {
+      const ult = Number(localStorage.getItem('boda-panel-actividad')) || 0;
+      return ult > 0 && Date.now() - ult > Math.max(1, Number(CFG.INACTIVIDAD_MIN) || 30) * 60000;
+    } catch (e) { return false; }
+  }
+
   async function init() {
     if (CFG.NOVIOS) $('#novios').textContent = CFG.NOVIOS;
+    if (/motivo=inactividad/.test(location.search)) {
+      error('Tu sesión se cerró por inactividad. Vuelve a ingresar.');
+    }
     const form = $('#loginForm');
     const btn = $('#btnEntrar');
     $('#email').focus();
@@ -38,7 +49,15 @@
 
     try {
       const { data } = await db.auth.getSession();
-      if (data && esPanel(data.session)) { location.href = 'lista.html'; return; }
+      if (data && esPanel(data.session)) {
+        if (inactivo()) {
+          await db.auth.signOut();
+          error('Tu sesión se cerró por inactividad. Vuelve a ingresar.');
+        } else {
+          location.href = 'lista.html';
+          return;
+        }
+      }
     } catch (e) { /* sin sesión */ }
 
     form.addEventListener('submit', async e => {
@@ -58,6 +77,7 @@
           await db.auth.signOut();
           error('Esta cuenta no tiene acceso a la lista de la boda.');
         } else {
+          try { localStorage.setItem('boda-panel-actividad', String(Date.now())); } catch (e) { /* sin almacenamiento */ }
           location.href = 'lista.html';
           return;
         }

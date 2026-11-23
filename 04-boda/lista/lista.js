@@ -33,6 +33,30 @@
   const personas = n => n === 1 ? '1 persona' : n + ' personas';
   const acompDe = i => (Array.isArray(i.acompanantes) ? i.acompanantes : []).filter(Boolean);
 
+  /* Personas de la invitación: 0 = invitado; 1..n = acompañantes
+     (con su nombre, o «Acompañante N» si no lo dieron). */
+  function personasDe(i) {
+    const total = Math.max(1, i.estado === 'asiste' ? (i.asistentes || 1) : i.pases);
+    const acomp = acompDe(i);
+    const lista = [{ idx: 0, nombre: i.nombre, rol: 'Invitado' }];
+    for (let k = 1; k < total; k++) lista.push({ idx: k, nombre: acomp[k - 1] || 'Acompañante ' + k, rol: 'Acompañante' });
+    return lista;
+  }
+
+  /* Quiénes ya ingresaron (por número de persona). Con datos antiguos,
+     que solo guardaban cuántos, se toman los primeros. */
+  function presentesDe(i) {
+    if (Array.isArray(i.presentes) && i.presentes.length) return new Set(i.presentes);
+    const s = new Set();
+    for (let k = 0; k < (i.ingresaron || 0); k++) s.add(k);
+    return s;
+  }
+
+  function guardarPresentes(i, set, aviso) {
+    const lista = [...set].sort((a, b) => a - b);
+    return actualizar(i.id, { presentes: lista, ingresaron: lista.length }, aviso);
+  }
+
   function fechaBonita(iso) {
     if (!iso) return '';
     const d = new Date(iso);
@@ -63,6 +87,7 @@
     menos: 'M6 12h12',
     mas: 'M12 6v12M6 12h12',
     check: 'M5 12.5l4.5 4.5L19 7.5',
+    cruz: 'M6.5 6.5l11 11M17.5 6.5l-11 11',
     volver: 'M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3'
   };
   function boton(clase, icono, texto, titulo, alClic) {
@@ -112,7 +137,14 @@
   }
 
   async function actualizar(id, cambios, aviso) {
-    const { error } = await db.from(TABLA).update(cambios).eq('id', id);
+    let { error } = await db.from(TABLA).update(cambios).eq('id', id);
+    /* Base sin la columna «presentes» todavía: se guarda solo cuántos ingresaron. */
+    if (error && /presentes/.test(error.message || '') && 'presentes' in cambios) {
+      const sinNombres = Object.assign({}, cambios);
+      delete sinNombres.presentes;
+      ({ error } = await db.from(TABLA).update(sinNombres).eq('id', id));
+      if (!error) aviso = 'Guardado. Para registrar a cada persona, corre en Supabase el SQL de la columna «presentes».';
+    }
     if (error) { toast(error.message || 'No se pudo guardar'); return false; }
     await recargar();
     if (aviso) toast(aviso);
@@ -222,19 +254,7 @@
       return art;
     }
 
-    if (i.estado === 'asiste' || i.ingresaron > 0) {
-      const ing = el('div', 'inv-ingreso');
-      ing.appendChild(el('span', '', 'Ingreso'));
-      const tope = Math.max(i.asistentes, i.pases);
-      const menos = boton('btn-icono', 'menos', '', 'Restar un ingreso', () => actualizar(i.id, { ingresaron: Math.max(0, i.ingresaron - 1) }));
-      menos.disabled = i.ingresaron <= 0;
-      const mas = boton('btn-icono', 'mas', '', 'Sumar un ingreso', () => actualizar(i.id, { ingresaron: Math.min(tope, i.ingresaron + 1) }));
-      mas.disabled = i.ingresaron >= tope;
-      ing.appendChild(menos);
-      ing.appendChild(el('b', i.ingresaron >= i.asistentes && i.asistentes ? 'completo' : '', i.ingresaron + ' / ' + (i.asistentes || i.pases)));
-      ing.appendChild(mas);
-      art.appendChild(ing);
-    }
+    if (i.estado === 'asiste' || i.ingresaron > 0) art.appendChild(bloqueIngreso(i));
 
     /* Antes de que responda: enviarle la invitación (línea discreta). */
     if (i.estado === 'pendiente') {
@@ -255,25 +275,63 @@
 
   /* Confirmar: sin responder → confirma su asistencia;
      asistirá → registra su ingreso; ya ingresó → permite deshacerlo. */
-  function botonConfirmar(i) {
-    const esperados = i.asistentes || i.pases;
+  function botonConfirmar(i, despues) {
+    const listo = ok => { if (ok && despues) despues(); };
     if (i.estado === 'pendiente') {
       return boton('btn-sm btn-confirmar', 'check', 'Confirmar asistencia',
         'Marcar que ' + i.nombre + ' asistirá (' + personas(i.pases) + ')',
         () => confirmarAsistencia(i));
     }
-    if (i.ingresaron >= esperados) {
-      return boton('btn-sm btn-confirmado', 'check', 'Ingresó',
-        'Ya ingresaron (' + i.ingresaron + ' de ' + esperados + '). Toca para deshacer.',
+    const gente = personasDe(i);
+    const total = gente.length;
+    const pres = presentesDe(i);
+    if (pres.size >= total) {
+      return boton('btn-sm btn-confirmado', 'check', total === 1 ? 'Ingresó' : 'Ingresaron todos',
+        'Ya ingresaron todos. Toca para deshacer.',
         () => {
-          if (confirm('¿Quitar el ingreso registrado de «' + i.nombre + '»?')) {
-            actualizar(i.id, { ingresaron: 0 }, 'Ingreso de ' + i.nombre + ' quitado');
+          if (confirm('¿Quitar el ingreso de ' + (total === 1 ? '«' + i.nombre + '»' : 'las ' + total + ' personas') + '?')) {
+            guardarPresentes(i, new Set(), 'Ingreso de ' + i.nombre + ' quitado').then(listo);
           }
         });
     }
-    return boton('btn-sm btn-confirmar', 'check', 'Confirmar ingreso',
-      'Registrar que ingresaron ' + personas(esperados) + ' de ' + i.nombre,
-      () => actualizar(i.id, { ingresaron: esperados }, i.nombre + ': ingreso confirmado'));
+    const texto = total === 1 ? 'Confirmar ingreso' : 'Confirmar a los ' + total;
+    return boton('btn-sm btn-confirmar', 'check', texto,
+      'Registrar que ingresaron ' + (total === 1 ? i.nombre : 'las ' + total + ' personas'),
+      () => guardarPresentes(i, new Set(gente.map(g => g.idx)),
+        total === 1 ? i.nombre + ': ingreso confirmado' : 'Ingresaron las ' + total + ' personas').then(listo));
+  }
+
+  /* Ingreso: cuántos llegaron y, si son varios, un botón por persona
+     (independientes entre sí). */
+  function bloqueIngreso(i, despues) {
+    const gente = personasDe(i);
+    const pres = presentesDe(i);
+    const caja = el('div', 'ingreso');
+    const cab = el('div', 'ingreso-cab');
+    cab.appendChild(el('span', '', 'Ingreso'));
+    cab.appendChild(el('b', pres.size >= gente.length ? 'completo' : '', pres.size + ' de ' + gente.length));
+    caja.appendChild(cab);
+    if (gente.length > 1) {
+      gente.forEach(g => {
+        const dentro = pres.has(g.idx);
+        const fila = el('div', 'ingreso-persona' + (dentro ? ' dentro' : ''));
+        const datos = el('div', 'ingreso-datos');
+        datos.appendChild(el('small', '', g.rol));
+        datos.appendChild(el('span', '', g.nombre));
+        fila.appendChild(datos);
+        fila.appendChild(boton('btn-sm ' + (dentro ? 'btn-quitar' : 'btn-persona'), dentro ? 'cruz' : 'check',
+          dentro ? 'Quitar' : 'Confirmar',
+          (dentro ? 'Quitar el ingreso de ' : 'Confirmar el ingreso de ') + g.nombre,
+          () => {
+            const nuevo = new Set(presentesDe(i));
+            if (dentro) nuevo.delete(g.idx); else nuevo.add(g.idx);
+            guardarPresentes(i, nuevo, g.nombre + (dentro ? ': ingreso quitado' : ': ingresó'))
+              .then(ok => { if (ok && despues) despues(); });
+          }));
+        caja.appendChild(fila);
+      });
+    }
+    return caja;
   }
 
   function confirmarAsistencia(i) {
@@ -365,7 +423,7 @@
 
   async function volverALista(i) {
     if (!confirm('¿Pasar a «' + i.nombre + '» a la lista de invitados como «sin responder»?')) return;
-    await actualizar(i.id, { estado: 'pendiente', asistentes: 0, acompanantes: [], respondido: null }, i.nombre + ' volvió a la lista');
+    await actualizar(i.id, { estado: 'pendiente', asistentes: 0, acompanantes: [], respondido: null, presentes: [], ingresaron: 0 }, i.nombre + ' volvió a la lista');
   }
 
   function cambiarVista(v) {
@@ -544,47 +602,36 @@
     const i = items.find(x => x.codigo === codigo);
     if (!i) { res.appendChild(aviso('mal', 'Pase no encontrado', 'Puede que lo hayan eliminado de la lista.')); return; }
 
-    const esperados = i.estado === 'asiste' ? i.asistentes : i.pases;
+    const repintar = () => pintarPase(codigo, false);
+    const gente = personasDe(i);
+    const pres = presentesDe(i);
     const ficha = el('div', 'qr-ficha');
     ficha.appendChild(el('h3', '', i.nombre));
     ficha.appendChild(pillEstado(i));
-    ficha.appendChild(el('p', 'qr-cifra', 'Ingresaron ' + i.ingresaron + ' de ' + esperados));
-    if (acompDe(i).length) ficha.appendChild(el('p', 'qr-acomp', 'Con: ' + acompDe(i).join(', ')));
     res.appendChild(ficha);
 
     if (i.estado !== 'asiste') {
       res.appendChild(aviso('alerta', i.estado === 'no_asiste' ? 'Dijo que no asistiría' : 'No confirmó su asistencia',
         'Tiene ' + lugares(i.pases) + ' en la invitación.'));
-    } else if (i.ingresaron >= esperados && recien) {
-      res.appendChild(aviso('alerta', 'Este pase ya se usó por completo', 'Revisa que no lo estén usando dos veces.'));
-    } else if (i.ingresaron >= esperados) {
-      res.appendChild(aviso('ok', 'Ingreso registrado', 'Ya pueden pasar.'));
-    }
-
-    const faltan = Math.max(0, esperados - i.ingresaron);
-    if (faltan > 0) {
-      const b = boton('btn-verde', 'check', faltan === 1 ? 'Registrar ingreso (1)' : 'Registrar ingreso de ' + faltan, '', async () => {
-        const cambios = { ingresaron: esperados };
-        if (i.estado !== 'asiste') Object.assign(cambios, { estado: 'asiste', asistentes: i.pases, respondido: new Date().toISOString() });
-        if (await actualizar(i.id, cambios)) pintarPase(codigo, false);
+      const b = boton('btn-verde', 'check', 'Dejar pasar y registrar (' + i.pases + ')', '', async () => {
+        const todos = Array.from({ length: i.pases }, (_, k) => k);
+        if (await actualizar(i.id, { estado: 'asiste', asistentes: i.pases, respondido: new Date().toISOString(), presentes: todos, ingresaron: todos.length })) repintar();
       });
       b.classList.add('btn-ancho');
       res.appendChild(b);
+      return;
     }
-    if (i.ingresaron > 0) {
-      const ajustar = el('div', 'inv-ingreso');
-      ajustar.appendChild(el('span', '', 'Ajustar'));
-      ajustar.appendChild(boton('btn-icono', 'menos', '', 'Restar uno', async () => {
-        if (await actualizar(i.id, { ingresaron: i.ingresaron - 1 })) pintarPase(codigo, false);
-      }));
-      ajustar.appendChild(el('b', '', String(i.ingresaron)));
-      const mas = boton('btn-icono', 'mas', '', 'Sumar uno', async () => {
-        if (await actualizar(i.id, { ingresaron: i.ingresaron + 1 })) pintarPase(codigo, false);
-      });
-      mas.disabled = i.ingresaron >= Math.max(i.pases, i.asistentes);
-      ajustar.appendChild(mas);
-      res.appendChild(ajustar);
+
+    if (pres.size >= gente.length && recien) {
+      res.appendChild(aviso('alerta', 'Este pase ya se usó por completo', 'Revisa que no lo estén usando dos veces.'));
+    } else if (pres.size >= gente.length) {
+      res.appendChild(aviso('ok', 'Ingreso registrado', 'Ya pueden pasar.'));
     }
+
+    res.appendChild(bloqueIngreso(i, repintar));
+    const general = botonConfirmar(i, repintar);
+    general.classList.add('btn-ancho');
+    res.appendChild(general);
   }
 
   /* ── CSV ────────────────────────────────────────────────── */
@@ -608,9 +655,10 @@
 
   function descargarCsv() {
     if (!items.length) { toast('Aún no hay invitados'); return; }
-    const filas = [['Invitado', 'Acompañantes', 'Pases', 'Respuesta', 'Asistirán', 'Ingresaron', 'Teléfono', 'Mensaje', 'Origen', 'Respondió', 'Enlace']];
+    const filas = [['Invitado', 'Acompañantes', 'Pases', 'Respuesta', 'Asistirán', 'Ingresaron', 'Quiénes ingresaron', 'Teléfono', 'Mensaje', 'Origen', 'Respondió', 'Enlace']];
     items.slice().sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(i => filas.push([
-      i.nombre, acompDe(i).join(', '), i.pases, textoEstado(i), i.asistentes, i.ingresaron, i.telefono || '', i.mensaje || '',
+      i.nombre, acompDe(i).join(', '), i.pases, textoEstado(i), i.asistentes, i.ingresaron,
+      (() => { const p = presentesDe(i); return personasDe(i).filter(g => p.has(g.idx)).map(g => g.nombre).join(', '); })(), i.telefono || '', i.mensaje || '',
       i.origen === 'tarjeta' ? 'Tarjeta' : 'Lista', fechaBonita(i.respondido), enlace(i) || ''
     ]));
     const csv = filas.map(f => f.map(c => '"' + String(c === null || c === undefined ? '' : c).replace(/"/g, '""') + '"').join(';')).join('\r\n');
@@ -726,6 +774,50 @@
     }
   }
 
+  /* ── Cierre de sesión por inactividad ───────────────────── */
+  const CLAVE_ACTIVIDAD = 'boda-panel-actividad';
+  const LIMITE_MS = Math.max(1, Number(CFG.INACTIVIDAD_MIN) || 30) * 60000;
+  const AVISO_MS = 60000;
+  let avisado = false;
+
+  function ultimaActividad() {
+    try { return Number(localStorage.getItem(CLAVE_ACTIVIDAD)) || 0; } catch (e) { return 0; }
+  }
+  function marcarActividad() {
+    avisado = false;
+    try { localStorage.setItem(CLAVE_ACTIVIDAD, String(Date.now())); } catch (e) { /* sin almacenamiento */ }
+  }
+  function inactivoDemasiado() {
+    const ult = ultimaActividad();
+    return ult > 0 && Date.now() - ult > LIMITE_MS;
+  }
+  async function cerrarPorInactividad() {
+    detenerCamara();
+    try { localStorage.removeItem(CLAVE_ACTIVIDAD); } catch (e) { /* sin almacenamiento */ }
+    try { await db.auth.signOut(); } catch (e) { /* igual sale */ }
+    location.replace('login.html?motivo=inactividad');
+  }
+  function vigilarInactividad() {
+    marcarActividad();
+    let ultimoGuardado = 0;
+    const alUsar = () => {
+      /* Como mucho una escritura cada 5 s. */
+      if (Date.now() - ultimoGuardado > 5000) { ultimoGuardado = Date.now(); marcarActividad(); }
+    };
+    ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach(ev =>
+      window.addEventListener(ev, alUsar, { passive: true }));
+    const revisar = () => {
+      const quieto = Date.now() - ultimaActividad();
+      if (quieto > LIMITE_MS) { cerrarPorInactividad(); return; }
+      if (quieto > LIMITE_MS - AVISO_MS && !avisado) {
+        avisado = true;
+        toast('Tu sesión se cerrará en 1 minuto por inactividad. Toca la pantalla para seguir.');
+      }
+    };
+    setInterval(revisar, 15000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) revisar(); });
+  }
+
   /* ── Inicio ─────────────────────────────────────────────── */
   async function init() {
     if (CFG.NOVIOS) $('#novios').textContent = CFG.NOVIOS;
@@ -765,8 +857,15 @@
     const meta = data && data.session && data.session.user.app_metadata;
     if (!meta || meta.panel !== 'boda') { location.href = 'login.html'; return; }
 
-    db.auth.onAuthStateChange(ev => { if (ev === 'SIGNED_OUT') location.href = 'login.html'; });
+    /* Volvió después de mucho tiempo (pestaña cerrada o equipo dormido). */
+    if (inactivoDemasiado()) { await cerrarPorInactividad(); return; }
+    vigilarInactividad();
+
+    db.auth.onAuthStateChange(ev => {
+      if (ev === 'SIGNED_OUT' && !location.search.includes('motivo')) location.href = 'login.html';
+    });
     $('#btnSalir').addEventListener('click', async () => {
+      try { localStorage.removeItem(CLAVE_ACTIVIDAD); } catch (e) { /* sin almacenamiento */ }
       try { await db.auth.signOut(); } catch (e) { /* igual sale */ }
       location.href = 'login.html';
     });
