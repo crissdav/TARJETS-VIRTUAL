@@ -9,7 +9,10 @@ window.BODA = {
   NOVIO: 'Nombre del novio',                     // ← CAMBIAR
   /* Fecha y hora de la ceremonia (hora local, formato AAAA-MM-DDTHH:MM). */
   FECHA: '2027-02-20T16:00',              // ← CAMBIAR
-  CIUDAD: 'Lima, Perú',                   // ← CAMBIAR
+  /* true mientras la hora no esté definida: se muestra «Hora por confirmar»
+     y el evento se agenda como de todo el día. Ponlo en false al definirla. */
+  HORA_POR_CONFIRMAR: true,
+  CIUDAD: 'Ciudad por confirmar',         // ← CAMBIAR
 
   FRASE: 'El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección.',
   FRASE_AUTOR: 'Antoine de Saint-Exupéry',
@@ -21,27 +24,27 @@ window.BODA = {
 
   CEREMONIA: {
     TITULO: 'Ceremonia religiosa',
-    LUGAR: 'Parroquia Nuestra Señora',    // ← CAMBIAR
-    DIRECCION: 'Dirección de la iglesia', // ← CAMBIAR
-    HORA: '4:00 p. m.',
-    MAPA: 'https://maps.google.com/?q=Lima' // ← CAMBIAR (enlace de Google Maps)
+    LUGAR: 'Lugar por confirmar',         // ← CAMBIAR
+    DIRECCION: 'Dirección por confirmar', // ← CAMBIAR
+    HORA: 'Hora por confirmar',           // ← CAMBIAR
+    MAPA: ''                              // ← CAMBIAR (enlace de Google Maps; vacío = sin botón «Cómo llegar»)
   },
   RECEPCION: {
     TITULO: 'Recepción',
-    LUGAR: 'Salón de eventos',            // ← CAMBIAR
-    DIRECCION: 'Dirección del salón',     // ← CAMBIAR
-    HORA: '7:00 p. m.',
-    MAPA: 'https://maps.google.com/?q=Lima' // ← CAMBIAR
+    LUGAR: 'Lugar por confirmar',         // ← CAMBIAR
+    DIRECCION: 'Dirección por confirmar', // ← CAMBIAR
+    HORA: 'Hora por confirmar',           // ← CAMBIAR
+    MAPA: ''                              // ← CAMBIAR
   },
 
   /* Iconos disponibles: anillos, copas, cena, baile, pastel, luna, camara, musica */
   ITINERARIO: [
-    { hora: '4:00 p. m.', titulo: 'Ceremonia', texto: 'Nos damos el sí', icono: 'anillos' },
-    { hora: '7:00 p. m.', titulo: 'Recepción', texto: 'Brindis de bienvenida', icono: 'copas' },
-    { hora: '8:30 p. m.', titulo: 'Cena', texto: 'Compartimos la mesa', icono: 'cena' },
-    { hora: '10:00 p. m.', titulo: 'Primer baile', texto: 'Y abrimos la pista', icono: 'baile' },
-    { hora: '11:30 p. m.', titulo: 'Pastel', texto: 'Un dulce momento', icono: 'pastel' },
-    { hora: '3:00 a. m.', titulo: 'Despedida', texto: 'Gracias por venir', icono: 'luna' }
+    { hora: 'Hora por confirmar', titulo: 'Ceremonia', texto: 'Nos damos el sí', icono: 'anillos' },
+    { hora: 'Hora por confirmar', titulo: 'Recepción', texto: 'Brindis de bienvenida', icono: 'copas' },
+    { hora: 'Hora por confirmar', titulo: 'Cena', texto: 'Compartimos la mesa', icono: 'cena' },
+    { hora: 'Hora por confirmar', titulo: 'Primer baile', texto: 'Y abrimos la pista', icono: 'baile' },
+    { hora: 'Hora por confirmar', titulo: 'Pastel', texto: 'Un dulce momento', icono: 'pastel' },
+    { hora: 'Hora por confirmar', titulo: 'Despedida', texto: 'Gracias por venir', icono: 'luna' }
   ],
 
   DRESS_CODE: 'Formal',
@@ -54,7 +57,7 @@ window.BODA = {
   REGALOS_TEXTO: 'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle con nosotros, puedes hacerlo así:',
   REGALOS: [
     { titulo: 'Lluvia de sobres', texto: 'Habrá un buzón en la recepción.' },
-    { titulo: 'Transferencia', texto: 'BCP · Cuenta 000-00000000-0-00', copiar: '000-00000000-0-00' } // ← CAMBIAR
+    { titulo: 'Transferencia', texto: 'Cuenta por confirmar' } // ← CAMBIAR (agrega copiar: 'número' para el botón Copiar)
   ],
 
   /* WhatsApp que recibe las confirmaciones (código de país + número, sin +). */

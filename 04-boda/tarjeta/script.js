@@ -50,7 +50,7 @@
       FECHA_CORTA: pad(FECHA.getDate()) + '.' + pad(FECHA.getMonth() + 1) + '.' + FECHA.getFullYear(),
       FECHA_PUNTOS: pad(FECHA.getDate()) + ' · ' + pad(FECHA.getMonth() + 1) + ' · ' + FECHA.getFullYear(),
       FECHA_LARGA: mayus(DIAS[FECHA.getDay()]) + ' ' + FECHA.getDate() + ' de ' + MESES[FECHA.getMonth()] +
-        ' de ' + FECHA.getFullYear() + ' · ' + horaBonita(FECHA)
+        ' de ' + FECHA.getFullYear() + ' · ' + (D.HORA_POR_CONFIRMAR ? 'Hora por confirmar' : horaBonita(FECHA))
     });
     $$('[data-b]').forEach(n => {
       const v = valores[n.dataset.b];
@@ -208,11 +208,17 @@
     }
 
     const utc = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const dia = d => d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
     const fin = new Date(FECHA.getTime() + 10 * 3600 * 1000);
-    const lugar = [D.CEREMONIA && D.CEREMONIA.LUGAR, D.CEREMONIA && D.CEREMONIA.DIRECCION].filter(Boolean).join(', ');
+    /* Sin hora definida: evento de todo el día. */
+    const fechas = D.HORA_POR_CONFIRMAR
+      ? dia(FECHA) + '/' + dia(new Date(y, m, FECHA.getDate() + 1))
+      : utc(FECHA) + '/' + utc(fin);
+    const lugar = [D.CEREMONIA && D.CEREMONIA.LUGAR, D.CEREMONIA && D.CEREMONIA.DIRECCION]
+      .filter(t => t && !/por confirmar/i.test(t)).join(', ');
     $('#btnAgendar').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
       '&text=' + encodeURIComponent('Boda de ' + D.NOVIA + ' & ' + D.NOVIO) +
-      '&dates=' + utc(FECHA) + '/' + utc(fin) +
+      '&dates=' + fechas +
       '&location=' + encodeURIComponent(lugar) +
       '&details=' + encodeURIComponent(location.origin + location.pathname);
   }
