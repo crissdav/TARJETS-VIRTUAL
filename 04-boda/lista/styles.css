@@ -116,9 +116,22 @@ textarea.input { resize: vertical; font-size: 17px; }
 .inv-ingreso span { margin-right: auto; font-weight: 500; }
 .inv-ingreso b { min-width: 52px; text-align: center; font-size: 18px; color: var(--bosque); }
 .inv-ingreso b.completo { color: var(--ok); }
-.inv-acciones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 44px; gap: 6px; margin-top: auto; }
+.inv-acciones { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; margin-top: auto; }
 .inv-acciones .btn { padding-left: 6px; padding-right: 6px; min-width: 0; }
-.inv-acciones .btn-rojo { width: 44px; padding: 0; }
+.inv-acciones .btn { padding-left: 8px; padding-right: 8px; }
+/* Celular: Confirmar arriba a todo el ancho; Editar y Eliminar debajo */
+.inv-acciones .btn-confirmar, .inv-acciones .btn-confirmado, .inv-acciones-no .btn:first-child { grid-column: 1 / -1; }
+.btn-confirmar { background: linear-gradient(180deg, #34935F, var(--ok)); border-color: var(--ok); color: #fff; font-weight: 600; }
+.btn-confirmar:hover { background: #22663F; border-color: #22663F; }
+.btn-confirmado { background: var(--ok-fondo); border-color: rgba(46, 125, 79, .35); color: var(--ok); font-weight: 600; }
+.btn-confirmado:hover { background: #d6eadd; color: var(--ok); border-color: var(--ok); }
+.btn-editar { background: var(--papel); color: var(--salvia-osc); border-color: rgba(95, 111, 82, .35); }
+.btn-editar:hover { background: var(--salvia-osc); color: #fff; border-color: var(--salvia-osc); }
+.inv-invitar { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; font-size: 14px; color: var(--suave); padding: 8px 10px; background: var(--marfil); border-radius: 10px; }
+.inv-invitar > span { font-weight: 600; }
+.btn.btn-texto { display: inline-flex; align-items: center; gap: 5px; min-height: 0; box-shadow: none; white-space: normal; background: none; border: 0; padding: 4px 2px; font: inherit; font-size: 14px; font-weight: 600; color: var(--salvia-osc); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.btn.btn-texto:hover { color: var(--bosque); background: none; }
+.btn.btn-texto-wa { color: #1F8F55; }
 
 .pill { flex: none; font-size: 14px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
 .pill-ok { color: var(--ok); background: var(--ok-fondo); }
@@ -168,6 +181,8 @@ textarea.input { resize: vertical; font-size: 17px; }
 }
 @media (min-width: 900px) {
   .stats { grid-template-columns: repeat(6, 1fr); }
+  .inv-acciones, .inv-acciones-no { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .inv-acciones .btn-confirmar, .inv-acciones .btn-confirmado, .inv-acciones-no .btn:first-child { grid-column: auto; }
 }
 
 /* ── Apartados ── */
@@ -182,5 +197,5 @@ textarea.input { resize: vertical; font-size: 17px; }
 .vista-nota { margin-bottom: 12px; }
 .inv-acomp { font-size: 16px; color: var(--texto); }
 .inv-acomp b { font-weight: 600; color: var(--salvia-osc); }
-.inv-acciones-no { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) 44px; }
+.inv-acciones-no { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .qr-acomp { font-size: 17px; color: var(--texto); }

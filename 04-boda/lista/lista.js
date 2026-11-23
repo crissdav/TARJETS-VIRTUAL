@@ -217,7 +217,7 @@
       const acc = el('div', 'inv-acciones inv-acciones-no');
       acc.appendChild(boton('btn-sm btn-borde', 'volver', 'Volver a la lista', 'Pasar a ' + i.nombre + ' a la lista de invitados como «sin responder»', () => volverALista(i)));
       acc.appendChild(boton('btn-sm btn-borde', 'lapiz', 'Editar', 'Editar a ' + i.nombre, () => abrirEditar(i)));
-      acc.appendChild(boton('btn-sm btn-rojo', 'basura', '', 'Eliminar a ' + i.nombre, () => eliminar(i)));
+      acc.appendChild(boton('btn-sm btn-rojo', 'basura', 'Eliminar', 'Eliminar a ' + i.nombre, () => eliminar(i)));
       art.appendChild(acc);
       return art;
     }
@@ -236,13 +236,50 @@
       art.appendChild(ing);
     }
 
+    /* Antes de que responda: enviarle la invitación (línea discreta). */
+    if (i.estado === 'pendiente') {
+      const inv = el('div', 'inv-invitar');
+      inv.appendChild(el('span', '', 'Invitación:'));
+      inv.appendChild(boton('btn-texto btn-texto-wa', 'wa', 'Enviar por WhatsApp', 'Enviar la invitación a ' + i.nombre + ' por WhatsApp', () => enviarWhatsapp(i)));
+      inv.appendChild(boton('btn-texto', 'link', 'Copiar enlace', 'Copiar el enlace personal de ' + i.nombre, () => copiarEnlace(i)));
+      art.appendChild(inv);
+    }
+
     const acc = el('div', 'inv-acciones');
-    acc.appendChild(boton('btn-sm btn-wa', 'wa', 'Enviar', 'Enviar la invitación a ' + i.nombre + ' por WhatsApp', () => enviarWhatsapp(i)));
-    acc.appendChild(boton('btn-sm btn-borde', 'link', 'Enlace', 'Copiar el enlace personal de ' + i.nombre, () => copiarEnlace(i)));
-    acc.appendChild(boton('btn-sm btn-borde', 'lapiz', 'Editar', 'Editar a ' + i.nombre, () => abrirEditar(i)));
-    acc.appendChild(boton('btn-sm btn-rojo', 'basura', '', 'Eliminar a ' + i.nombre, () => eliminar(i)));
+    acc.appendChild(botonConfirmar(i));
+    acc.appendChild(boton('btn-sm btn-editar', 'lapiz', 'Editar', 'Editar a ' + i.nombre, () => abrirEditar(i)));
+    acc.appendChild(boton('btn-sm btn-rojo', 'basura', 'Eliminar', 'Eliminar a ' + i.nombre, () => eliminar(i)));
     art.appendChild(acc);
     return art;
+  }
+
+  /* Confirmar: sin responder → confirma su asistencia;
+     asistirá → registra su ingreso; ya ingresó → permite deshacerlo. */
+  function botonConfirmar(i) {
+    const esperados = i.asistentes || i.pases;
+    if (i.estado === 'pendiente') {
+      return boton('btn-sm btn-confirmar', 'check', 'Confirmar asistencia',
+        'Marcar que ' + i.nombre + ' asistirá (' + personas(i.pases) + ')',
+        () => confirmarAsistencia(i));
+    }
+    if (i.ingresaron >= esperados) {
+      return boton('btn-sm btn-confirmado', 'check', 'Ingresó',
+        'Ya ingresaron (' + i.ingresaron + ' de ' + esperados + '). Toca para deshacer.',
+        () => {
+          if (confirm('¿Quitar el ingreso registrado de «' + i.nombre + '»?')) {
+            actualizar(i.id, { ingresaron: 0 }, 'Ingreso de ' + i.nombre + ' quitado');
+          }
+        });
+    }
+    return boton('btn-sm btn-confirmar', 'check', 'Confirmar ingreso',
+      'Registrar que ingresaron ' + personas(esperados) + ' de ' + i.nombre,
+      () => actualizar(i.id, { ingresaron: esperados }, i.nombre + ': ingreso confirmado'));
+  }
+
+  function confirmarAsistencia(i) {
+    if (!confirm('¿Confirmar que «' + i.nombre + '» asistirá con ' + personas(i.pases) + '?')) return;
+    actualizar(i.id, { estado: 'asiste', asistentes: i.pases, respondido: new Date().toISOString() },
+      i.nombre + ': asistencia confirmada');
   }
 
   /* ── Enviar / copiar ────────────────────────────────────── */
