@@ -61,7 +61,7 @@ window.BODA = {
   ],
 
   /* WhatsApp que recibe las confirmaciones (código de país + número, sin +). */
-  WHATSAPP: '51900000000',                // ← CAMBIAR
+  WHATSAPP: '51917845115',
   /* Hasta cuándo se confirma (texto libre). */
   CONFIRMAR_ANTES: '31 de enero de 2027', // ← CAMBIAR
   /* Sin enlace personal, ¿cuántas personas puede confirmar alguien? */
