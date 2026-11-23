@@ -203,7 +203,8 @@
       <form class="rsvp-form" id="rsvpForm" autocomplete="off" hidden>
         <div class="campo" id="campoNombre">
           <label for="rNombre">Tu nombre completo</label>
-          <input type="text" id="rNombre" maxlength="80" placeholder="Nombre y apellido">
+          <input type="text" id="rNombre" maxlength="80" placeholder="Nombre y apellido" aria-describedby="errNombre">
+          <p class="campo-error" id="errNombre" role="alert" hidden></p>
         </div>
 
         <fieldset class="campo opciones">

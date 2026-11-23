@@ -30,6 +30,25 @@ create table if not exists public.boda_invitados (
 alter table public.boda_invitados add column if not exists acompanantes text[] not null default '{}';
 alter table public.boda_invitados add column if not exists presentes int[] not null default '{}';
 
+-- Nombres únicos: "Juan Pérez", "juan perez" y "Juan  Pérez " cuentan como el mismo.
+create or replace function public.boda_clave(t text)
+returns text
+language sql
+immutable
+parallel safe
+set search_path = public, extensions
+as $$
+  select lower(regexp_replace(btrim(extensions.unaccent('extensions.unaccent'::regdictionary, coalesce(t, ''))), '\s+', ' ', 'g'));
+$$;
+
+do $$
+begin
+  create unique index if not exists boda_invitados_nombre_unico
+    on public.boda_invitados (public.boda_clave(nombre));
+exception when unique_violation then
+  raise notice 'Hay nombres repetidos en boda_invitados. Corrígelos en el panel y vuelve a correr este archivo.';
+end $$;
+
 alter table public.boda_invitados enable row level security;
 
 -- Solo el usuario marcado con app_metadata.panel = 'boda' entra al panel.
@@ -51,6 +70,7 @@ drop function if exists public.boda_responder(text, boolean, int, text);
 drop function if exists public.boda_responder(text, boolean, int, text, text[]);
 drop function if exists public.boda_registrar(text, boolean, int, text);
 drop function if exists public.boda_registrar(text, boolean, int, text, text[]);
+drop function if exists public.boda_registrar(text, boolean, int, text, text[], text);
 
 -- Limpia la lista de acompañantes: sin vacíos, máx. 80 letras c/u y
 -- como mucho p_max nombres.
@@ -120,11 +140,13 @@ end;
 $$;
 
 -- 3) Confirmar sin enlace personal (si la tarjeta lo permite).
---    Si la misma persona ya se anotó así antes, se actualiza (sin duplicar).
+--    El nombre no puede repetirse: si ya existe otro invitado con ese
+--    nombre, falla con el mensaje 'ya_existe'. Quien ya se anotó desde la
+--    tarjeta manda su código (p_codigo) para cambiar su respuesta.
 --    Devuelve el código de su pase.
 create or replace function public.boda_registrar(
   p_nombre text, p_asiste boolean default true, p_asistentes int default 1, p_mensaje text default null,
-  p_acompanantes text[] default '{}')
+  p_acompanantes text[] default '{}', p_codigo text default null)
 returns text
 language plpgsql
 security definer
@@ -134,6 +156,7 @@ declare
   v_nombre text := nullif(left(regexp_replace(btrim(coalesce(p_nombre, '')), '\s+', ' ', 'g'), 80), '');
   v_cant   int  := least(greatest(coalesce(p_asistentes, 1), 1), 10);
   v_msg    text := nullif(left(btrim(coalesce(p_mensaje, '')), 500), '');
+  v_propio text := nullif(lower(btrim(coalesce(p_codigo, ''))), '');
   v_acomp  text[];
   v_codigo text;
 begin
@@ -145,29 +168,43 @@ begin
   end if;
   v_acomp := case when p_asiste then public.boda_limpiar_nombres(p_acompanantes, v_cant - 1) else '{}'::text[] end;
 
-  select i.codigo into v_codigo
-    from public.boda_invitados i
-   where i.origen = 'tarjeta'
-     and lower(unaccent(i.nombre)) = lower(unaccent(v_nombre))
-   limit 1;
-
-  if v_codigo is not null then
-    update public.boda_invitados
-       set estado     = case when p_asiste then 'asiste' else 'no_asiste' end,
-           pases      = greatest(pases, v_cant),
-           asistentes = case when p_asiste then v_cant else 0 end,
-           acompanantes = v_acomp,
-           mensaje    = v_msg,
-           respondido = now()
-     where codigo = v_codigo;
-  else
-    insert into public.boda_invitados (nombre, pases, estado, asistentes, acompanantes, mensaje, origen, respondido)
-    values (v_nombre, v_cant,
-            case when p_asiste then 'asiste' else 'no_asiste' end,
-            case when p_asiste then v_cant else 0 end,
-            v_acomp, v_msg, 'tarjeta', now())
-    returning codigo into v_codigo;
+  -- Su propio registro anterior (para cambiar la respuesta)
+  if v_propio is not null then
+    select i.codigo into v_codigo
+      from public.boda_invitados i
+     where i.codigo = v_propio and i.origen = 'tarjeta';
   end if;
+
+  -- El nombre ya lo tiene otro invitado
+  if exists (select 1 from public.boda_invitados i
+              where public.boda_clave(i.nombre) = public.boda_clave(v_nombre)
+                and (v_codigo is null or i.codigo <> v_codigo)) then
+    raise exception 'ya_existe' using hint = 'Ya existe un invitado con ese nombre';
+  end if;
+
+  begin
+    if v_codigo is not null then
+      update public.boda_invitados
+         set nombre       = v_nombre,
+             estado       = case when p_asiste then 'asiste' else 'no_asiste' end,
+             pases        = greatest(pases, v_cant),
+             asistentes   = case when p_asiste then v_cant else 0 end,
+             acompanantes = v_acomp,
+             mensaje      = v_msg,
+             respondido   = now()
+       where codigo = v_codigo;
+    else
+      insert into public.boda_invitados (nombre, pases, estado, asistentes, acompanantes, mensaje, origen, respondido)
+      values (v_nombre, v_cant,
+              case when p_asiste then 'asiste' else 'no_asiste' end,
+              case when p_asiste then v_cant else 0 end,
+              v_acomp, v_msg, 'tarjeta', now())
+      returning codigo into v_codigo;
+    end if;
+  exception when unique_violation then
+    -- Dos personas con el mismo nombre al mismo tiempo
+    raise exception 'ya_existe' using hint = 'Ya existe un invitado con ese nombre';
+  end;
 
   return v_codigo;
 end;
@@ -175,10 +212,10 @@ $$;
 
 revoke execute on function public.boda_invitacion(text) from public;
 revoke execute on function public.boda_responder(text, boolean, int, text, text[]) from public;
-revoke execute on function public.boda_registrar(text, boolean, int, text, text[]) from public;
+revoke execute on function public.boda_registrar(text, boolean, int, text, text[], text) from public;
 grant execute on function public.boda_invitacion(text) to anon, authenticated;
 grant execute on function public.boda_responder(text, boolean, int, text, text[]) to anon, authenticated;
-grant execute on function public.boda_registrar(text, boolean, int, text, text[]) to anon, authenticated;
+grant execute on function public.boda_registrar(text, boolean, int, text, text[], text) to anon, authenticated;
 
 -- ── Dar acceso al panel ───────────────────────────────────────────
 -- 1. Authentication → Users → Add user (correo + contraseña, Auto Confirm).

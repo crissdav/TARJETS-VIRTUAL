@@ -58,6 +58,8 @@ button { font: inherit; cursor: pointer; }
   border: 1px solid var(--linea); border-radius: 10px;
 }
 .input:focus { outline: none; border-color: var(--salvia); box-shadow: 0 0 0 3px rgba(138, 154, 123, .2); }
+.input.con-error { border-color: var(--no); }
+.campo-error { margin: -6px 0 14px; padding: 9px 12px; border-radius: 10px; background: var(--no-fondo); color: var(--no); font-size: 15px; font-weight: 500; }
 textarea.input { resize: vertical; font-size: 17px; }
 .campo { display: block; margin-bottom: 14px; }
 .campo > span { display: block; font-size: 14.5px; font-weight: 600; color: var(--salvia-osc); margin-bottom: 5px; }

@@ -92,7 +92,8 @@
   <form class="modal-caja" id="fEditar" role="dialog" aria-modal="true" aria-labelledby="mEditarTitulo" autocomplete="off">
     <h2 id="mEditarTitulo">Agregar invitado</h2>
     <label class="campo"><span>Nombre (persona o familia) *</span>
-      <input class="input" id="eNombre" maxlength="80" required placeholder="Ej.: Familia Rojas Díaz"></label>
+      <input class="input" id="eNombre" maxlength="80" required placeholder="Ej.: Familia Rojas Díaz" aria-describedby="eError"></label>
+    <p class="campo-error" id="eError" role="alert" hidden></p>
     <div class="fila2">
       <label class="campo"><span>Pases</span>
         <input class="input" id="ePases" type="number" min="1" max="30" value="1" required></label>

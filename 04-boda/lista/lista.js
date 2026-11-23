@@ -138,6 +138,7 @@
 
   async function actualizar(id, cambios, aviso) {
     let { error } = await db.from(TABLA).update(cambios).eq('id', id);
+    if (error && esRepetido(error)) { errorNombre('Ya existe ese invitado.'); return false; }
     /* Base sin la columna «presentes» todavía: se guarda solo cuántos ingresaron. */
     if (error && /presentes/.test(error.message || '') && 'presentes' in cambios) {
       const sinNombres = Object.assign({}, cambios);
@@ -374,8 +375,20 @@
     if (modal.id === 'mQr') detenerCamara();
   }
 
+  /* Error de la base por nombre repetido (índice único). */
+  const esRepetido = error => error && (error.code === '23505' || /nombre_unico|duplicate key/i.test(error.message || ''));
+
+  function errorNombre(texto) {
+    const msg = $('#eError');
+    msg.textContent = texto;
+    msg.hidden = !texto;
+    $('#eNombre').classList.toggle('con-error', !!texto);
+    if (texto) $('#eNombre').focus();
+  }
+
   function abrirEditar(i) {
     editando = i || null;
+    errorNombre('');
     $('#mEditarTitulo').textContent = i ? 'Editar invitado' : 'Agregar invitado';
     $('#eNombre').value = i ? i.nombre : '';
     $('#ePases').value = i ? i.pases : 1;
@@ -396,8 +409,10 @@
     const acompanantes = $('#eAcomp').value.split(/\r?\n/).map(x => x.trim().replace(/\s+/g, ' ').slice(0, 80)).filter(Boolean);
     if (!nombre) { toast('Escribe el nombre'); return; }
 
-    if (!editando && items.some(x => clave(x.nombre) === clave(nombre)) &&
-        !confirm('Ya hay un invitado llamado «' + nombre + '». ¿Agregarlo de todos modos?')) return;
+    /* Los nombres no se repiten (sin importar mayúsculas, tildes ni espacios). */
+    const repetido = items.find(x => clave(x.nombre) === clave(nombre) && (!editando || x.id !== editando.id));
+    if (repetido) { errorNombre('Ya existe ese invitado: «' + repetido.nombre + '».'); return; }
+    errorNombre('');
 
     const btn = $('#btnGuardar');
     btn.disabled = true;
@@ -414,7 +429,10 @@
     } else {
       const { error } = await db.from(TABLA).insert({ nombre, pases, telefono, acompanantes: acompanantes.slice(0, pases - 1) });
       ok = !error;
-      if (error) toast(error.message || 'No se pudo agregar');
+      if (error) {
+        if (esRepetido(error)) errorNombre('Ya existe ese invitado.');
+        else toast(error.message || 'No se pudo agregar');
+      }
       else { await recargar(); toast(nombre + ' agregado'); }
     }
     btn.disabled = false;
@@ -489,7 +507,7 @@
     btn.disabled = true;
     const { error } = await db.from(TABLA).insert(nuevos);
     btn.disabled = false;
-    if (error) { toast(error.message || 'No se pudo agregar la lista'); return; }
+    if (error) { toast(esRepetido(error) ? 'Algún invitado de la lista ya existe. Revisa los nombres.' : (error.message || 'No se pudo agregar la lista')); return; }
     $('#iTexto').value = '';
     $('#iVista').textContent = '';
     cerrar($('#mImportar'));
@@ -827,6 +845,7 @@
     $('#filtro').addEventListener('change', pintar);
     $('#orden').addEventListener('change', pintar);
     $('#btnAgregar').addEventListener('click', () => abrirEditar(null));
+    $('#eNombre').addEventListener('input', () => { if (!$('#eError').hidden) errorNombre(''); });
     document.querySelectorAll('.pestana').forEach(b => b.addEventListener('click', () => cambiarVista(b.dataset.vista)));
     $('#fEditar').addEventListener('submit', guardarEditar);
     $('#eEstado').addEventListener('change', () => {

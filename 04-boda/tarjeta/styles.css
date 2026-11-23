@@ -293,6 +293,7 @@ main { position: relative; z-index: 2; overflow-x: clip; }
 .campo textarea { resize: vertical; }
 .campo input:focus, .campo select:focus, .campo textarea:focus { outline: none; border-color: var(--salvia); box-shadow: 0 0 0 3px rgba(138, 154, 123, .2); }
 .campo.error input, .campo input.error { border-color: #b4574d; }
+.campo-error { margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: #F7E6E3; color: #8F3A30; font-family: var(--f-sans); font-size: 15px; line-height: 1.45; }
 .campo-titulo { font-family: var(--f-sans); font-size: 16.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--salvia-osc); margin-bottom: 8px; }
 .acomp-fila { position: relative; margin-bottom: 8px; }
 .acomp-fila span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-family: var(--f-sans); font-size: 16.5px; font-weight: 600; color: var(--oro); }

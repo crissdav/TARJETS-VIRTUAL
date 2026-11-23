@@ -398,7 +398,11 @@
       },
       body: JSON.stringify(body)
     });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
+    if (!r.ok) {
+      let detalle = '';
+      try { detalle = await r.text(); } catch (e) { /* sin cuerpo */ }
+      throw new Error('HTTP ' + r.status + ' ' + detalle);
+    }
     return r.json();
   }
 
@@ -517,7 +521,7 @@
       toast('Escribe tu nombre, por favor');
       return;
     }
-    $('#campoNombre').classList.remove('error');
+    avisoNombre('');
     const asiste = asisteElegido();
     const camposAcomp = asiste ? [...$('#listaAcomp').querySelectorAll('input')] : [];
     const vacio = camposAcomp.find(i => !i.value.trim());
@@ -552,13 +556,22 @@
           r.personas = asiste ? invitacion.asistentes : 0;
           r.acompanantes = invitacion.acompanantes || r.acompanantes;
         } else {
+          /* Si ya se anotó antes desde este teléfono, manda su código para
+             cambiar su respuesta (así su propio nombre no cuenta como repetido). */
+          const anterior = leerGuardado();
           r.codigo = await rpc('boda_registrar', {
             p_nombre: nombre, p_asiste: asiste, p_asistentes: r.personas, p_mensaje: r.mensaje,
-            p_acompanantes: r.acompanantes
+            p_acompanantes: r.acompanantes, p_codigo: (anterior && anterior.codigo) || null
           });
         }
         r.guardado = true;
       } catch (err) {
+        if (/ya_existe/.test(err.message || '')) {
+          btn.disabled = false;
+          btn.textContent = 'Enviar confirmación';
+          avisoNombre('Ya existe un invitado con ese nombre. Si ya confirmaste, no necesitas hacerlo otra vez; si eres otra persona, escribe también tu segundo apellido.');
+          return;
+        }
         toast('No pudimos guardar tu respuesta. Envíala por WhatsApp.');
       }
     }
@@ -568,6 +581,18 @@
     mostrarListo(r);
     if (r.guardado && r.asiste && window.BodaFX) BodaFX.confeti();
     $('#rsvp').scrollIntoView({ behavior: reducido ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function avisoNombre(texto) {
+    const caja = $('#campoNombre');
+    const msg = $('#errNombre');
+    caja.classList.toggle('error', !!texto);
+    msg.textContent = texto || '';
+    msg.hidden = !texto;
+    if (texto) {
+      $('#rNombre').focus();
+      caja.scrollIntoView({ behavior: reducido ? 'auto' : 'smooth', block: 'center' });
+    }
   }
 
   function saludar(inv) {
@@ -603,6 +628,7 @@
 
   async function iniciarRsvp() {
     $('#rsvpForm').addEventListener('submit', enviar);
+    $('#rNombre').addEventListener('input', () => { if (!$('#errNombre').hidden) avisoNombre(''); });
     $$('input[name="asiste"]').forEach(r => r.addEventListener('change', actualizarCampos));
     $('#rPersonas').addEventListener('change', () => pintarAcomp());
     $('#btnCambiar').addEventListener('click', () => {
